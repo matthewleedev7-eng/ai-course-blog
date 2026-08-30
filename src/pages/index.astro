@@ -83,32 +83,34 @@ const levels = ["전체", "입문", "중급"];
 
       <!-- 플랫폼 및 난이도 필터 버튼 -->
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pt-2 border-t border-slate-100 dark:border-slate-800">
-        <!-- 제공처 필터 -->
-        <div class="flex items-center gap-1.5 flex-wrap">
-          <span class="text-xs font-semibold text-slate-400 mr-1">제공사:</span>
-          {providers.map((p, idx) => (
-            <button 
-              type="button" 
-              class={`filter-provider-btn px-3 py-1 text-xs font-medium rounded-lg transition-all ${
-                idx === 0 
-                  ? 'bg-blue-600 text-white shadow-sm' 
-                  : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
-              }`}
-              data-provider={p}
-            >
-              {p}
-            </button>
-          ))}
+        <!-- 제공처 필터 (모바일 터치 가로 스와이프 지원) -->
+        <div class="overflow-x-auto pb-1 scrollbar-none -mx-1 px-1">
+          <div class="flex items-center gap-1.5 min-w-max">
+            <span class="text-xs font-semibold text-slate-400 mr-1 shrink-0">제공사:</span>
+            {providers.map((p, idx) => (
+              <button 
+                type="button" 
+                class={`filter-provider-btn px-3 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap transition-all ${
+                  idx === 0 
+                    ? 'bg-blue-600 text-white shadow-sm' 
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
+                }`}
+                data-provider={p}
+              >
+                {p}
+              </button>
+            ))}
+          </div>
         </div>
 
         <!-- 난이도 & 수료증 옵션 -->
-        <div class="flex items-center gap-3 flex-wrap">
+        <div class="flex items-center justify-between sm:justify-start gap-3 flex-wrap pt-1 sm:pt-0">
           <div class="flex items-center gap-1">
-            <span class="text-xs font-semibold text-slate-400 mr-1">난이도:</span>
+            <span class="text-xs font-semibold text-slate-400 mr-1 shrink-0">난이도:</span>
             {levels.map((lvl, idx) => (
               <button 
                 type="button" 
-                class={`filter-level-btn px-2.5 py-1 text-xs font-medium rounded-lg transition-all ${
+                class={`filter-level-btn px-2.5 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap transition-all ${
                   idx === 0 
                     ? 'bg-slate-800 text-white dark:bg-slate-200 dark:text-slate-900' 
                     : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
@@ -120,9 +122,9 @@ const levels = ["전체", "입문", "중급"];
             ))}
           </div>
 
-          <label class="inline-flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 cursor-pointer ml-2">
+          <label class="inline-flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 cursor-pointer ml-auto sm:ml-2">
             <input type="checkbox" id="filter-certificate" class="rounded border-slate-300 dark:border-slate-700 text-blue-600 focus:ring-blue-500 w-4 h-4" />
-            <span>수료증/뱃지 제공만</span>
+            <span class="whitespace-nowrap">수료증/뱃지 제공만</span>
           </label>
         </div>
       </div>
