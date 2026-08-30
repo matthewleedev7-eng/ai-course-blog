@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://ai-course-blog.vercel.app',
+  site: 'https://matthewlee-ailog.com',
   i18n: {
     defaultLocale: 'ko',
     locales: ['ko', 'en'],
