@@ -1,0 +1,46 @@
+---
+interface Props {
+  slotId?: string;
+  format?: 'auto' | 'horizontal' | 'rectangle' | 'in-article';
+  client?: string;
+  className?: string;
+}
+
+const {
+  slotId = "1234567890",
+  format = "auto",
+  client = "ca-pub-XXXXXXXXXXXXXXXX",
+  className = ""
+} = Astro.props;
+
+// 애드센스 실제 승인 후 true로 변경하거나 환경변수(PUBLIC_ADSENSE_ENABLED)로 제어 가능
+const isAdEnabled = false;
+---
+
+<div class={`adsense-wrapper my-6 overflow-hidden rounded-xl border border-dashed border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/40 p-3 text-center transition-all ${className}`}>
+  {isAdEnabled ? (
+    <div>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client={client}
+           data-ad-slot={slotId}
+           data-ad-format={format}
+           data-full-width-responsive="true"></ins>
+      <script is:inline>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+  ) : (
+    <div class="flex flex-col items-center justify-center py-4 px-3 text-xs text-slate-400 dark:text-slate-500">
+      <div class="flex items-center gap-1.5 font-medium tracking-wide uppercase">
+        <svg class="w-3.5 h-3.5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+        <span>Google AdSense Slot ({format})</span>
+      </div>
+      <p class="mt-1 text-[11px] text-slate-400">
+        애드센스 승인 후 클라이언트 ID(`ca-pub-xxx`)를 입력하면 자동으로 맞춤 광고가 노출되는 영역입니다.
+      </p>
+    </div>
+  )}
+</div>

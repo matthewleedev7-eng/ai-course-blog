@@ -1,0 +1,179 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import AdSenseBanner from '../../components/AdSenseBanner.astro';
+
+export async function getStaticPaths() {
+  const courses = await getCollection('courses');
+  return courses.map((course) => ({
+    params: { id: course.id },
+    props: { course },
+  }));
+}
+
+const { course } = Astro.props;
+const { Content } = await render(course);
+
+const allCourses = await getCollection('courses');
+const otherCourses = allCourses.filter(c => c.id !== course.id).slice(0, 3);
+---
+
+<Layout 
+  title={course.data.title}
+  description={course.data.description}
+>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <!-- 빵부스러기(Breadcrumb) 경로 -->
+    <nav class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mb-6">
+      <a href="/" class="hover:text-blue-600 transition-colors">홈</a>
+      <span>/</span>
+      <a href="/" class="hover:text-blue-600 transition-colors">무료 강의</a>
+      <span>/</span>
+      <span class="text-slate-800 dark:text-slate-200 font-medium truncate max-w-xs">{course.data.title}</span>
+    </nav>
+
+    <!-- 강의 상세 헤더 -->
+    <header class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-10 shadow-sm">
+      <div class="flex items-center gap-2 flex-wrap mb-4">
+        <span class="px-3 py-1 text-xs font-bold rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
+          {course.data.provider}
+        </span>
+        <span class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+          100% 무료
+        </span>
+        {course.data.hasCertificate && (
+          <span class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20">
+            공식 수료증/뱃지
+          </span>
+        )}
+        {course.data.badge && (
+          <span class="px-2.5 py-1 text-xs font-semibold rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+            ★ {course.data.badge}
+          </span>
+        )}
+      </div>
+
+      <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white leading-tight sm:leading-tight">
+        {course.data.title}
+      </h1>
+
+      <p class="mt-4 text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+        {course.data.description}
+      </p>
+
+      <!-- 강의 스펙 바 -->
+      <div class="mt-6 pt-6 border-t border-slate-100 dark:border-slate-800 grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+        <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50">
+          <span class="text-slate-400 block mb-1">권장 난이도</span>
+          <strong class="text-slate-800 dark:text-slate-200 text-sm">{course.data.level}</strong>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50">
+          <span class="text-slate-400 block mb-1">예상 소요 시간</span>
+          <strong class="text-slate-800 dark:text-slate-200 text-sm">{course.data.duration}</strong>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50">
+          <span class="text-slate-400 block mb-1">강의 언어</span>
+          <strong class="text-slate-800 dark:text-slate-200 text-sm">{course.data.language}</strong>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50">
+          <span class="text-slate-400 block mb-1">학습자 평점</span>
+          <strong class="text-amber-500 text-sm flex items-center gap-1">
+            ★ {course.data.rating} / 5.0
+          </strong>
+        </div>
+      </div>
+
+      <!-- 원클릭 바로가기 버튼 -->
+      <div class="mt-8 flex flex-col sm:flex-row items-center gap-3">
+        <a 
+          href={course.data.url} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-md hover:shadow-lg transition-all"
+        >
+          <span>{course.data.provider} 공식 무료 강의 바로가기</span>
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </a>
+
+        <a 
+          href="/"
+          class="w-full sm:w-auto inline-flex items-center justify-center px-5 py-3 text-sm font-semibold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl transition-all"
+        >
+          ← 목록으로 돌아가기
+        </a>
+      </div>
+    </header>
+
+    <!-- 본문 상단 애드센스 슬롯 -->
+    <AdSenseBanner format="in-article" className="my-8" />
+
+    <!-- 마크다운 본문 리뷰 & 가이드 -->
+    <div class="prose prose-slate dark:prose-invert max-w-none rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-10 shadow-sm mt-8 prose-headings:font-bold prose-headings:tracking-tight prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-img:rounded-xl">
+      <Content />
+    </div>
+
+    <!-- 본문 하단 애드센스 슬롯 -->
+    <AdSenseBanner format="in-article" className="my-8" />
+
+    <!-- 공유 및 하단 안내 박스 -->
+    <div class="mt-8 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div>
+        <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200">이 강의 정보가 유익하셨나요?</h4>
+        <p class="text-xs text-slate-500 mt-0.5">동료 개발자나 AI 학습을 고민하는 친구에게 링크를 공유해 보세요.</p>
+      </div>
+
+      <button 
+        id="copy-link-btn"
+        type="button" 
+        class="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-all"
+      >
+        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+        </svg>
+        <span id="copy-text">페이지 링크 복사</span>
+      </button>
+    </div>
+
+    <!-- 다른 추천 강의 섹션 -->
+    <section class="mt-16 pt-10 border-t border-slate-200 dark:border-slate-800">
+      <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-6">함께 보면 좋은 다른 무료 AI 강의</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {otherCourses.map((c) => (
+          <div class="flex flex-col justify-between p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:border-blue-500/40 transition-all">
+            <div>
+              <span class="text-[11px] font-bold text-blue-600 dark:text-blue-400 mb-2 block">{c.data.provider}</span>
+              <h4 class="text-sm font-bold text-slate-900 dark:text-white line-clamp-2 leading-snug">
+                <a href={`/courses/${c.id}`} class="hover:underline">{c.data.title}</a>
+              </h4>
+              <p class="mt-2 text-xs text-slate-500 line-clamp-2">{c.data.description}</p>
+            </div>
+            <a href={`/courses/${c.id}`} class="mt-4 text-xs font-semibold text-blue-600 dark:text-blue-400 inline-flex items-center gap-1">
+              리뷰 보기 →
+            </a>
+          </div>
+        ))}
+      </div>
+    </section>
+  </article>
+
+  <!-- 링크 복사 스크립트 -->
+  <script is:inline>
+    const copyBtn = document.getElementById('copy-link-btn');
+    const copyText = document.getElementById('copy-text');
+    copyBtn?.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        if (copyText) {
+          copyText.textContent = '복사 완료! 🎉';
+          setTimeout(() => {
+            copyText.textContent = '페이지 링크 복사';
+          }, 2000);
+        }
+      } catch (err) {
+        alert('주소가 복사되었습니다.');
+      }
+    });
+  </script>
+</Layout>

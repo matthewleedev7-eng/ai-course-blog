@@ -1,0 +1,185 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title,
+  description = "OpenAI, Google, DeepLearning.AI 등 글로벌 공식 무료 AI 강의 및 튜토리얼을 엄선하여 한국어로 정리한 AI 교육 큐레이션 블로그입니다.",
+  image = "/og-image.png",
+} = Astro.props;
+
+const siteName = "AI 러닝로그 | 무료 AI 강의 & 독학 가이드";
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || "http://localhost:4321");
+---
+
+<!doctype html>
+<html lang="ko" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title} | {siteName}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph / SNS 공유 최적화 -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={`${title} | ${siteName}`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={`${title} | ${siteName}`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+
+    <!-- Pretendard Web Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+    <!-- 구글 애드센스 공식 스크립트 영역 (승인 후 아래 주석 해제 및 본인 ca-pub ID 적용) -->
+    <!-- 
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+     crossorigin="anonymous"></script>
+    -->
+
+    <!-- 테마 초기화 스크립트 (다크모드 깜빡임 방지) -->
+    <script is:inline>
+      const theme = (() => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dark';
+        }
+        return 'light';
+      })();
+
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+      window.localStorage.setItem('theme', theme);
+    </script>
+
+    <style>
+      body {
+        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 min-h-screen flex flex-col antialiased selection:bg-blue-500 selection:text-white transition-colors duration-200">
+    <!-- 헤더 내비게이션 (스크롤 시 확실히 상단 고정) -->
+    <header class="sticky top-0 z-50 w-full backdrop-blur-md bg-white/90 dark:bg-slate-950/90 border-b border-slate-200 dark:border-slate-800 shadow-xs">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <!-- 로고 -->
+        <a href="/" class="flex items-center gap-2.5 group">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-extrabold text-base sm:text-lg tracking-tight text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+              AI 러닝로그
+            </span>
+            <span class="text-[10px] font-medium text-slate-400 -mt-0.5 tracking-wider">나만 알기 아까운 무료 AI 강의</span>
+          </div>
+        </a>
+
+        <!-- 내비게이션 메뉴 & 다크모드 버튼 -->
+        <div class="flex items-center gap-2 sm:gap-6">
+          <nav class="hidden md:flex items-center gap-5 text-sm font-medium text-slate-600 dark:text-slate-400">
+            <a href="/" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">강의 목록</a>
+            <a href="/#curation-standard" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">추천 원칙</a>
+            <a href="/about" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">블로그 소개</a>
+            <a href="/privacy" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">개인정보처리방침</a>
+          </nav>
+
+          <!-- 다크 모드 토글 버튼 -->
+          <button
+            id="theme-toggle"
+            type="button"
+            class="p-2 rounded-xl text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all"
+            aria-label="테마 전환"
+          >
+            <!-- 해 아이콘 (다크모드일 때 보임) -->
+            <svg id="theme-toggle-sun" class="w-4 h-4 hidden dark:block text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <!-- 달 아이콘 (라이트모드일 때 보임) -->
+            <svg id="theme-toggle-moon" class="w-4 h-4 block dark:hidden text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.03 9.03 0 008.354-5.646z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- 본문 내용 -->
+    <main class="flex-grow">
+      <slot />
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="mt-20 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 py-12 text-sm text-slate-500 dark:text-slate-400">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          <div class="md:col-span-2">
+            <div class="flex items-center gap-2 font-bold text-slate-900 dark:text-white text-base">
+              <div class="w-6 h-6 rounded-lg bg-blue-600 flex items-center justify-center text-white text-xs">AI</div>
+              AI 러닝로그 (AI Learning Log)
+            </div>
+            <p class="mt-2.5 text-xs leading-relaxed max-w-md text-slate-500 dark:text-slate-400">
+              비싼 유료 강의 대신, 글로벌 테크 기업(OpenAI, Google, Anthropic 등)과 유명 유튜브 채널에서 공개한 양질의 무료 AI 강의를 직접 공부해보고 엄선하여 기록하는 개인 블로그입니다.
+            </p>
+          </div>
+
+          <div>
+            <h4 class="font-semibold text-slate-900 dark:text-white text-xs tracking-wider uppercase mb-3">메뉴</h4>
+            <ul class="space-y-2 text-xs">
+              <li><a href="/" class="hover:text-blue-600 dark:hover:text-blue-400">전체 강의 목록</a></li>
+              <li><a href="/about" class="hover:text-blue-600 dark:hover:text-blue-400">블로그 소개 & 운영자 노트</a></li>
+              <li><a href="/privacy" class="hover:text-blue-600 dark:hover:text-blue-400">개인정보처리방침</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="font-semibold text-slate-900 dark:text-white text-xs tracking-wider uppercase mb-3">피드백 & 강의 제보</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              추천하고 싶은 무료 AI 강의가 있거나 문의사항이 있으시면 언제든 메일로 보내주세요.
+            </p>
+            <a href="mailto:matthew.lee.dev7@gmail.com" class="mt-2 inline-block text-xs text-blue-600 dark:text-blue-400 font-medium hover:underline">
+              matthew.lee.dev7@gmail.com
+            </a>
+          </div>
+        </div>
+
+        <div class="pt-8 border-t border-slate-100 dark:border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+          <p>© 2026 AI 러닝로그. All rights reserved.</p>
+          <div class="flex items-center gap-4">
+            <a href="/privacy" class="hover:underline">개인정보처리방침</a>
+            <span>•</span>
+            <a href="/about" class="hover:underline">블로그 소개</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- 테마 토글 스크립트 -->
+    <script is:inline>
+      const themeToggleBtn = document.getElementById('theme-toggle');
+      themeToggleBtn?.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      });
+    </script>
+  </body>
+</html>
