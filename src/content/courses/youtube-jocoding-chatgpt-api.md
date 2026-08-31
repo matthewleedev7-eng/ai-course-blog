@@ -2,7 +2,7 @@
 title: "조코딩 (JoCoding) - ChatGPT API로 나만의 수익형 AI 웹서비스 만들기"
 description: "구독자 60만 대표 코딩 유튜버 조코딩의 명강의! 파이썬 기초부터 OpenAI API 연동, 웹 배포 및 애드센스 광고 삽입까지 한 번에 끝내는 무료 풀코스"
 provider: "YouTube"
-url: "https://www.youtube.com/watch?v=1F_bK6kY2Yw"
+url: "https://www.youtube.com/playlist?list=PLU9-uwewPMe0okyXGe7rvEY77Akbg8WEV"
 level: "입문"
 duration: "약 3시간 (단기 완성)"
 language: "한국어"

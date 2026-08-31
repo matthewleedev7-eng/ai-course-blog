@@ -2,7 +2,7 @@
 title: "Hugging Face - Deep Reinforcement Learning & NLP Free Course"
 description: "허깅페이스 공식 무료 강좌! 딥 강화학습(Deep RL)과 트랜스포머 라이브러리를 활용해 직접 게임 AI 에이전트를 훈련하고 모델을 배포해보세요."
 provider: "Hugging Face"
-url: "https://huggingface.co/learn/deep-rl-course/unit0/introduction"
+url: "https://github.com/huggingface/deep-rl-class"
 level: "중급"
 duration: "총 8개 유닛 (약 3~4주 소요)"
 language: "영어 (Colab 실습 코드 중심)"
