@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Analytics from '@vercel/analytics/astro';
 
 interface Props {
   title: string;
@@ -288,5 +289,6 @@ if (!alternateLangURL.startsWith('/')) alternateLangURL = `/${alternateLangURL}`
         });
       });
     </script>
+    <Analytics />
   </body>
 </html>
