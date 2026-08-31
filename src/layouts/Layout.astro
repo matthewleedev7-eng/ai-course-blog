@@ -64,6 +64,16 @@ if (!alternateLangURL.startsWith('/')) alternateLangURL = `/${alternateLangURL}`
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2773225131688341"
      crossorigin="anonymous"></script>
 
+    <!-- 구글 애널리틱스 (GA4) 공식 추적 태그 (측정 ID: G-0RG3XQTJ9C) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0RG3XQTJ9C"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-0RG3XQTJ9C');
+    </script>
+
     <!-- 테마 초기화 스크립트 -->
     <script is:inline>
       const theme = (() => {
