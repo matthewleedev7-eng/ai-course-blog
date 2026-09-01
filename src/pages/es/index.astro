@@ -1,0 +1,349 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import CourseCard from '../../components/CourseCard.astro';
+import AdSenseBanner from '../../components/AdSenseBanner.astro';
+import { getCollection } from 'astro:content';
+
+const allCourses = await getCollection('courses_es');
+const sortedCourses = allCourses.sort((a, b) => {
+  if (a.data.featured && !b.data.featured) return -1;
+  if (!a.data.featured && b.data.featured) return 1;
+  return new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime();
+});
+
+const providers = ["Todos", "Google", "Harvard University", "DeepLearning.AI", "Stanford University", "Hugging Face", "Microsoft", "AWS"];
+const levels = ["Todos", "Principiante", "Intermedio", "Avanzado"];
+---
+
+<Layout 
+  title="Inicio | Los Mejores Cursos Gratuitos de IA (2026)"
+  description="Colección seleccionada de los mejores cursos oficiales y gratuitos de Inteligencia Artificial, ingeniería de prompts y modelos LLM de Google, Harvard, OpenAI y creadores globales líderes."
+  lang="es"
+>
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden pt-12 pb-16 md:pt-20 md:pb-24 border-b border-slate-200/80 dark:border-slate-800/80 bg-gradient-to-b from-blue-50/50 via-transparent to-transparent dark:from-blue-950/20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800/50 mb-6">
+        <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+        Cursos Gratuitos de IA Seleccionados 2026
+      </div>
+
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white max-w-3xl mx-auto leading-tight sm:leading-tight">
+        Evita Bootcamps Costosos, <br class="hidden sm:inline" />
+        <span class="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
+          Aprende con Cursos Oficiales y Gratuitos
+        </span>
+      </h1>
+
+      <p class="mt-5 text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
+        Desde Harvard CS50 y Google Cloud hasta Andrew Ng y Hugging Face.<br class="hidden sm:inline" />
+        Recursos formativos verificados y consejos de estudio para autodidactas en un solo lugar.
+      </p>
+
+      <!-- Key Stats -->
+      <div class="mt-8 grid grid-cols-3 max-w-md mx-auto gap-4 p-4 rounded-2xl bg-white/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 backdrop-blur-sm shadow-sm">
+        <div>
+          <div class="text-xl sm:text-2xl font-black text-blue-600 dark:text-blue-400">{sortedCourses.length}+</div>
+          <div class="text-[11px] sm:text-xs text-slate-500 mt-0.5">Cursos Seleccionados</div>
+        </div>
+        <div class="border-x border-slate-100 dark:border-slate-800">
+          <div class="text-xl sm:text-2xl font-black text-emerald-600 dark:text-emerald-400">100%</div>
+          <div class="text-[11px] sm:text-xs text-slate-500 mt-0.5">Acceso Gratuito</div>
+        </div>
+        <div>
+          <div class="text-xl sm:text-2xl font-black text-amber-500">4.9★</div>
+          <div class="text-[11px] sm:text-xs text-slate-500 mt-0.5">Valoración Media</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Top AdSense Banner -->
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+    <AdSenseBanner format="horizontal" />
+  </div>
+
+  <!-- Search & Filter Controls -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+    <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm space-y-4">
+      <!-- Search Input -->
+      <div class="relative">
+        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+        <input 
+          type="text" 
+          id="search-input" 
+          placeholder="Buscar por título, plataforma, palabras clave (ej. Python, RAG, Colab)..." 
+          class="w-full pl-11 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+        />
+      </div>
+
+      <!-- Filters -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pt-2 border-t border-slate-100 dark:border-slate-800">
+        <!-- Provider Filters -->
+        <div class="overflow-x-auto pb-1 scrollbar-none -mx-1 px-1">
+          <div class="flex items-center gap-1.5 min-w-max">
+            <span class="text-xs font-semibold text-slate-400 mr-1 shrink-0">Plataforma:</span>
+            {providers.map((p, idx) => (
+              <button 
+                type="button" 
+                class={`filter-provider-btn px-3 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap transition-all ${
+                  idx === 0 
+                    ? 'bg-blue-600 text-white shadow-sm' 
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
+                }`}
+                data-provider={p === "Todos" ? "ALL" : p}
+              >
+                {p}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <!-- Level & Certificate -->
+        <div class="flex items-center justify-between sm:justify-start gap-3 flex-wrap pt-1 sm:pt-0">
+          <div class="flex items-center gap-1">
+            <span class="text-xs font-semibold text-slate-400 mr-1 shrink-0">Nivel:</span>
+            {levels.map((lvl, idx) => (
+              <button 
+                type="button" 
+                class={`filter-level-btn px-2.5 py-1.5 text-xs font-medium rounded-lg whitespace-nowrap transition-all ${
+                  idx === 0 
+                    ? 'bg-slate-800 text-white dark:bg-slate-200 dark:text-slate-900' 
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
+                }`}
+                data-level={lvl === "Todos" ? "ALL" : lvl}
+              >
+                {lvl}
+              </button>
+            ))}
+          </div>
+
+          <label class="inline-flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 cursor-pointer ml-auto sm:ml-2">
+            <input type="checkbox" id="filter-certificate" class="rounded border-slate-300 dark:border-slate-700 text-blue-600 focus:ring-blue-500 w-4 h-4" />
+            <span class="whitespace-nowrap">Solo con Certificado / Insignia</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Courses Grid -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+    <div class="flex items-center justify-between mb-5">
+      <h2 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+        <span>Cursos Gratuitos Destacados</span>
+        <span id="result-count" class="text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400">
+          {sortedCourses.length}
+        </span>
+      </h2>
+    </div>
+
+    <!-- Cards -->
+    <div id="course-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {sortedCourses.map((course) => (
+        <CourseCard id={course.id} course={course.data} lang="es" />
+      ))}
+    </div>
+
+    <!-- Empty State -->
+    <div id="no-results" class="hidden py-16 text-center rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8">
+      <div class="w-12 h-12 mx-auto rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 mb-3">
+        🔍
+      </div>
+      <h3 class="text-base font-bold text-slate-700 dark:text-slate-300">No se encontraron cursos que coincidan con tu búsqueda</h3>
+      <p class="text-xs text-slate-400 mt-1">Intenta ajustar tus palabras clave o limpiar los filtros seleccionados.</p>
+      <button 
+        id="reset-filters" 
+        class="mt-4 px-4 py-1.5 text-xs font-semibold text-blue-600 bg-blue-50 dark:bg-blue-900/30 rounded-lg hover:bg-blue-100"
+      >
+        Restablecer Filtros
+      </button>
+    </div>
+  </section>
+
+  <!-- In-Article AdSense -->
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
+    <AdSenseBanner format="in-article" />
+  </div>
+
+  <!-- Curation Standards Section -->
+  <section id="curation-standard" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
+    <div class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-900 dark:via-slate-900 dark:to-blue-950/20 p-8 sm:p-10">
+      <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-4">
+        💡 Nuestros 3 Criterios de Selección Rigurosos
+      </h3>
+      <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl mb-8">
+        Filtramos la publicidad vacía y los cursos trampa. Para respetar tu tiempo de estudio, cada curso incluido en este registro cumple tres principios innegociables:
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+          <div class="text-2xl mb-3">🛡️</div>
+          <h4 class="font-bold text-sm text-slate-900 dark:text-white mb-2">1. Cero Costes Ocultos</h4>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            Sin suscripciones trampa ni pasarelas de pago a mitad de lección. Solo recursos 100% gratuitos y verificados.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+          <div class="text-2xl mb-3">🏛️</div>
+          <h4 class="font-bold text-sm text-slate-900 dark:text-white mb-2">2. Respaldo de Instituciones Líderes</h4>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            Priorizamos programas oficiales desarrollados por investigadores de Harvard, Stanford, Google y DeepLearning.AI.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+          <div class="text-2xl mb-3">💻</div>
+          <h4 class="font-bold text-sm text-slate-900 dark:text-white mb-2">3. Enfoque Práctico</h4>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            Valoramos cursos con cuadernos interactivos en Google Colab, repositorios abiertos y laboratorios que puedes ejecutar de inmediato.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Client-side filter & search script -->
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchInput = document.getElementById('search-input');
+      const providerBtns = document.querySelectorAll('.filter-provider-btn');
+      const levelBtns = document.querySelectorAll('.filter-level-btn');
+      const certCheckbox = document.getElementById('filter-certificate');
+      const courseCards = document.querySelectorAll('.course-card');
+      const resultCount = document.getElementById('result-count');
+      const noResults = document.getElementById('no-results');
+      const resetBtn = document.getElementById('reset-filters');
+      const tagPills = document.querySelectorAll('.tag-pill');
+
+      let currentProvider = 'ALL';
+      let currentLevel = 'ALL';
+      let certificateOnly = false;
+      let searchQuery = '';
+
+      function filterCourses() {
+        let visibleCount = 0;
+
+        courseCards.forEach(card => {
+          const provider = card.getAttribute('data-provider');
+          const level = card.getAttribute('data-level');
+          const hasCert = card.getAttribute('data-certificate') === 'true';
+          const searchText = card.getAttribute('data-search') || '';
+
+          const matchProvider = currentProvider === 'ALL' || provider === currentProvider;
+          const matchLevel = currentLevel === 'ALL' || (level && level.includes(currentLevel));
+          const matchCert = !certificateOnly || hasCert;
+          const matchSearch = !searchQuery || searchText.includes(searchQuery.toLowerCase());
+
+          if (matchProvider && matchLevel && matchCert && matchSearch) {
+            card.style.display = 'flex';
+            visibleCount++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        if (resultCount) resultCount.textContent = visibleCount.toString();
+        if (noResults) {
+          if (visibleCount === 0) {
+            noResults.classList.remove('hidden');
+          } else {
+            noResults.classList.add('hidden');
+          }
+        }
+      }
+
+      // Search input event
+      searchInput?.addEventListener('input', (e) => {
+        searchQuery = e.target.value.trim();
+        filterCourses();
+      });
+
+      // Provider filter
+      providerBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          providerBtns.forEach(b => {
+            b.classList.remove('bg-blue-600', 'text-white', 'shadow-sm');
+            b.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-400');
+          });
+          btn.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-400');
+          btn.classList.add('bg-blue-600', 'text-white', 'shadow-sm');
+
+          currentProvider = btn.getAttribute('data-provider') || 'ALL';
+          filterCourses();
+        });
+      });
+
+      // Level filter
+      levelBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          levelBtns.forEach(b => {
+            b.classList.remove('bg-slate-800', 'text-white', 'dark:bg-slate-200', 'dark:text-slate-900');
+            b.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-400');
+          });
+          btn.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-400');
+          btn.classList.add('bg-slate-800', 'text-white', 'dark:bg-slate-200', 'dark:text-slate-900');
+
+          currentLevel = btn.getAttribute('data-level') || 'ALL';
+          filterCourses();
+        });
+      });
+
+      // Certificate checkbox
+      certCheckbox?.addEventListener('change', (e) => {
+        certificateOnly = e.target.checked;
+        filterCourses();
+      });
+
+      // Tag click to search
+      tagPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          const tag = pill.textContent.replace('#', '').trim();
+          if (searchInput) {
+            searchInput.value = tag;
+            searchQuery = tag;
+            filterCourses();
+            searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        });
+      });
+
+      // Reset filters
+      resetBtn?.addEventListener('click', () => {
+        if (searchInput) searchInput.value = '';
+        searchQuery = '';
+        currentProvider = 'ALL';
+        currentLevel = 'ALL';
+        certificateOnly = false;
+        if (certCheckbox) certCheckbox.checked = false;
+
+        providerBtns.forEach((b, idx) => {
+          if (idx === 0) {
+            b.classList.add('bg-blue-600', 'text-white', 'shadow-sm');
+            b.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-400');
+          } else {
+            b.classList.remove('bg-blue-600', 'text-white', 'shadow-sm');
+            b.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-400');
+          }
+        });
+
+        levelBtns.forEach((b, idx) => {
+          if (idx === 0) {
+            b.classList.add('bg-slate-800', 'text-white', 'dark:bg-slate-200', 'dark:text-slate-900');
+            b.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-400');
+          } else {
+            b.classList.remove('bg-slate-800', 'text-white', 'dark:bg-slate-200', 'dark:text-slate-900');
+            b.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-400');
+          }
+        });
+
+        filterCourses();
+      });
+    });
+  </script>
+</Layout>

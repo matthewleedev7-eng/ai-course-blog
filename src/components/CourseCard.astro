@@ -16,11 +16,12 @@ interface Props {
     rating?: number;
     badge?: string;
   };
-  lang?: 'ko' | 'en';
+  lang?: 'ko' | 'en' | 'es';
 }
 
 const { id, course, lang = 'ko' } = Astro.props;
 const isEn = lang === 'en';
+const isEs = lang === 'es';
 
 // 플랫폼별 색상 테마
 const providerThemes: Record<string, { bg: string; text: string; border: string }> = {
@@ -85,14 +86,14 @@ const theme = providerThemes[course.provider] || defaultTheme;
     <div class="mt-4 flex flex-wrap items-center gap-y-2 gap-x-3 text-xs text-slate-500 dark:text-slate-400 pt-3 border-t border-slate-100 dark:border-slate-800/80">
       <span class="inline-flex items-center gap-1 font-medium">
         <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
-        {isEn ? "Level:" : "난이도:"} <strong class="text-slate-700 dark:text-slate-300">{course.level}</strong>
+        {isEs ? "Nivel:" : isEn ? "Level:" : "난이도:"} <strong class="text-slate-700 dark:text-slate-300">{course.level}</strong>
       </span>
       <span class="inline-flex items-center gap-1">
         ⏱ {course.duration}
       </span>
       {course.hasCertificate && (
         <span class="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-medium">
-          🎓 {isEn ? "Certificate" : "수료증/뱃지"}
+          🎓 {isEs ? "Certificado" : isEn ? "Certificate" : "수료증/뱃지"}
         </span>
       )}
     </div>
@@ -110,10 +111,10 @@ const theme = providerThemes[course.provider] || defaultTheme;
   <!-- 하단 액션 버튼 -->
   <div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2">
     <a 
-      href={isEn ? `/en/courses/${id}` : `/courses/${id}`}
+      href={isEs ? `/es/courses/${id}` : isEn ? `/en/courses/${id}` : `/courses/${id}`}
       class="inline-flex items-center text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
     >
-      {isEn ? "Read Guide" : "상세 가이드 보기"}
+      {isEs ? "Ver Guía" : isEn ? "Read Guide" : "상세 가이드 보기"}
       <svg class="w-3.5 h-3.5 ml-1 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
       </svg>
@@ -125,7 +126,7 @@ const theme = providerThemes[course.provider] || defaultTheme;
       rel="noopener noreferrer"
       class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm hover:shadow transition-all"
     >
-      {isEn ? "Take Course" : "강의 바로가기"}
+      {isEs ? "Ir al Curso" : isEn ? "Take Course" : "강의 바로가기"}
       <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
       </svg>
