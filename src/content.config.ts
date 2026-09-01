@@ -55,6 +55,11 @@ const news = defineCollection({
   schema: newsSchema,
 });
 
+const news_en = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/news_en' }),
+  schema: newsSchema,
+});
+
 const guideSchema = z.object({
   title: z.string(),
   author: z.string(),
@@ -134,4 +139,4 @@ const gov = defineCollection({
 });
 
 // 현재 라이브 공개 컬렉션만 안전하게 export (guides, models, gov는 추후 공개 시 추가)
-export const collections = { courses, courses_en, news };
+export const collections = { courses, courses_en, news, news_en };

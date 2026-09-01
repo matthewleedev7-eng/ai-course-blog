@@ -2,7 +2,7 @@
 import Layout from '../../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 
-const allNews = await getCollection('news');
+const allNews = await getCollection('news_en');
 // Sort by date descending (newest first)
 const sortedNews = allNews.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 const latestDate = sortedNews[0]?.data.date || '2026-09-01';
@@ -99,7 +99,7 @@ const categories = ["All", "🤖 Models/Tools", "⚡ Dev/API", "🎓 Free Learni
                 ? 'bg-blue-600 text-white shadow-xs' 
                 : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
             }`}
-            data-category={cat === "All" ? "전체" : cat}
+            data-category={cat}
           >
             {cat}
           </button>
@@ -244,7 +244,7 @@ const categories = ["All", "🤖 Models/Tools", "⚡ Dev/API", "🎓 Free Learni
       const pubTimestamp = document.getElementById('current-pub-timestamp');
 
       let activeDate = dateBtns[0]?.getAttribute('data-date') || 'ALL';
-      let activeCategory = '전체';
+      let activeCategory = 'All';
       let searchQuery = '';
 
       function filterCards() {
@@ -261,7 +261,7 @@ const categories = ["All", "🤖 Models/Tools", "⚡ Dev/API", "🎓 Free Learni
           const dateMatch = activeDate === 'ALL' || cardDate === activeDate;
 
           // 2. Category condition
-          const catMatch = activeCategory === '전체' || cardCat === activeCategory;
+          const catMatch = activeCategory === 'All' || cardCat === activeCategory;
 
           // 3. Search query condition
           const queryMatch = searchQuery.length === 0 || 
