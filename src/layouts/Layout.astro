@@ -6,7 +6,7 @@ interface Props {
   title: string;
   description?: string;
   image?: string;
-  lang?: 'ko' | 'en' | 'es';
+  lang?: 'ko' | 'en' | 'es' | 'pt';
 }
 
 const {
@@ -17,9 +17,12 @@ const {
 
 const isEn = lang === 'en';
 const isEs = lang === 'es';
-const isKo = !isEn && !isEs;
+const isPt = lang === 'pt';
+const isKo = !isEn && !isEs && !isPt;
 
-const defaultDescription = isEs
+const defaultDescription = isPt
+  ? "Cursos e tutoriais oficiais e gratuitos de IA da OpenAI, Google, DeepLearning.AI e Harvard, selecionados para autodidatas."
+  : isEs
   ? "Cursos y tutoriales oficiales y gratuitos de IA de OpenAI, Google, DeepLearning.AI y Harvard, seleccionados para autodidactas."
   : isEn
   ? "Handpicked free AI courses and official tutorials from OpenAI, Google, DeepLearning.AI, and Harvard, curated for self-learners."
@@ -27,7 +30,9 @@ const defaultDescription = isEs
 
 const description = Astro.props.description || defaultDescription;
 
-const siteName = isEs 
+const siteName = isPt
+  ? "AI Learning Log | Cursos Gratuitos de IA"
+  : isEs 
   ? "AI Learning Log | Cursos Gratuitos de IA" 
   : isEn 
   ? "AI Learning Log | Curated Free AI Courses" 
@@ -36,13 +41,14 @@ const siteName = isEs
 const siteBase = "https://matthewlee-ailog.com";
 const canonicalURL = new URL(Astro.url.pathname, siteBase);
 
-// 다국어 URL 계산 (접두사 /en, /es 제거 후 각 언어별 클린 경로 매핑)
-let cleanPath = Astro.url.pathname.replace(/^\/(en|es)(\/|$)/, '/');
+// 다국어 URL 계산 (접두사 /en, /es, /pt 제거 후 각 언어별 클린 경로 매핑)
+let cleanPath = Astro.url.pathname.replace(/^\/(en|es|pt)(\/|$)/, '/');
 if (!cleanPath.startsWith('/')) cleanPath = '/' + cleanPath;
 
 const koPath = cleanPath;
 const enPath = cleanPath === '/' ? '/en' : `/en${cleanPath}`;
 const esPath = cleanPath === '/' ? '/es' : `/es${cleanPath}`;
+const ptPath = cleanPath === '/' ? '/pt' : `/pt${cleanPath}`;
 ---
 
 <!doctype html>
@@ -59,6 +65,7 @@ const esPath = cleanPath === '/' ? '/es' : `/es${cleanPath}`;
     <link rel="alternate" hreflang="ko" href={`${siteBase}/`} />
     <link rel="alternate" hreflang="en" href={`${siteBase}/en/`} />
     <link rel="alternate" hreflang="es" href={`${siteBase}/es/`} />
+    <link rel="alternate" hreflang="pt" href={`${siteBase}/pt/`} />
     <link rel="alternate" hreflang="x-default" href={`${siteBase}/`} />
 
     <!-- Open Graph / SNS 공유 최적화 -->
@@ -123,7 +130,7 @@ const esPath = cleanPath === '/' ? '/es' : `/es${cleanPath}`;
     <header class="sticky top-0 z-50 w-full backdrop-blur-md bg-white/90 dark:bg-slate-950/90 border-b border-slate-200 dark:border-slate-800 shadow-xs">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <!-- 로고 -->
-        <a href={isEs ? "/es" : isEn ? "/en" : "/"} class="flex items-center gap-2.5 group">
+        <a href={isPt ? "/pt" : isEs ? "/es" : isEn ? "/en" : "/"} class="flex items-center gap-2.5 group">
           <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform">
             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
@@ -131,40 +138,41 @@ const esPath = cleanPath === '/' ? '/es' : `/es${cleanPath}`;
           </div>
           <div class="flex flex-col">
             <span class="font-extrabold text-base sm:text-lg tracking-tight text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-              {isEs ? "AI Learning Log" : isEn ? "AI Learning Log" : "AI 러닝로그"}
+              {isPt ? "AI Learning Log" : isEs ? "AI Learning Log" : isEn ? "AI Learning Log" : "AI 러닝로그"}
             </span>
             <span class="text-[10px] font-medium text-slate-400 -mt-0.5 tracking-wider">
-              {isEs ? "Cursos Gratuitos de IA" : isEn ? "Handpicked Free AI Courses" : "나만 알기 아까운 무료 AI 강의"}
+              {isPt ? "Cursos Gratuitos de IA" : isEs ? "Cursos Gratuitos de IA" : isEn ? "Handpicked Free AI Courses" : "나만 알기 아까운 무료 AI 강의"}
             </span>
           </div>
         </a>
 
-        <!-- 내비게이션 메뉴 & 3개국어 전환 & 다크모드 버튼 -->
+        <!-- 내비게이션 메뉴 & 4개국어 전환 & 다크모드 버튼 -->
         <div class="flex items-center gap-2 sm:gap-4">
           <nav class="hidden md:flex items-center gap-5 text-sm font-medium text-slate-600 dark:text-slate-400">
-            <a href={isEs ? "/es" : isEn ? "/en" : "/"} class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-              {isEs ? "Cursos" : isEn ? "Courses" : "강의 목록"}
+            <a href={isPt ? "/pt" : isEs ? "/es" : isEn ? "/en" : "/"} class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+              {isPt ? "Cursos" : isEs ? "Cursos" : isEn ? "Courses" : "강의 목록"}
             </a>
-            <a href={isEs ? "/es/news" : isEn ? "/en/news" : "/news"} class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center gap-1.5">
-              <span>{isEs ? "Noticias IA" : isEn ? "AI News" : "정오의 AI 뉴스"}</span>
+            <a href={isPt ? "/pt/news" : isEs ? "/es/news" : isEn ? "/en/news" : "/news"} class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center gap-1.5">
+              <span>{isPt ? "Notícias IA" : isEs ? "Noticias IA" : isEn ? "AI News" : "정오의 AI 뉴스"}</span>
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
             </a>
-            <a href={isEs ? "/es#curation-standard" : isEn ? "/en#curation-standard" : "/#curation-standard"} class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-              {isEs ? "Criterios" : isEn ? "Criteria" : "추천 원칙"}
+            <a href={isPt ? "/pt#curation-standard" : isEs ? "/es#curation-standard" : isEn ? "/en#curation-standard" : "/#curation-standard"} class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+              {isPt ? "Critérios" : isEs ? "Criterios" : isEn ? "Criteria" : "추천 원칙"}
             </a>
-            <a href={isEs ? "/es/about" : isEn ? "/en/about" : "/about"} class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-              {isEs ? "Acerca de" : isEn ? "About" : "블로그 소개"}
+            <a href={isPt ? "/pt/about" : isEs ? "/es/about" : isEn ? "/en/about" : "/about"} class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+              {isPt ? "Sobre" : isEs ? "Acerca de" : isEn ? "About" : "블로그 소개"}
             </a>
-            <a href={isEs ? "/es/privacy" : isEn ? "/en/privacy" : "/privacy"} class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-              {isEs ? "Privacidad" : isEn ? "Privacy" : "개인정보처리방침"}
+            <a href={isPt ? "/pt/privacy" : isEs ? "/es/privacy" : isEn ? "/en/privacy" : "/privacy"} class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+              {isPt ? "Privacidade" : isEs ? "Privacidad" : isEn ? "Privacy" : "개인정보처리방침"}
             </a>
           </nav>
 
-          <!-- 3개국어(KO | EN | ES) 세그먼트 전환 토글 -->
+          <!-- 4개국어(KO | EN | ES | PT) 세그먼트 전환 토글 -->
           <div class="inline-flex items-center rounded-xl p-0.5 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold shadow-2xs">
-            <a href={koPath} class={`px-2 py-1 rounded-lg transition-all ${isKo ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`} title="한국어">KO</a>
-            <a href={enPath} class={`px-2 py-1 rounded-lg transition-all ${isEn ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`} title="English">EN</a>
-            <a href={esPath} class={`px-2 py-1 rounded-lg transition-all ${isEs ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`} title="Español">ES</a>
+            <a href={koPath} class={`px-1.5 sm:px-2 py-1 rounded-lg transition-all ${isKo ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`} title="한국어">KO</a>
+            <a href={enPath} class={`px-1.5 sm:px-2 py-1 rounded-lg transition-all ${isEn ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`} title="English">EN</a>
+            <a href={esPath} class={`px-1.5 sm:px-2 py-1 rounded-lg transition-all ${isEs ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`} title="Español">ES</a>
+            <a href={ptPath} class={`px-1.5 sm:px-2 py-1 rounded-lg transition-all ${isPt ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`} title="Português">PT</a>
           </div>
 
           <!-- 다크 모드 토글 버튼 -->
@@ -207,31 +215,32 @@ const esPath = cleanPath === '/' ? '/es' : `/es${cleanPath}`;
         <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-100 dark:border-slate-800">
           <span class="text-xs font-bold text-slate-400">Language / Idioma:</span>
           <div class="inline-flex items-center rounded-xl p-0.5 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold">
-            <a href={koPath} class={`px-2.5 py-1 rounded-lg transition-all ${isKo ? 'bg-blue-600 text-white' : 'text-slate-600 dark:text-slate-400'}`}>KO</a>
-            <a href={enPath} class={`px-2.5 py-1 rounded-lg transition-all ${isEn ? 'bg-blue-600 text-white' : 'text-slate-600 dark:text-slate-400'}`}>EN</a>
-            <a href={esPath} class={`px-2.5 py-1 rounded-lg transition-all ${isEs ? 'bg-blue-600 text-white' : 'text-slate-600 dark:text-slate-400'}`}>ES</a>
+            <a href={koPath} class={`px-2 py-1 rounded-lg transition-all ${isKo ? 'bg-blue-600 text-white' : 'text-slate-600 dark:text-slate-400'}`}>KO</a>
+            <a href={enPath} class={`px-2 py-1 rounded-lg transition-all ${isEn ? 'bg-blue-600 text-white' : 'text-slate-600 dark:text-slate-400'}`}>EN</a>
+            <a href={esPath} class={`px-2 py-1 rounded-lg transition-all ${isEs ? 'bg-blue-600 text-white' : 'text-slate-600 dark:text-slate-400'}`}>ES</a>
+            <a href={ptPath} class={`px-2 py-1 rounded-lg transition-all ${isPt ? 'bg-blue-600 text-white' : 'text-slate-600 dark:text-slate-400'}`}>PT</a>
           </div>
         </div>
 
-        <a href={isEs ? "/es" : isEn ? "/en" : "/"} class="mobile-nav-link flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 transition-colors">
+        <a href={isPt ? "/pt" : isEs ? "/es" : isEn ? "/en" : "/"} class="mobile-nav-link flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 transition-colors">
           <span>📚</span>
-          <span>{isEs ? "Todos los Cursos" : isEn ? "All Courses" : "전체 강의 목록"}</span>
+          <span>{isPt ? "Todos os Cursos" : isEs ? "Todos los Cursos" : isEn ? "All Courses" : "전체 강의 목록"}</span>
         </a>
-        <a href={isEs ? "/es/news" : isEn ? "/en/news" : "/news"} class="mobile-nav-link flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 transition-colors">
+        <a href={isPt ? "/pt/news" : isEs ? "/es/news" : isEn ? "/en/news" : "/news"} class="mobile-nav-link flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 transition-colors">
           <span>☀️</span>
-          <span>{isEs ? "Noticias IA al Mediodía" : isEn ? "AI Daily News" : "정오의 AI 뉴스 (매일 12시)"}</span>
+          <span>{isPt ? "Notícias IA ao Meio-Dia" : isEs ? "Noticias IA al Mediodía" : isEn ? "AI Daily News" : "정오의 AI 뉴스 (매일 12시)"}</span>
         </a>
-        <a href={isEs ? "/es#curation-standard" : isEn ? "/en#curation-standard" : "/#curation-standard"} class="mobile-nav-link flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 transition-colors">
+        <a href={isPt ? "/pt#curation-standard" : isEs ? "/es#curation-standard" : isEn ? "/en#curation-standard" : "/#curation-standard"} class="mobile-nav-link flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 transition-colors">
           <span>💡</span>
-          <span>{isEs ? "Criterios de Curaduría" : isEn ? "Curation Criteria" : "추천 원칙"}</span>
+          <span>{isPt ? "Critérios de Curadoria" : isEs ? "Criterios de Curaduría" : isEn ? "Curation Criteria" : "추천 원칙"}</span>
         </a>
-        <a href={isEs ? "/es/about" : isEn ? "/en/about" : "/about"} class="mobile-nav-link flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 transition-colors">
+        <a href={isPt ? "/pt/about" : isEs ? "/es/about" : isEn ? "/en/about" : "/about"} class="mobile-nav-link flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 transition-colors">
           <span>👤</span>
-          <span>{isEs ? "Acerca del Blog" : isEn ? "About Blogger" : "블로그 소개 & 운영자 노트"}</span>
+          <span>{isPt ? "Sobre o Blog" : isEs ? "Acerca del Blog" : isEn ? "About Blogger" : "블로그 소개 & 운영자 노트"}</span>
         </a>
-        <a href={isEs ? "/es/privacy" : isEn ? "/en/privacy" : "/privacy"} class="mobile-nav-link flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 transition-colors">
+        <a href={isPt ? "/pt/privacy" : isEs ? "/es/privacy" : isEn ? "/en/privacy" : "/privacy"} class="mobile-nav-link flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 transition-colors">
           <span>🔒</span>
-          <span>{isEs ? "Política de Privacidad" : isEn ? "Privacy Policy" : "개인정보처리방침"}</span>
+          <span>{isPt ? "Política de Privacidade" : isEs ? "Política de Privacidad" : isEn ? "Privacy Policy" : "개인정보처리방침"}</span>
         </a>
         <div class="pt-2 border-t border-slate-100 dark:border-slate-800/80">
           <a href="mailto:matthew.lee.dev7@gmail.com" class="flex items-center gap-2 px-3 py-2 text-xs font-medium text-blue-600 dark:text-blue-400 hover:underline">
@@ -254,10 +263,12 @@ const esPath = cleanPath === '/' ? '/es' : `/es${cleanPath}`;
           <div class="md:col-span-2">
             <div class="flex items-center gap-2 font-bold text-slate-900 dark:text-white text-base">
               <div class="w-6 h-6 rounded-lg bg-blue-600 flex items-center justify-center text-white text-xs">AI</div>
-              {isEs ? "AI Learning Log (Español)" : isEn ? "AI Learning Log" : "AI 러닝로그 (AI Learning Log)"}
+              {isPt ? "AI Learning Log (Português)" : isEs ? "AI Learning Log (Español)" : isEn ? "AI Learning Log" : "AI 러닝로그 (AI Learning Log)"}
             </div>
             <p class="mt-2.5 text-xs leading-relaxed max-w-md text-slate-500 dark:text-slate-400">
-              {isEs
+              {isPt
+                ? "Um registro de aprendizado pessoal dedicado a curar e avaliar os melhores cursos gratuitos de IA da OpenAI, Google, Anthropic e criadores mundiais. Sem cobranças ocultas."
+                : isEs
                 ? "Un registro de aprendizaje personal dedicado a curar y reseñar los mejores cursos gratuitos de IA de OpenAI, Google, Anthropic y creadores mundiales. Sin muros de pago."
                 : isEn 
                 ? "A personal learning log dedicated to curating and reviewing top-tier free AI courses from OpenAI, Google, Anthropic, and trusted creators worldwide. Skip expensive paywalls."
@@ -267,22 +278,24 @@ const esPath = cleanPath === '/' ? '/es' : `/es${cleanPath}`;
 
           <div>
             <h4 class="font-semibold text-slate-900 dark:text-white text-xs tracking-wider uppercase mb-3">
-              {isEs ? "Menú" : isEn ? "Menu" : "메뉴"}
+              {isPt ? "Menu" : isEs ? "Menú" : isEn ? "Menu" : "메뉴"}
             </h4>
             <ul class="space-y-2 text-xs">
-              <li><a href={isEs ? "/es" : isEn ? "/en" : "/"} class="hover:text-blue-600 dark:hover:text-blue-400">{isEs ? "Todos los Cursos" : isEn ? "All Courses" : "전체 강의 목록"}</a></li>
-              <li><a href={isEs ? "/es/news" : isEn ? "/en/news" : "/news"} class="hover:text-blue-600 dark:hover:text-blue-400">{isEs ? "Noticias de IA" : isEn ? "AI Daily News" : "정오의 AI 뉴스 (매일 브리핑)"}</a></li>
-              <li><a href={isEs ? "/es/about" : isEn ? "/en/about" : "/about"} class="hover:text-blue-600 dark:hover:text-blue-400">{isEs ? "Acerca del Blog" : isEn ? "About Blogger" : "블로그 소개 & 운영자 노트"}</a></li>
-              <li><a href={isEs ? "/es/privacy" : isEn ? "/en/privacy" : "/privacy"} class="hover:text-blue-600 dark:hover:text-blue-400">{isEs ? "Política de Privacidad" : isEn ? "Privacy Policy" : "개인정보처리방침"}</a></li>
+              <li><a href={isPt ? "/pt" : isEs ? "/es" : isEn ? "/en" : "/"} class="hover:text-blue-600 dark:hover:text-blue-400">{isPt ? "Todos os Cursos" : isEs ? "Todos los Cursos" : isEn ? "All Courses" : "전체 강의 목록"}</a></li>
+              <li><a href={isPt ? "/pt/news" : isEs ? "/es/news" : isEn ? "/en/news" : "/news"} class="hover:text-blue-600 dark:hover:text-blue-400">{isPt ? "Notícias de IA" : isEs ? "Noticias de IA" : isEn ? "AI Daily News" : "정오의 AI 뉴스 (매일 브리핑)"}</a></li>
+              <li><a href={isPt ? "/pt/about" : isEs ? "/es/about" : isEn ? "/en/about" : "/about"} class="hover:text-blue-600 dark:hover:text-blue-400">{isPt ? "Sobre o Blog" : isEs ? "Acerca del Blog" : isEn ? "About Blogger" : "블로그 소개 & 운영자 노트"}</a></li>
+              <li><a href={isPt ? "/pt/privacy" : isEs ? "/es/privacy" : isEn ? "/en/privacy" : "/privacy"} class="hover:text-blue-600 dark:hover:text-blue-400">{isPt ? "Política de Privacidade" : isEs ? "Política de Privacidad" : isEn ? "Privacy Policy" : "개인정보처리방침"}</a></li>
             </ul>
           </div>
 
           <div>
             <h4 class="font-semibold text-slate-900 dark:text-white text-xs tracking-wider uppercase mb-3">
-              {isEs ? "Contacto y Sugerencias" : isEn ? "Feedback & Submissions" : "피드백 & 강의 제보"}
+              {isPt ? "Contato e Sugestões" : isEs ? "Contacto y Sugerencias" : isEn ? "Feedback & Submissions" : "피드백 & 강의 제보"}
             </h4>
             <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-              {isEs
+              {isPt
+                ? "Tem alguma recomendação de curso gratuito de IA ou sugestão? Envie uma mensagem a qualquer momento."
+                : isEs
                 ? "¿Tienes una recomendación de curso gratuito de IA o sugerencia? Escríbenos en cualquier momento."
                 : isEn 
                 ? "Have a great free AI course recommendation or feedback? Feel free to email me anytime."
@@ -295,11 +308,11 @@ const esPath = cleanPath === '/' ? '/es' : `/es${cleanPath}`;
         </div>
 
         <div class="pt-8 border-t border-slate-100 dark:border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
-          <p>© 2026 AI Learning Log. {isEs ? "Todos los derechos reservados." : "All rights reserved."}</p>
+          <p>© 2026 AI Learning Log. {isPt ? "Todos os direitos reservados." : isEs ? "Todos los derechos reservados." : "All rights reserved."}</p>
           <div class="flex items-center gap-4">
-            <a href={isEs ? "/es/privacy" : isEn ? "/en/privacy" : "/privacy"} class="hover:underline">{isEs ? "Privacidad" : isEn ? "Privacy Policy" : "개인정보처리방침"}</a>
+            <a href={isPt ? "/pt/privacy" : isEs ? "/es/privacy" : isEn ? "/en/privacy" : "/privacy"} class="hover:underline">{isPt ? "Privacidade" : isEs ? "Privacidad" : isEn ? "Privacy Policy" : "개인정보처리방침"}</a>
             <span>•</span>
-            <a href={isEs ? "/es/about" : isEn ? "/en/about" : "/about"} class="hover:underline">{isEs ? "Acerca de" : isEn ? "About" : "블로그 소개"}</a>
+            <a href={isPt ? "/pt/about" : isEs ? "/es/about" : isEn ? "/en/about" : "/about"} class="hover:underline">{isPt ? "Sobre" : isEs ? "Acerca de" : isEn ? "About" : "블로그 소개"}</a>
           </div>
         </div>
       </div>

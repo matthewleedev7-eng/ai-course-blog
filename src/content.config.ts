@@ -34,6 +34,11 @@ const courses_es = defineCollection({
   schema: courseSchema,
 });
 
+const courses_pt = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/courses_pt' }),
+  schema: courseSchema,
+});
+
 const newsSchema = z.object({
   title: z.string(),
   date: z.string(),
@@ -67,6 +72,11 @@ const news_en = defineCollection({
 
 const news_es = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/news_es' }),
+  schema: newsSchema,
+});
+
+const news_pt = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/news_pt' }),
   schema: newsSchema,
 });
 
@@ -149,4 +159,4 @@ const gov = defineCollection({
 });
 
 // 현재 라이브 공개 컬렉션만 안전하게 export (guides, models, gov는 추후 공개 시 추가)
-export const collections = { courses, courses_en, courses_es, news, news_en, news_es };
+export const collections = { courses, courses_en, courses_es, courses_pt, news, news_en, news_es, news_pt };
