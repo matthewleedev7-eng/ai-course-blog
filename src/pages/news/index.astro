@@ -1,0 +1,379 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const allNews = await getCollection('news');
+// 날짜 기준 내림차순 정렬 (최신순)
+const sortedNews = allNews.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+const latestDate = sortedNews[0]?.data.date || '2026-08-30';
+
+const categories = ["전체", "🤖 모델/도구", "⚡ 개발/API", "🎓 무료 교육", "🌐 생태계/트렌드"];
+---
+
+<Layout 
+  title="정오의 AI 뉴스 | AI 러닝로그"
+  description="점심시간 3분으로 끝내는 글로벌 AI 핵심 뉴스 브리핑. 3줄 요약, 원문 링크, 추천 무료 강의를 매일 정오에 전해드립니다."
+>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <!-- 헤더 섹션 -->
+    <header class="text-center py-6 sm:py-8 border-b border-slate-200 dark:border-slate-800">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-blue-100 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800/60 mb-4">
+        <span>☀️</span>
+        <span id="current-edition-badge">매일 낮 12시 발행 • {sortedNews[0]?.data.edition}</span>
+      </div>
+
+      <h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center justify-center gap-2.5 flex-wrap">
+        <span>정오의 AI 뉴스</span>
+        <span id="current-title-date" class="text-blue-600 dark:text-blue-400 font-extrabold text-xl sm:text-3xl">
+          · {latestDate}
+        </span>
+      </h1>
+
+      <p class="mt-3 text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-xl mx-auto leading-relaxed">
+        바쁜 하루, 점심시간 <strong>딱 3분</strong>으로 끝내는 글로벌 AI 핵심 동향.<br class="hidden sm:inline" />
+        원문 팩트체크 링크, 핵심 3줄 요약, 연관 무료 강의까지 엄선하여 전해드립니다.
+      </p>
+
+      <div class="mt-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800/80 text-xs text-slate-500 dark:text-slate-400 font-medium">
+        <span>🕒</span>
+        <span id="current-pub-timestamp">발행 시각: {latestDate} 12:00:00 KST</span>
+      </div>
+    </header>
+
+    <!-- 검색 및 아카이브 네비게이션 섹션 -->
+    <div class="mt-8 space-y-4">
+      <!-- 1. 과거 뉴스 실시간 검색창 -->
+      <div class="relative">
+        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+        <input 
+          type="text" 
+          id="news-search-input"
+          placeholder="지난 뉴스 검색 (예: Gemini, 앤트로픽, 엔비디아, RAG, 코딩, 음성)..." 
+          class="w-full pl-11 pr-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-xs transition-all"
+        />
+      </div>
+
+      <!-- 2. 날짜별 호차 선택 탭 (Archive Selector) -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none -mx-1 px-1">
+        <span class="text-xs font-bold text-slate-400 mr-1 shrink-0 flex items-center gap-1">
+          <span>📅</span>
+          <span>호차:</span>
+        </span>
+        {sortedNews.map((news, idx) => (
+          <button 
+            type="button" 
+            class={`date-filter-btn px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
+              idx === 0 
+                ? 'bg-blue-600 text-white shadow-sm ring-2 ring-blue-500/20' 
+                : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+            }`}
+            data-date={news.data.date}
+            data-edition={news.data.edition}
+          >
+            {news.data.date} ({idx === 0 ? "오늘" : idx === 1 ? "어제" : "그저께"})
+          </button>
+        ))}
+        <button 
+          type="button" 
+          class="date-filter-btn px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all"
+          data-date="ALL"
+          data-edition="전체 지난 뉴스 모아보기"
+        >
+          📂 전체 모아보기
+        </button>
+      </div>
+
+      <!-- 3. 카테고리 필터 칩 -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none -mx-1 px-1">
+        <span class="text-xs font-bold text-slate-400 mr-1 shrink-0">분류:</span>
+        {categories.map((cat, idx) => (
+          <button 
+            type="button" 
+            class={`category-filter-btn px-3 py-1 text-xs font-medium rounded-lg whitespace-nowrap transition-all ${
+              idx === 0 
+                ? 'bg-blue-600 text-white shadow-xs' 
+                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
+            }`}
+            data-category={cat}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <!-- 뉴스 리스트 섹션 -->
+    <section class="mt-8 space-y-6" id="news-list-container">
+      {sortedNews.map((newsBlock) => (
+        newsBlock.data.items.map((item, index) => (
+          <article 
+            class="news-card rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm hover:border-blue-500/40 transition-all overflow-hidden"
+            data-date={newsBlock.data.date}
+            data-category={item.category}
+            data-title={item.headline.toLowerCase()}
+            data-summary={item.summary.join(' ').toLowerCase()}
+            data-tags={item.tags.join(' ').toLowerCase()}
+            style={newsBlock.data.date === latestDate ? "" : "display: none;"}
+          >
+            <!-- 상단 메타 바 -->
+            <div class="flex items-center justify-between gap-2 flex-wrap mb-3.5">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-blue-900/50">
+                  {item.category}
+                </span>
+                <span class="text-xs font-medium text-slate-500 dark:text-slate-400">
+                  출처: <strong>{item.source}</strong>
+                </span>
+                {item.publishedDate && (
+                  <span class="text-xs text-slate-400 dark:text-slate-500 flex items-center gap-1">
+                    <span>•</span>
+                    <span>원문 발행: <strong class="text-slate-600 dark:text-slate-300">{item.publishedDate}</strong></span>
+                  </span>
+                )}
+              </div>
+
+              <!-- 원문 기사 바로가기 링크 버튼 -->
+              <a 
+                href={item.sourceUrl} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/40 transition-colors"
+              >
+                <span>원문 기사 보러가기</span>
+                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+            </div>
+
+            <!-- 헤드라인 제목 -->
+            <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white leading-snug">
+              <a href={item.sourceUrl} target="_blank" rel="noopener noreferrer" class="hover:text-blue-600 transition-colors">
+                {item.headline}
+              </a>
+            </h2>
+
+            <!-- 핵심 3줄 요약 박스 -->
+            <div class="mt-4 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800/80">
+              <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-1.5">
+                <span>📌</span>
+                <span>핵심 3줄 요약 (Key Highlights)</span>
+              </div>
+              <ul class="space-y-2 text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                {item.summary.map((line) => (
+                  <li class="flex items-start gap-2">
+                    <span class="text-blue-500 font-bold shrink-0 mt-0.5">•</span>
+                    <span>{line}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <!-- 💡 실무/학습자 한 줄 시사점 (Takeaway) -->
+            <div class="mt-3.5 p-3.5 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/50 text-xs sm:text-sm text-indigo-900 dark:text-indigo-200 leading-relaxed font-medium">
+              {item.takeaway}
+            </div>
+
+            <!-- 하단 태그 및 복사 버튼 -->
+            <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-between gap-2 flex-wrap">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="text-[11px] text-slate-400 font-medium mr-1">📅 {newsBlock.data.date}호</span>
+                {item.tags.map((tag) => (
+                  <span class="text-[11px] px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+
+              <button 
+                type="button" 
+                class="copy-news-btn text-xs text-slate-500 hover:text-slate-800 dark:hover:text-white inline-flex items-center gap-1 font-medium transition-colors"
+                data-text={`${item.headline}\n\n[핵심 3줄 요약]\n${item.summary.map(s => '• ' + s).join('\n')}\n\n원문: ${item.sourceUrl}`}
+              >
+                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+                <span>요약 복사</span>
+              </button>
+            </div>
+
+            <!-- 🔥 연관 무료 강의 추천 카드 배너 -->
+            {item.relatedCourse && (
+              <div class="mt-4 -mx-6 -mb-6 sm:-mx-8 sm:-mb-8 p-4 bg-gradient-to-r from-blue-50/80 to-indigo-50/80 dark:from-blue-950/30 dark:to-indigo-950/30 border-t border-blue-100 dark:border-blue-900/40 flex items-center justify-between gap-3 flex-wrap">
+                <div class="flex items-center gap-2">
+                  <span class="text-sm">🎓</span>
+                  <span class="text-xs font-bold text-blue-950 dark:text-blue-200">
+                    추천 무료 강의: <span class="underline decoration-blue-400">{item.relatedCourse.title}</span>
+                  </span>
+                </div>
+                <a 
+                  href={item.relatedCourse.url} 
+                  class="px-3 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-all shadow-2xs inline-flex items-center gap-1"
+                >
+                  <span>강의 보러가기</span>
+                  <span>→</span>
+                </a>
+              </div>
+            )}
+          </article>
+        ))
+      ))}
+    </section>
+
+    <!-- 검색 결과 없음 안내 -->
+    <div id="no-search-results" class="hidden text-center py-16">
+      <div class="text-4xl mb-3">🔍</div>
+      <h3 class="text-base font-bold text-slate-800 dark:text-slate-200">검색 결과가 없습니다</h3>
+      <p class="text-xs text-slate-500 mt-1">다른 키워드로 검색하거나 카테고리 필터를 변경해 보세요.</p>
+    </div>
+
+    <!-- RSS 피드 구독 안내 카드 -->
+    <div class="mt-12 rounded-3xl border border-slate-200 dark:border-slate-800 bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-md">
+      <div>
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 text-xs font-semibold mb-2">
+          <span>📡</span>
+          <span>RSS 2.0 Feed 지원</span>
+        </div>
+        <h3 class="text-xl font-bold">슬랙(Slack), Feedly, 뉴스 리더기로 매일 받아보세요</h3>
+        <p class="text-xs sm:text-sm text-blue-100 mt-1.5 max-w-md leading-relaxed">
+          정오의 AI 뉴스는 실시간 RSS 2.0 표준 피드로도 발행됩니다. 리더기나 업무용 메신저에 등록해 두면 점심시간마다 자동으로 배달받으실 수 있습니다.
+        </p>
+      </div>
+
+      <a 
+        href="/rss.xml" 
+        target="_blank"
+        class="shrink-0 px-5 py-3 rounded-xl bg-white text-blue-600 font-extrabold text-xs sm:text-sm shadow-md hover:bg-blue-50 transition-all inline-flex items-center gap-1.5"
+      >
+        <span>📡 RSS 피드 열기 (XML)</span>
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- 동적 필터링, 검색, 날짜 전환 스크립트 -->
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      let activeDate = '2026-08-30'; // 기본값: 오늘
+      let activeCategory = '전체';
+      let searchQuery = '';
+
+      const searchInput = document.getElementById('news-search-input');
+      const dateBtns = document.querySelectorAll('.date-filter-btn');
+      const catBtns = document.querySelectorAll('.category-filter-btn');
+      const cards = document.querySelectorAll('.news-card');
+      const noResults = document.getElementById('no-search-results');
+      const titleDate = document.getElementById('current-title-date');
+      const editionBadge = document.getElementById('current-edition-badge');
+      const pubTimestamp = document.getElementById('current-pub-timestamp');
+
+      function filterCards() {
+        let visibleCount = 0;
+
+        cards.forEach(card => {
+          const cardDate = card.getAttribute('data-date');
+          const cardCat = card.getAttribute('data-category');
+          const cardTitle = card.getAttribute('data-title') || '';
+          const cardSummary = card.getAttribute('data-summary') || '';
+          const cardTags = card.getAttribute('data-tags') || '';
+
+          // 1. 날짜 조건 (검색 중일 때는 자동으로 전체 날짜 대상 검색 지원)
+          const dateMatch = searchQuery.length > 0 || activeDate === 'ALL' || cardDate === activeDate;
+
+          // 2. 카테고리 조건
+          const catMatch = activeCategory === '전체' || cardCat === activeCategory;
+
+          // 3. 검색어 조건
+          const queryMatch = searchQuery.length === 0 || 
+            cardTitle.includes(searchQuery) || 
+            cardSummary.includes(searchQuery) || 
+            cardTags.includes(searchQuery);
+
+          if (dateMatch && catMatch && queryMatch) {
+            card.style.display = 'block';
+            visibleCount++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        if (noResults) {
+          noResults.classList.toggle('hidden', visibleCount > 0);
+        }
+      }
+
+      // 날짜 버튼 클릭
+      dateBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          dateBtns.forEach(b => {
+            b.classList.remove('bg-blue-600', 'text-white', 'shadow-sm', 'ring-2', 'ring-blue-500/20');
+            b.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+          });
+          btn.classList.add('bg-blue-600', 'text-white', 'shadow-sm', 'ring-2', 'ring-blue-500/20');
+          btn.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+
+          activeDate = btn.getAttribute('data-date');
+          const edition = btn.getAttribute('data-edition');
+
+          if (titleDate && activeDate !== 'ALL') {
+            titleDate.innerText = `· ${activeDate}`;
+          } else if (titleDate) {
+            titleDate.innerText = `· 전체 아카이브`;
+          }
+
+          if (editionBadge && edition) {
+            editionBadge.innerText = edition;
+          }
+
+          if (pubTimestamp && activeDate !== 'ALL') {
+            pubTimestamp.innerText = `발행 시각: ${activeDate} 12:00:00 KST`;
+          }
+
+          filterCards();
+        });
+      });
+
+      // 카테고리 버튼 클릭
+      catBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          catBtns.forEach(b => {
+            b.classList.remove('bg-blue-600', 'text-white', 'shadow-xs');
+            b.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-400');
+          });
+          btn.classList.add('bg-blue-600', 'text-white', 'shadow-xs');
+          btn.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-400');
+
+          activeCategory = btn.getAttribute('data-category');
+          filterCards();
+        });
+      });
+
+      // 검색창 입력 (실시간 디바운스 검색)
+      searchInput?.addEventListener('input', (e) => {
+        searchQuery = e.target.value.trim().toLowerCase();
+        filterCards();
+      });
+
+      // 복사 버튼
+      document.querySelectorAll('.copy-news-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const text = btn.getAttribute('data-text');
+          if (text) {
+            await navigator.clipboard.writeText(text);
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<span>복사됨! 🎉</span>';
+            setTimeout(() => {
+              btn.innerHTML = originalHTML;
+            }, 2000);
+          }
+        });
+      });
+    });
+  </script>
+</Layout>

@@ -22,3 +22,24 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# python helper scripts
+scripts/
+
+# local guides & open models test (safe freeze)
+src/pages/guides/
+src/content/guides/
+src/pages/models/
+src/content/models/
+
+# local gov grants & education test (safe freeze)
+src/pages/gov/
+src/content/gov/
+
+# local vram & quantization calculator (safe freeze)
+src/pages/calculator/
+
+# local token pricing & browser agent reports (safe freeze)
+src/pages/pricing/
+src/pages/browsers/
+src/content/browsers/
