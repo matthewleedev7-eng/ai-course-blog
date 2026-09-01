@@ -271,8 +271,11 @@ const categories = ["Todos", "🤖 Modelos/Ferramentas", "⚡ Desenvolvimento/AP
       let activeCategory = 'Todos';
       let searchQuery = '';
 
+      const normalize = (str) => (str || '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
       function applyFilters() {
         let visibleCount = 0;
+        const normQuery = normalize(searchQuery);
 
         newsCards.forEach((card) => {
           const cardDate = card.getAttribute('data-date');
@@ -288,10 +291,10 @@ const categories = ["Todos", "🤖 Modelos/Ferramentas", "⚡ Desenvolvimento/AP
           const categoryMatch = (activeCategory === 'Todos') || (cardCategory === activeCategory);
 
           // 3. Search query match
-          const searchMatch = !searchQuery || 
-            cardTitle.includes(searchQuery) || 
-            cardSummary.includes(searchQuery) || 
-            cardTags.includes(searchQuery);
+          const searchMatch = !normQuery || 
+            normalize(cardTitle).includes(normQuery) || 
+            normalize(cardSummary).includes(normQuery) || 
+            normalize(cardTags).includes(normQuery);
 
           if (dateMatch && categoryMatch && searchMatch) {
             card.style.display = 'block';

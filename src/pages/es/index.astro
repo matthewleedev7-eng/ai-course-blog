@@ -226,8 +226,11 @@ const levels = ["Todos", "Principiante", "Intermedio", "Avanzado"];
       let certificateOnly = false;
       let searchQuery = '';
 
+      const normalize = (str) => (str || '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
       function filterCourses() {
         let visibleCount = 0;
+        const normQuery = normalize(searchQuery);
 
         courseCards.forEach(card => {
           const provider = card.getAttribute('data-provider');
@@ -238,7 +241,7 @@ const levels = ["Todos", "Principiante", "Intermedio", "Avanzado"];
           const matchProvider = currentProvider === 'ALL' || provider === currentProvider;
           const matchLevel = currentLevel === 'ALL' || (level && level.includes(currentLevel));
           const matchCert = !certificateOnly || hasCert;
-          const matchSearch = !searchQuery || searchText.includes(searchQuery.toLowerCase());
+          const matchSearch = !normQuery || normalize(searchText).includes(normQuery);
 
           if (matchProvider && matchLevel && matchCert && matchSearch) {
             card.style.display = 'flex';

@@ -244,8 +244,11 @@ const levels = ["Todos", "Iniciante", "Intermediário", "Avançado"];
       let certificateOnly = false;
       let searchQuery = '';
 
+      const normalize = (str) => (str || '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
       function filterCourses() {
         let visibleCount = 0;
+        const normQuery = normalize(searchQuery);
 
         courseWrappers.forEach((el) => {
           const title = el.getAttribute('data-title') || '';
@@ -256,11 +259,11 @@ const levels = ["Todos", "Iniciante", "Intermediário", "Avançado"];
           const tags = el.getAttribute('data-tags') || '';
 
           // 1. Search Query
-          const matchesSearch = !searchQuery || 
-            title.includes(searchQuery.toLowerCase()) || 
-            desc.includes(searchQuery.toLowerCase()) || 
-            provider.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            tags.includes(searchQuery.toLowerCase());
+          const matchesSearch = !normQuery || 
+            normalize(title).includes(normQuery) || 
+            normalize(desc).includes(normQuery) || 
+            normalize(provider).includes(normQuery) ||
+            normalize(tags).includes(normQuery);
 
           // 2. Provider Filter
           const matchesProvider = currentProvider === 'ALL' || provider.toLowerCase().includes(currentProvider.toLowerCase());
