@@ -260,14 +260,14 @@ const categories = ["전체", "🤖 모델/도구", "⚡ 개발/API", "🎓 무�
   <!-- 동적 필터링, 검색, 날짜 전환 스크립트 -->
   <script is:inline>
     document.addEventListener('DOMContentLoaded', () => {
-      let activeDate = '2026-08-30'; // 기본값: 오늘
-      let activeCategory = '전체';
-      let searchQuery = '';
-
       const searchInput = document.getElementById('news-search-input');
       const dateBtns = document.querySelectorAll('.date-filter-btn');
       const catBtns = document.querySelectorAll('.category-filter-btn');
       const cards = document.querySelectorAll('.news-card');
+
+      let activeDate = dateBtns[0]?.getAttribute('data-date') || '2026-09-02';
+      let activeCategory = '전체';
+      let searchQuery = '';
       const noResults = document.getElementById('no-search-results');
       const titleDate = document.getElementById('current-title-date');
       const editionBadge = document.getElementById('current-edition-badge');

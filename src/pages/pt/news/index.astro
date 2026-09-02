@@ -267,7 +267,7 @@ const categories = ["Todos", "🤖 Modelos/Ferramentas", "⚡ Desenvolvimento/AP
       const editionBadge = document.getElementById('current-edition-badge');
       const pubTimestamp = document.getElementById('current-pub-timestamp');
 
-      let activeDate = '2026-09-01'; // Default latest date
+      let activeDate = dateButtons[0]?.getAttribute('data-date') || '2026-09-02';
       let activeCategory = 'Todos';
       let searchQuery = '';
 
