@@ -175,6 +175,7 @@ const specialSchema = z.object({
     label: z.string(),
     value: z.string(),
     detail: z.string().optional(),
+    basis: z.enum(['measured', 'estimate']).default('measured'),
   })).optional(),
 });
 
