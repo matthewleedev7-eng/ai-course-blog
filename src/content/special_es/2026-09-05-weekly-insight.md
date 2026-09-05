@@ -2,8 +2,8 @@
 title: "Perspectiva Semanal: 30 de agosto–5 de septiembre, 2026 — 'La IA es más rápida, más autónoma y requiere más infraestructura'"
 date: "2026-09-05"
 category: "Perspectiva Semanal"
+edition: "Septiembre 2026, Semana 1"
 author: "Equipo Editorial de AI Learning Log"
-edition: "Semana 1, Septiembre 2026"
 summary: "Cuatro tendencias críticas de la industria de IA de la semana pasada: desafíos de control de agentes autónomos, reevaluación de modelos de código abierto, intensificación de la competencia de arquitectura de infraestructura, estandarización del procesamiento multimodal en tiempo real."
 description: "Síntesis semanal de noticias de IA (30 ago–5 sep): seguridad de agentes, impulso de código abierto, infraestructura de energía limpia, procesamiento multimodal en tiempo real"
 keyFacts:

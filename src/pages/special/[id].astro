@@ -30,6 +30,11 @@ const { Content } = await render(item);
         <span class="px-3 py-1 text-xs font-bold rounded-lg bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20">
           {item.data.category}
         </span>
+        {item.data.edition && (
+          <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+            {item.data.edition}
+          </span>
+        )}
         <span class="text-xs text-slate-500 dark:text-slate-400">{item.data.date} · {item.data.author}</span>
       </div>
       <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white leading-tight">

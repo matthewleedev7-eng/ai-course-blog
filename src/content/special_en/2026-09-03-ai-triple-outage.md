@@ -3,6 +3,7 @@ title: "Same Time, Different Reasons: Why ChatGPT, Claude, and Grok All Failed o
 date: "2026-09-03"
 author: "AI Learning Log Editorial Team"
 category: "Matt's Find"
+edition: "Matt's Find #01"
 summary: "On the morning of September 3, 2026, OpenAI's ChatGPT, Anthropic's Claude, and xAI's Grok experienced service outages at nearly identical times. Investigation revealed each incident had separate, individual infrastructure causes—but this 'unintended simultaneous outage' exposed the critical dependency on AI services."
 sources:
   - name: "Decrypt"

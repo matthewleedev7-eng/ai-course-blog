@@ -2,8 +2,8 @@
 title: "Insight Semanal: 30 de Agosto–5 de Setembro, 2026 — 'IA Fica Mais Rápida, Mais Autônoma e Exige Mais Infraestrutura'"
 date: "2026-09-05"
 category: "Insight Semanal"
+edition: "Setembro 2026, Semana 1"
 author: "Equipe Editorial do AI Learning Log"
-edition: "Semana 1, Setembro 2026"
 summary: "Quatro tendências críticas da indústria de IA da semana passada: desafios de controle de agentes autônomos, reavaliação de modelos de código aberto, intensificação da competição de arquitetura de infraestrutura, padronização do processamento multimodal em tempo real."
 description: "Síntese semanal de notícias de IA (30 ago–5 set): segurança de agentes, impulso de código aberto, infraestrutura de energia limpa, processamento multimodal em tempo real"
 keyFacts:

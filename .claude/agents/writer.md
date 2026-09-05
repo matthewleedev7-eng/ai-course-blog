@@ -53,5 +53,12 @@ items:
 courseSchema 필드: title, description, provider, url, level, duration, language, hasCertificate, tags, isFree, featured(기본 false), rating(기본 4.9), publishedDate, badge(선택)
 본문은 "📌 어떤 강의인가요?" / "🎯 이런 분들께 추천합니다" / "📚 핵심 커리큘럼" 3단 구성을 기존 파일과 동일하게 따르세요.
 
+# 파일 작성 규칙 (Matt's Find — 단독 분석/주간 인사이트)
+specialSchema 필드: title, date, author, category, edition, summary, sources(필수, 최소 1개), tags, featured, keyFacts(선택).
+`edition` 필드는 반드시 채워야 합니다 (검색/필터에 쓰임):
+- 단독 분석(category: "Matt's Find"): `src/content/special/`의 기존 파일들을 확인해서 가장 큰 번호 다음 번호로 `"Matt's Find #NN"` (2자리, 예: #02) 부여
+- 주간 인사이트(category: "주간 인사이트"/"Weekly Insight" 등): `"YYYY년 M월 N주차"` — N은 발행일의 일자를 7로 나눠 올림(ceil(day/7))한 값. EN/ES/PT는 "Month YYYY, Week N" 형식으로 동일하게 번역
+`sources` 필드를 빠뜨리면 빌드가 깨집니다 — 외부 출처가 없는 경우(예: 우리 자체 뉴스 아카이브 재종합)에도 최소 1개(예: 뉴스 아카이브 링크)는 넣으세요.
+
 # 완료 후
 파일을 작성/저장한 뒤, 어떤 경로에 어떤 파일들을 만들었는지 목록으로 보고하세요. `npm run build` 실행이나 git 커밋/푸시는 당신의 역할이 아닙니다 — 총괄(메인 세션)이 최종 빌드 검증 후 배포를 진행합니다.

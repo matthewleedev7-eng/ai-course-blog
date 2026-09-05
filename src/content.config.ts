@@ -163,6 +163,7 @@ const specialSchema = z.object({
   date: z.string(),
   author: z.string().default("AI Learning Log 편집팀"),
   category: z.string().default("Matt's Find"),
+  edition: z.string().optional(),
   summary: z.string(),
   sources: z.array(z.object({
     name: z.string(),

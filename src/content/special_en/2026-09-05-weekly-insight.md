@@ -2,8 +2,8 @@
 title: "Weekly Insight: August 30–September 5, 2026 — 'AI Gets Faster, More Autonomous, and Requires More Infrastructure'"
 date: "2026-09-05"
 category: "Weekly Insight"
+edition: "September 2026, Week 1"
 author: "AI Learning Log Editorial Team"
-edition: "Week 1, September 2026"
 summary: "Four critical AI industry trends from last week's daily briefings: autonomous agent control challenges, open-source model revaluation, infrastructure architecture competition intensification, multimodal real-time processing standardization."
 description: "Weekly AI news synthesis (Aug 30–Sep 5): agent safety, open-source momentum, clean energy infrastructure, real-time multimodal processing"
 keyFacts:
