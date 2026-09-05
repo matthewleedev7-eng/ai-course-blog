@@ -7,8 +7,8 @@ const sorted = allSpecials.sort((a, b) => new Date(b.data.date).getTime() - new 
 ---
 
 <Layout
-  title="특집 | AI 러닝로그"
-  description="정오의 뉴스 브리핑 형식을 넘어서는, 깊이 있는 취재와 사실관계 검증을 거친 AI 업계 특집 리포트."
+  title="Matt's Find | AI 러닝로그"
+  description="정오의 뉴스 브리핑 형식을 넘어서는, 깊이 있는 취재와 사실관계 검증을 거친 AI 러닝로그만의 이슈 코너."
 >
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
     <header class="text-center py-6 sm:py-8 border-b border-slate-200 dark:border-slate-800">
@@ -16,9 +16,10 @@ const sorted = allSpecials.sort((a, b) => new Date(b.data.date).getTime() - new 
         <span>🔎</span>
         <span>깊이 있는 단독 분석</span>
       </div>
-      <h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">특집</h1>
+      <h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Matt's Find</h1>
       <p class="mt-3 text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-xl mx-auto leading-relaxed">
-        매일의 정오 브리핑에 담기 힘든 굵직한 사건을, 원문 출처를 밝히고 사실관계를 검증해 깊이 있게 다룹니다.
+        매일의 정오 브리핑에 담기 힘든 굵직한 사건을,<br />
+        원문 출처를 밝히고 사실관계를 검증해 깊이 있게 다룹니다.
       </p>
     </header>
 
@@ -52,7 +53,7 @@ const sorted = allSpecials.sort((a, b) => new Date(b.data.date).getTime() - new 
       ))}
 
       {sorted.length === 0 && (
-        <div class="text-center py-16 text-slate-400 text-sm">아직 등록된 특집 기사가 없습니다.</div>
+        <div class="text-center py-16 text-slate-400 text-sm">아직 등록된 Matt's Find 기사가 없습니다.</div>
       )}
     </section>
   </div>

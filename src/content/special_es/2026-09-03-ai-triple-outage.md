@@ -2,7 +2,7 @@
 title: "Misma Hora, Diferentes Razones: Por Qué ChatGPT, Claude y Grok Fallaron el 3 de Septiembre"
 date: "2026-09-03"
 author: "Equipo Editorial de AI Learning Log"
-category: "Informe Especial"
+category: "Matt's Find"
 summary: "En la mañana del 3 de septiembre de 2026, ChatGPT de OpenAI, Claude de Anthropic y Grok de xAI experimentaron interrupciones de servicio en tiempos casi idénticos. La investigación reveló que cada incidente tuvo causas de infraestructura separadas e individuales, pero esta 'interrupción simultánea no intencional' expuso la dependencia crítica de los servicios de IA."
 sources:
   - name: "Decrypt"

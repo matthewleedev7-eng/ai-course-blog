@@ -2,7 +2,7 @@
 title: "같은 시간, 다른 이유… ChatGPT·Claude·Grok이 동시에 먹통이 된 9월 3일의 교훈"
 date: "2026-09-03"
 author: "AI Learning Log 편집팀"
-category: "특집"
+category: "Matt's Find"
 summary: "2026년 9월 3일 오전, OpenAI의 ChatGPT, Anthropic의 Claude, xAI의 Grok이 거의 동일한 시간대에 장애를 겪었다. 각각 개별 인프라 장애라는 조사 결과가 나왔지만, 이 '의도하지 않은 동시 장애'가 드러낸 AI 서비스 의존도의 심각성은 무시할 수 없다."
 sources:
   - name: "Decrypt"
