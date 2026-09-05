@@ -158,5 +158,44 @@ const gov = defineCollection({
   schema: govSchema,
 });
 
+const specialSchema = z.object({
+  title: z.string(),
+  date: z.string(),
+  author: z.string().default("AI Learning Log 편집팀"),
+  category: z.string().default("특집"),
+  summary: z.string(),
+  sources: z.array(z.object({
+    name: z.string(),
+    url: z.string(),
+  })),
+  tags: z.array(z.string()),
+  featured: z.boolean().default(true),
+  keyFacts: z.array(z.object({
+    label: z.string(),
+    value: z.string(),
+    detail: z.string().optional(),
+  })).optional(),
+});
+
+const special = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/special' }),
+  schema: specialSchema,
+});
+
+const special_en = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/special_en' }),
+  schema: specialSchema,
+});
+
+const special_es = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/special_es' }),
+  schema: specialSchema,
+});
+
+const special_pt = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/special_pt' }),
+  schema: specialSchema,
+});
+
 // 현재 라이브 공개 컬렉션만 안전하게 export (guides, models, gov는 추후 공개 시 추가)
-export const collections = { courses, courses_en, courses_es, courses_pt, news, news_en, news_es, news_pt };
+export const collections = { courses, courses_en, courses_es, courses_pt, news, news_en, news_es, news_pt, special, special_en, special_es, special_pt };

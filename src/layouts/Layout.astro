@@ -156,6 +156,9 @@ const ptPath = cleanPath === '/' ? '/pt' : `/pt${cleanPath}`;
               <span>{isPt ? "Notícias IA" : isEs ? "Noticias IA" : isEn ? "AI News" : "정오의 AI 뉴스"}</span>
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
             </a>
+            <a href={isPt ? "/pt/special" : isEs ? "/es/special" : isEn ? "/en/special" : "/special"} class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+              {isPt ? "Especiais" : isEs ? "Especiales" : isEn ? "Special" : "특집"}
+            </a>
             <a href={isPt ? "/pt#curation-standard" : isEs ? "/es#curation-standard" : isEn ? "/en#curation-standard" : "/#curation-standard"} class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
               {isPt ? "Critérios" : isEs ? "Criterios" : isEn ? "Criteria" : "추천 원칙"}
             </a>
@@ -229,6 +232,10 @@ const ptPath = cleanPath === '/' ? '/pt' : `/pt${cleanPath}`;
         <a href={isPt ? "/pt/news" : isEs ? "/es/news" : isEn ? "/en/news" : "/news"} class="mobile-nav-link flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 transition-colors">
           <span>☀️</span>
           <span>{isPt ? "Notícias IA ao Meio-Dia" : isEs ? "Noticias IA al Mediodía" : isEn ? "AI Daily News" : "정오의 AI 뉴스 (매일 12시)"}</span>
+        </a>
+        <a href={isPt ? "/pt/special" : isEs ? "/es/special" : isEn ? "/en/special" : "/special"} class="mobile-nav-link flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 transition-colors">
+          <span>🔎</span>
+          <span>{isPt ? "Especiais" : isEs ? "Especiales" : isEn ? "Special Reports" : "특집"}</span>
         </a>
         <a href={isPt ? "/pt#curation-standard" : isEs ? "/es#curation-standard" : isEn ? "/en#curation-standard" : "/#curation-standard"} class="mobile-nav-link flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 transition-colors">
           <span>💡</span>
