@@ -46,7 +46,7 @@ const { Content } = await render(item);
     </header>
 
     {item.data.keyFacts && item.data.keyFacts.length > 0 && (
-      <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
+      <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {item.data.keyFacts.map((fact, i) => {
           const bar = ['bg-[#2a78d6] dark:bg-[#3987e5]', 'bg-[#eb6834] dark:bg-[#d95926]', 'bg-[#1baf7a] dark:bg-[#199e70]'][i % 3];
           return (
