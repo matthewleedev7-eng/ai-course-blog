@@ -8,10 +8,6 @@ summary: "OpenAI와 마이크로소프트를 상대로 시애틀 타임즈와 �
 sources:
   - name: "TechCrunch"
     url: "https://techcrunch.com/2026/09/05/seattle-times-and-newsday-are-the-latest-publications-to-sue-openai-and-microsoft/"
-  - name: "Decrypt"
-    url: "https://decrypt.co/377491/ai-solved-350-year-old-math-problem"
-  - name: "OpenAI - Blog"
-    url: "https://openai.com/blog"
 tags: ["OpenAI", "Microsoft", "Copyright", "AI Ethics", "Creator Rights", "저작권", "AI 윤리", "창작자", "투명성", "공정한 보상"]
 featured: true
 keyFacts:
