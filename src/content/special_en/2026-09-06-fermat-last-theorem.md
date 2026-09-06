@@ -2,7 +2,7 @@
 title: "AI Solved a Math Mystery, Now What Should Humans Do: The Future as Seen Through Fermat's Last Theorem"
 date: "2026-09-06T18:00:00"
 author: "AI Learning Log Editorial Team"
-category: "Matt's Discovery"
+category: "Matt's Find"
 edition: "Matt's Find #03"
 summary: "Anthropic's Claude has completed a computer-verified proof of Fermat's Last Theorem, a 358-year-old mathematical problem. This is not merely a mathematical achievement. It means AI is fundamentally redefining humanity's most basic questions—the nature of proof, truth, and understanding itself."
 description: "A 358-year-old math problem solved: AI's capability, humanity's role, and what we're missing"

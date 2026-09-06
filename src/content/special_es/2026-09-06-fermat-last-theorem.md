@@ -2,7 +2,7 @@
 title: "La IA Resolvió un Misterio Matemático, Ahora ¿Qué Deben Hacer Los Humanos?: El Futuro Visto a Través del Último Teorema de Fermat"
 date: "2026-09-06T18:00:00"
 author: "Equipo Editorial de AI Learning Log"
-category: "Descubrimiento de Matt"
+category: "Matt's Find"
 edition: "Matt's Find #03"
 summary: "Claude de Anthropic ha completado una prueba verificada por computadora del Último Teorema de Fermat, un problema matemático de 358 años. Esto no es meramente un logro matemático. Significa que la IA está redefiniendo fundamentalmente las preguntas más básicas de la humanidad: la naturaleza de la prueba, la verdad y la comprensión misma."
 description: "Un problema matemático de 358 años resuelto: la capacidad de la IA, el rol de la humanidad, y lo que estamos perdiendo"

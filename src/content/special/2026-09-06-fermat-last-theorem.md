@@ -2,7 +2,7 @@
 title: "수학 난제를 푼 AI, 이제 인간은 무엇을 해야 하나: 페르마의 마지막 정리 증명으로 본 미래"
 date: "2026-09-06T18:00:00"
 author: "AI Learning Log 편집팀"
-category: "매트의 발견"
+category: "Matt's Find"
 edition: "Matt's Find #03"
 summary: "Anthropic Claude가 358년 역사의 페르마의 마지막 정리를 컴퓨터로 완전히 검증 가능한 증명으로 완성했다. 이는 단순한 수학적 성취가 아니다. 이는 AI가 인류의 가장 근본적인 질문들—증명, 진리, 이해의 본질—을 다시 정의하고 있음을 의미한다."
 description: "358년 역사의 수학 난제 해결: AI의 능력, 인간의 역할, 그리고 우리가 놓치고 있는 것"
