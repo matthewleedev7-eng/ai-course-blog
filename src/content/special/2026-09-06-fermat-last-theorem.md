@@ -1,6 +1,6 @@
 ---
 title: "수학 난제를 푼 AI, 이제 인간은 무엇을 해야 하나: 페르마의 마지막 정리 증명으로 본 미래"
-date: "2026-09-06"
+date: "2026-09-06T18:00:00"
 author: "AI Learning Log 편집팀"
 category: "매트의 발견"
 edition: "Matt's Find #03"

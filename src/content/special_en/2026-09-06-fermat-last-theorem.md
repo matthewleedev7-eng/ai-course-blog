@@ -1,6 +1,6 @@
 ---
 title: "AI Solved a Math Mystery, Now What Should Humans Do: The Future as Seen Through Fermat's Last Theorem"
-date: "2026-09-06"
+date: "2026-09-06T18:00:00"
 author: "AI Learning Log Editorial Team"
 category: "Matt's Discovery"
 edition: "Matt's Find #03"
