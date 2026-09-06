@@ -1,6 +1,6 @@
 ---
 title: "수학 난제를 푼 AI, 이제 인간은 무엇을 해야 하나: 페르마의 마지막 정리 증명으로 본 미래"
-date: "2026-09-06"
+date: "2026-09-06T18:00:00"
 author: "AI Learning Log 편집팀"
 category: "매트의 발견"
 edition: "Matt's Find #03"
@@ -9,8 +9,6 @@ description: "358년 역사의 수학 난제 해결: AI의 능력, 인간의 역
 sources:
   - name: "Decrypt"
     url: "https://decrypt.co/377491/ai-solved-350-year-old-math-problem"
-  - name: "Anthropic"
-    url: "https://www.anthropic.com"
 tags: ["AI", "Mathematics", "Fermat", "Proof", "Research", "Human-AI Collaboration"]
 featured: true
 keyFacts:

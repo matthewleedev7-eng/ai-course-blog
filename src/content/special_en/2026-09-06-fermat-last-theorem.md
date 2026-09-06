@@ -1,6 +1,6 @@
 ---
 title: "AI Solved a Math Mystery, Now What Should Humans Do: The Future as Seen Through Fermat's Last Theorem"
-date: "2026-09-06"
+date: "2026-09-06T18:00:00"
 author: "AI Learning Log Editorial Team"
 category: "Matt's Discovery"
 edition: "Matt's Find #03"
@@ -9,8 +9,6 @@ description: "A 358-year-old math problem solved: AI's capability, humanity's ro
 sources:
   - name: "Decrypt"
     url: "https://decrypt.co/377491/ai-solved-350-year-old-math-problem"
-  - name: "Anthropic"
-    url: "https://www.anthropic.com"
 tags: ["AI", "Mathematics", "Fermat", "Proof", "Research", "Human-AI Collaboration"]
 featured: true
 keyFacts:

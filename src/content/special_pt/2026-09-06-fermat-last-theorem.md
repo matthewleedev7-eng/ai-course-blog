@@ -1,6 +1,6 @@
 ---
 title: "A IA Resolveu um Mistério Matemático, Agora O Que Os Humanos Devem Fazer?: O Futuro Visto Através do Último Teorema de Fermat"
-date: "2026-09-06"
+date: "2026-09-06T18:00:00"
 author: "Equipo Editorial de AI Learning Log"
 category: "Descoberta de Matt"
 edition: "Matt's Find #03"
@@ -9,8 +9,6 @@ description: "Um problema matemático de 358 anos resolvido: a capacidade da IA,
 sources:
   - name: "Decrypt"
     url: "https://decrypt.co/377491/ai-solved-350-year-old-math-problem"
-  - name: "Anthropic"
-    url: "https://www.anthropic.com"
 tags: ["IA", "Matemática", "Fermat", "Prova", "Pesquisa", "Colaboração Humano-IA"]
 featured: true
 keyFacts:
