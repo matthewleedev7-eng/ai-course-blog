@@ -1,14 +1,18 @@
 ---
 title: "AI Solved a Math Mystery, Now What Should Humans Do: The Future as Seen Through Fermat's Last Theorem"
-date: "2026-09-06T18:00:00"
+date: "2026-09-06"
 author: "AI Learning Log Editorial Team"
-category: "Matt's Find"
+category: "Matt's Discovery"
 edition: "Matt's Find #03"
 summary: "Anthropic's Claude has completed a computer-verified proof of Fermat's Last Theorem, a 358-year-old mathematical problem. This is not merely a mathematical achievement. It means AI is fundamentally redefining humanity's most basic questions—the nature of proof, truth, and understanding itself."
 description: "A 358-year-old math problem solved: AI's capability, humanity's role, and what we're missing"
 sources:
   - name: "Decrypt"
     url: "https://decrypt.co/377491/ai-solved-350-year-old-math-problem"
+  - name: "Anthropic"
+    url: "https://www.anthropic.com"
+  - name: "Anthropic Research"
+    url: "https://www.anthropic.com/research/formalizing-fermats-last-theorem"
 tags: ["AI", "Mathematics", "Fermat", "Proof", "Research", "Human-AI Collaboration"]
 featured: true
 keyFacts:
@@ -27,7 +31,7 @@ keyFacts:
 
 In September 2026, Anthropic's Claude completely solved a 358-year-old mathematical mystery.
 
-Fermat's Last Theorem. A problem Pierre de Fermat left in a book's margin in 1665:
+Fermat's Last Theorem. A problem Pierre de Fermat left in a book's margin in 1637:
 
 > "For any integer n greater than 2, there are no three positive integers x, y, and z that satisfy x^n + y^n = z^n."
 
@@ -68,11 +72,11 @@ That's a misreading.
 
 **What AI did:** Provided a formally verifiable proof of a 358-year problem.
 
-**What AI cannot do:**
-- Explain why the problem was so difficult
-- Reveal the fundamental principles behind why this method works
-- Generate new mathematical intuition from this proof
-- Tell us what we should learn to solve future problems
+**AI's Limitations:**
+- May find it difficult to explain why the problem was so difficult
+- May find it difficult to reveal fundamental principles behind why this method works
+- May find it difficult to generate new mathematical intuition from this proof
+- May find it difficult to indicate learning directions for solving future problems
 
 **What humans must do:**
 1. Interpret Claude's proof and understand why it works
@@ -87,9 +91,6 @@ That's a misreading.
 Claude's achievement doesn't simply mean "computation is faster."
 
 **What we've missed:**
-
-One year ago: AI could solve math olympiad problems.
-Now: AI can prove a 358-year-old open problem.
 
 The difference isn't **scale**; it's a **qualitative shift**.
 
@@ -193,8 +194,7 @@ But this time, it's different.
 
 **The Riemann Hypothesis**
 - The phenomenon: An unsolved mystery explaining the distribution of all prime numbers (160 years unresolved)
-- The meaning: If solved, the very foundation of encryption technology would be shaken
-- AI's approach: Through formal verification, this enormous mystery could be proven within 10 days
+- The meaning: If solved, it is expected to have an impact on the foundation of encryption technology
 
 **The P vs NP Problem**
 - The phenomenon: Computer science's most fundamental unanswered question (50 years unresolved)
@@ -205,13 +205,13 @@ But this time, it's different.
 
 **Supply Chain Optimization**
 - The problem: Finding the optimal path across 1,000 locations with millions of variables (NP-hard problem)
-- Current state: Only approximations possible, severe cost waste
-- If AI's method works: Global supply chain efficiency increases by 10-30%, saving trillions annually
+- Current state: Only approximations possible, limitations in cost optimization
+- If AI's method works: Qualitative improvement in global supply chain optimization becomes possible
 
 **Financial Portfolio Optimization**
 - The problem: Calculating risk-return relationships across millions of assets
 - Current state: Only heuristics (empirical approximations) can handle it
-- If formal proof becomes possible: 100% optimal portfolio construction achievable, dramatically increased returns
+- If formal proof becomes possible: More optimized portfolio construction becomes achievable
 
 **Complex Scientific Research Optimization**
 - Drug development: Finding optimal molecular structures among candidates
@@ -223,7 +223,7 @@ But this time, it's different.
 **Protein Folding and Interaction Prediction**
 - The phenomenon: Complex protein 3D structures remain a challenge
 - Medical application: Design of cancer treatments, Alzheimer's medications
-- Formal verification: AI can formally verify all possible foldings, achieving 100% accuracy
+- Formal verification: Theoretically, AI might be able to formally verify all possible foldings
 
 **Neural Network Connectivity Analysis**
 - Brain disease understanding: Neurological mechanisms of Alzheimer's, Parkinson's, schizophrenia
@@ -235,12 +235,12 @@ But this time, it's different.
 
 ### The Revolution in Cryptography and Security
 
-**Collapse and Reconstruction of Current Encryption Systems**
+**Evolution of Current Encryption Systems**
 
-The moment the Riemann Hypothesis or P vs NP is solved, all current encryption becomes meaningless. But simultaneously:
-- Post-Quantum Cryptography can be formally and completely proven
-- An entirely new security paradigm emerges
-- Blockchain, banking systems, and defense infrastructure all upgrade
+If P vs NP is resolved, many cryptographic assumptions may become at risk. At the same time:
+- Formal proofs of Post-Quantum Cryptography could be pursued
+- Development of new security paradigms could be accelerated
+- Security reviews of existing systems may become necessary
 
 ---
 
