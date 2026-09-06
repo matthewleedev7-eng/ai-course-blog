@@ -8,10 +8,6 @@ summary: "La demanda por derechos de autor presentada por el Seattle Times y New
 sources:
   - name: "TechCrunch"
     url: "https://techcrunch.com/2026/09/05/seattle-times-and-newsday-are-the-latest-publications-to-sue-openai-and-microsoft/"
-  - name: "Decrypt"
-    url: "https://decrypt.co/377491/ai-solved-350-year-old-math-problem"
-  - name: "OpenAI - Blog"
-    url: "https://openai.com/blog"
 tags: ["OpenAI", "Microsoft", "Derechos de Autor", "Ética de IA", "Derechos de Creadores", "Transparencia", "Compensación Justa"]
 featured: true
 keyFacts:
