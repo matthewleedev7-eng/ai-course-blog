@@ -133,3 +133,4 @@ ai-course-blog/
 ## 🔒 라이선스 및 저작권 (License)
 
 © 2026 AI Learning Log (`matthewlee-ailog.com`). All rights reserved.
+# Vercel rebuild trigger
