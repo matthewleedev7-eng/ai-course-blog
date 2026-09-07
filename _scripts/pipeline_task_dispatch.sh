@@ -87,21 +87,13 @@ log_section "📰 [1/3] Scout: Daily News Collection"
 
 log_step "Creating task..."
 SCOUT_TASK=$(orca orchestration task-create \
-  --spec "{
-    \"role\": \"scout\",
-    \"date\": \"$DATE\",
-    \"action\": \"collect_news\",
-    \"config\": {
-      \"sources\": [\"openai\", \"deepmind\", \"anthropic\", \"google\"],
-      \"keyword_filters\": [\"AI agents\", \"LLM\", \"multimodal\", \"reasoning\"],
-      \"languages\": [\"KO\", \"EN\", \"ES\", \"PT\"]
-    }
-  }" \
+  --spec '{"role":"scout","date":"'"$DATE"'","action":"collect_news","config":{"sources":["openai","deepmind","anthropic","google"],"keyword_filters":["AI agents","LLM","multimodal","reasoning"],"languages":["KO","EN","ES","PT"]}}' \
   --task-title "Scout: Daily News Collection ($DATE)" \
   --run "$RUN_ID" \
   --json 2>&1)
 
-SCOUT_ID=$(echo "$SCOUT_TASK" | grep -o '"id":"[^"]*"' | head -1 | cut -d'"' -f4)
+# Extract task ID using reliable grep pattern
+SCOUT_ID=$(echo "$SCOUT_TASK" | grep "task_" | grep -o 'task_[a-f0-9]*' | head -1)
 
 if [ -z "$SCOUT_ID" ]; then
   log_error "Failed to create Scout task"
@@ -142,20 +134,12 @@ log_section "✅ [2/3] Verifier: Fact Verification"
 
 log_step "Creating task..."
 VERIFIER_TASK=$(orca orchestration task-create \
-  --spec "{
-    \"role\": \"verifier\",
-    \"action\": \"verify_news\",
-    \"input_file\": \"_pipeline/reports/scout_$DATE.md\",
-    \"config\": {
-      \"checks\": [\"deeplink\", \"copyright\", \"duplicate\", \"i18n_sync\"],
-      \"languages\": [\"KO\", \"EN\", \"ES\", \"PT\"]
-    }
-  }" \
+  --spec '{"role":"verifier","action":"verify_news","input_file":"_pipeline/reports/scout_'"$DATE"'.md","config":{"checks":["deeplink","copyright","duplicate","i18n_sync"],"languages":["KO","EN","ES","PT"]}}' \
   --task-title "Verifier: Fact Verification ($DATE)" \
   --run "$RUN_ID" \
   --json 2>&1)
 
-VERIFIER_ID=$(echo "$VERIFIER_TASK" | grep -o '"id":"[^"]*"' | head -1 | cut -d'"' -f4)
+VERIFIER_ID=$(echo "$VERIFIER_TASK" | grep -o '"id":"task_[^"]*"' | grep -o 'task_[^"]*' | head -1)
 
 if [ -z "$VERIFIER_ID" ]; then
   log_error "Failed to create Verifier task"
@@ -196,21 +180,12 @@ log_section "✏️ [3/3] Writer: Content Creation (Interactive)"
 
 log_step "Creating task..."
 WRITER_TASK=$(orca orchestration task-create \
-  --spec "{
-    \"role\": \"writer\",
-    \"action\": \"write_matts_find\",
-    \"editorial_intent\": \"[PENDING USER INPUT - see Manager terminal]\",
-    \"input_file\": \"_pipeline/reports/verifier_$DATE.md\",
-    \"config\": {
-      \"languages\": [\"KO\", \"EN\", \"ES\", \"PT\"],
-      \"target_edition\": \"Matt's Find #[auto-increment]\"
-    }
-  }" \
+  --spec '{"role":"writer","action":"write_matts_find","editorial_intent":"[PENDING USER INPUT]","input_file":"_pipeline/reports/verifier_'"$DATE"'.md","config":{"languages":["KO","EN","ES","PT"],"target_edition":"Matt'"'"'s Find #auto"}}' \
   --task-title "Writer: Content Creation ($DATE)" \
   --run "$RUN_ID" \
   --json 2>&1)
 
-WRITER_ID=$(echo "$WRITER_TASK" | grep -o '"id":"[^"]*"' | head -1 | cut -d'"' -f4)
+WRITER_ID=$(echo "$WRITER_TASK" | grep -o '"id":"task_[^"]*"' | grep -o 'task_[^"]*' | head -1)
 
 if [ -z "$WRITER_ID" ]; then
   log_error "Failed to create Writer task"
