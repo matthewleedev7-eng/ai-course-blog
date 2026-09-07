@@ -62,11 +62,11 @@ const ptPath = cleanPath === '/' ? '/pt' : `/pt${cleanPath}`;
     <link rel="canonical" href={canonicalURL} />
 
     <!-- 다국어 SEO (hreflang) 태그 -->
-    <link rel="alternate" hreflang="ko" href={`${siteBase}/`} />
-    <link rel="alternate" hreflang="en" href={`${siteBase}/en/`} />
-    <link rel="alternate" hreflang="es" href={`${siteBase}/es/`} />
-    <link rel="alternate" hreflang="pt" href={`${siteBase}/pt/`} />
-    <link rel="alternate" hreflang="x-default" href={`${siteBase}/`} />
+    <link rel="alternate" hreflang="ko" href={`${siteBase}${koPath}`} />
+    <link rel="alternate" hreflang="en" href={`${siteBase}${enPath}`} />
+    <link rel="alternate" hreflang="es" href={`${siteBase}${esPath}`} />
+    <link rel="alternate" hreflang="pt" href={`${siteBase}${ptPath}`} />
+    <link rel="alternate" hreflang="x-default" href={`${siteBase}${koPath}`} />
 
     <!-- Open Graph / SNS 공유 최적화 -->
     <meta property="og:type" content="website" />
