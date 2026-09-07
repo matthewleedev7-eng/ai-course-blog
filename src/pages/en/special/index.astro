@@ -66,9 +66,6 @@ const categories = ["All", ...Array.from(new Set(sorted.map((item) => item.data.
           data-search={`${item.data.title} ${item.data.summary} ${item.data.edition ?? ''} ${item.data.tags.join(' ')}`.toLowerCase()}
         >
           <div class="flex items-center gap-2 flex-wrap mb-3">
-            <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 border border-purple-100 dark:border-purple-900/50">
-              {item.data.category}
-            </span>
             {item.data.edition && (
               <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
                 {item.data.edition}
