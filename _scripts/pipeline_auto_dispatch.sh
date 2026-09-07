@@ -67,24 +67,23 @@ wait_for_worker_done() {
     log_step "⏳ Waiting for $agent_name worker_done (elapsed: ${elapsed}s/${timeout}s)..."
 
     # Query inbox for worker_done from this agent
-    # NOTE: tr '\n' ' ' converts multiline JSON to single line for grep matching
-    local inbox=$(orca orchestration inbox --json 2>/dev/null | tr '\n' ' ' || echo "{}")
+    local inbox=$(orca orchestration inbox --json 2>/dev/null || echo "{}")
 
-    # Check if there's a worker_done message from the expected handle with our task ID
-    # Task ID appears as "taskId":"task_xxx" in payload field (escaped quotes in JSON string)
-    if echo "$inbox" | grep -q '"type":"worker_done"'; then
+    # Check if task_id appears in the payload (most reliable method)
+    # Task ID appears in payload as: "taskId":"task_xxx" (inside JSON string)
+    if echo "$inbox" | grep -q "$task_id"; then
+      # Verify it's from expected handle
       if echo "$inbox" | grep -q "$expected_handle"; then
-        # Match task ID with flexible pattern (handles both escaped and unescaped quotes)
-        if echo "$inbox" | grep -qE "(taskId|\"taskId\").*:.*$task_id"; then
-          log_success "$agent_name completed!"
+        log_success "$agent_name completed!"
 
-          # Extract message details
-          local msg_id=$(echo "$inbox" | grep -o '"id":"msg_[^"]*"' | head -1 | cut -d'"' -f4)
-          local outcome=$(echo "$inbox" | grep -o '"outcome":"[^"]*"' | head -1 | cut -d'"' -f4)
+        # Extract message details (best effort)
+        local msg_id=$(echo "$inbox" | grep -o '"id":"msg_[a-f0-9]*"' | head -1 | sed 's/"//g' | cut -d':' -f2)
+        local outcome=$(echo "$inbox" | grep -o '"outcome":"succeeded"' | head -1 | sed 's/"//g' | cut -d':' -f2)
 
-          log_step "Message: $msg_id (outcome: $outcome)"
-          return 0
+        if [ -n "$msg_id" ]; then
+          log_step "Message: $msg_id (outcome: ${outcome:-unknown})"
         fi
+        return 0
       fi
     fi
 
