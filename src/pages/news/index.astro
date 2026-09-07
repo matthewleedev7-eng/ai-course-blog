@@ -8,12 +8,57 @@ const sortedNews = allNews.sort((a, b) => new Date(b.data.date).getTime() - new 
 const latestDate = sortedNews[0]?.data.date || '2026-08-30';
 
 const categories = ["전체", "🤖 모델/도구", "⚡ 개발/API", "🎓 무료 교육", "🌐 생태계/트렌드"];
+
+// 최신 뉴스 데이터를 schema.org 형식으로 변환
+const latestNews = sortedNews[0];
+const newsItems = latestNews?.data.items.map((item: any) => ({
+  headline: item.headline,
+  description: item.summary.join(' '),
+  datePublished: `${latestNews.data.date}T12:00:00+09:00`,
+  url: item.sourceUrl,
+})) || [];
+
+// JSON-LD Schema 생성
+const siteBase = "https://matthewlee-ailog.com";
+const schemaJson = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "정오의 AI 뉴스",
+  "description": "점심시간 3분으로 끝내는 글로벌 AI 핵심 뉴스 브리핑. 3줄 요약, 원문 링크, 추천 무료 강의를 매일 정오에 전해드립니다.",
+  "url": `${siteBase}/news`,
+  "image": `${siteBase}/og-image.png`,
+  "mainEntity": {
+    "@type": "NewsCollection",
+    "name": "정오의 AI 뉴스",
+    "description": "점심시간 3분으로 끝내는 글로벌 AI 핵심 뉴스 브리핑",
+    "url": `${siteBase}/news`,
+    "hasPart": newsItems.map(item => ({
+      "@type": "NewsArticle",
+      "headline": item.headline,
+      "description": item.description,
+      "datePublished": item.datePublished,
+      "url": item.url,
+    })),
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AI Learning Log",
+    "url": siteBase,
+    "logo": {
+      "@type": "ImageObject",
+      "url": `${siteBase}/favicon.svg`,
+      "width": 100,
+      "height": 100,
+    },
+  },
+};
 ---
 
-<Layout 
+<Layout
   title="정오의 AI 뉴스 | AI 러닝로그"
-  description="점심시간 3분으로 끝내는 글로벌 AI 핵심 뉴스 브리핑. 3줄 요약, 원문 링크, 추천 무료 강의를 매일 정오에 전해드립니다."
+  description="매일 정오 3분 AI 뉴스 브리핑: 3줄 요약, 원문 링크, 무료 강의 추천"
 >
+  <Fragment set:html={`<script type="application/ld+json">${JSON.stringify(schemaJson)}</script>`} />
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
     <!-- 헤더 섹션 -->
     <header class="text-center py-6 sm:py-8 border-b border-slate-200 dark:border-slate-800">

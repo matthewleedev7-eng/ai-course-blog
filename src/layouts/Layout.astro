@@ -81,6 +81,9 @@ const ptPath = cleanPath === '/' ? '/pt' : `/pt${cleanPath}`;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={image} />
 
+    <!-- 페이지별 추가 head 콘텐츠 (예: JSON-LD) -->
+    <slot name="head" />
+
     <!-- Pretendard Web Font -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 

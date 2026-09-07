@@ -8,13 +8,58 @@ const sortedNews = allNews.sort((a, b) => new Date(b.data.date).getTime() - new 
 const latestDate = sortedNews[0]?.data.date || '2026-09-01';
 
 const categories = ["Todos", "🤖 Modelos/Ferramentas", "⚡ Desenvolvimento/API", "🎓 Cursos Gratuitos", "🌐 Ecossistema"];
+
+// Convert latest news data to schema.org format
+const latestNews = sortedNews[0];
+const newsItems = latestNews?.data.items.map((item: any) => ({
+  headline: item.headline,
+  description: item.summary.join(' '),
+  datePublished: `${latestNews.data.date}T12:00:00+09:00`,
+  url: item.sourceUrl,
+})) || [];
+
+// JSON-LD Schema
+const siteBase = "https://matthewlee-ailog.com";
+const schemaJson = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Notícias de IA ao Meio-Dia",
+  "description": "Mantenha-se atualizado com resumos de 3 minutos sobre os avanços globais de IA, links para fontes originais e cursos gratuitos recomendados.",
+  "url": `${siteBase}/pt/news`,
+  "image": `${siteBase}/og-image.png`,
+  "mainEntity": {
+    "@type": "NewsCollection",
+    "name": "Notícias de IA ao Meio-Dia",
+    "description": "Resumos de 3 minutos sobre os avanços globais de IA",
+    "url": `${siteBase}/pt/news`,
+    "hasPart": newsItems.map(item => ({
+      "@type": "NewsArticle",
+      "headline": item.headline,
+      "description": item.description,
+      "datePublished": item.datePublished,
+      "url": item.url,
+    })),
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "AI Learning Log",
+    "url": siteBase,
+    "logo": {
+      "@type": "ImageObject",
+      "url": `${siteBase}/favicon.svg`,
+      "width": 100,
+      "height": 100,
+    },
+  },
+};
 ---
 
-<Layout 
+<Layout
   title="Notícias de IA ao Meio-Dia | AI Learning Log"
-  description="Mantenha-se atualizado com resumos de 3 minutos sobre os avanços globais de IA, links para fontes originais e cursos gratuitos recomendados."
+  description="Boletim de IA diário de 3 minutos: resumos, fontes, cursos grátis"
   lang="pt"
 >
+  <Fragment set:html={`<script type="application/ld+json">${JSON.stringify(schemaJson)}</script>`} />
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
     <!-- Header Section -->
     <header class="text-center py-6 sm:py-8 border-b border-slate-200 dark:border-slate-800">
