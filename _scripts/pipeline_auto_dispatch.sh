@@ -21,11 +21,13 @@ RUN_ID="run_f355a5decad6"
 SCOUT_HANDLE="term_7f8bd784-0cd9-4868-b8b7-3dbde2d346ad"
 VERIFIER_HANDLE="term_45334111-a033-49cd-ab4e-f598eab94237"
 WRITER_HANDLE="term_39b41ef6-cd1c-4b7b-9b62-d1eed9f5d8c7"
+TRANSLATOR_HANDLE="term_5c8bd784-0cd9-4868-b8b7-3dbde2d346ae"
 
 # Timeouts (seconds)
 SCOUT_TIMEOUT=1800
 VERIFIER_TIMEOUT=1800
-WRITER_TIMEOUT=3600
+WRITER_TIMEOUT=1800
+TRANSLATOR_TIMEOUT=1800
 
 # Polling interval (seconds)
 POLL_INTERVAL=5
@@ -133,27 +135,43 @@ copy_verifier_report() {
   return 0
 }
 
-# Copy Writer content to Manager
+# Copy Writer content to Manager (Korean only)
 copy_writer_content() {
+  local date="$1"
+  local source_file="../Writer/src/content/news/${date}-noon.md"
+  local dest_file="src/content/news/${date}-noon.md"
+
+  if [ -f "$source_file" ]; then
+    cp "$source_file" "$dest_file"
+    log_success "Writer content (KO) copied: $dest_file"
+    return 0
+  else
+    log_error "Writer KO file not found: $source_file"
+    return 1
+  fi
+}
+
+# Copy Translator content to Manager (EN/ES/PT)
+copy_translator_content() {
   local date="$1"
   local copied=0
 
-  # Copy news files (4 languages)
-  for lang in "" "_en" "_es" "_pt"; do
-    local source_file="../Writer/src/content/news${lang}/${date}-noon.md"
+  # Copy news files (3 languages: EN, ES, PT)
+  for lang in "_en" "_es" "_pt"; do
+    local source_file="../Translator/src/content/news${lang}/${date}-noon.md"
     local dest_file="src/content/news${lang}/${date}-noon.md"
 
     if [ -f "$source_file" ]; then
       cp "$source_file" "$dest_file"
-      log_success "Writer content copied: $dest_file"
+      log_success "Translator content copied: $dest_file"
       copied=$((copied + 1))
     fi
   done
 
-  if [ $copied -gt 0 ]; then
+  if [ $copied -eq 3 ]; then
     return 0
   else
-    log_error "No Writer content files found"
+    log_error "Translator: Expected 3 files, got $copied"
     return 1
   fi
 }
@@ -281,9 +299,52 @@ if ! wait_for_worker_done "$WRITER_ID" "$WRITER_TIMEOUT" "Writer" "$WRITER_HANDL
   exit 1
 fi
 
-# Copy Writer content to Manager
-log_step "Copying Writer content..."
+# Copy Writer content to Manager (KO only)
+log_step "Copying Writer content (Korean)..."
 if ! copy_writer_content "$DATE"; then
+  exit 1
+fi
+
+# =============================================================================
+# Phase 4: Translator
+# =============================================================================
+
+log_section "🌍 [4/4] Translator: Multi-language Translation"
+
+log_step "Creating Translator task..."
+TRANSLATOR_JSON=$(orca orchestration task-create \
+  --spec '{"role":"translator","action":"translate_content","input_file":"src/content/news/'"$DATE"'-noon.md","config":{"source_language":"KO","target_languages":["EN","ES","PT"]}}' \
+  --task-title "Translator: Multi-language Translation ($DATE)" \
+  --run "$RUN_ID" \
+  --json 2>&1)
+
+TRANSLATOR_ID=$(echo "$TRANSLATOR_JSON" | grep -o 'task_[a-f0-9]*' | head -1)
+
+if [ -z "$TRANSLATOR_ID" ]; then
+  log_error "Failed to create Translator task"
+  exit 1
+fi
+
+log_success "Task: $TRANSLATOR_ID"
+
+log_step "Dispatching to Translator..."
+orca orchestration dispatch \
+  --task "$TRANSLATOR_ID" \
+  --to "$TRANSLATOR_HANDLE" \
+  --inject \
+  --run "$RUN_ID" \
+  --json > /dev/null 2>&1
+
+log_success "Dispatched to Translator"
+
+# Wait for Translator completion
+if ! wait_for_worker_done "$TRANSLATOR_ID" "$TRANSLATOR_TIMEOUT" "Translator" "$TRANSLATOR_HANDLE"; then
+  exit 1
+fi
+
+# Copy Translator content to Manager (EN/ES/PT)
+log_step "Copying Translator content..."
+if ! copy_translator_content "$DATE"; then
   exit 1
 fi
 
@@ -295,14 +356,15 @@ log_section "✨ Pipeline Completed Successfully!"
 
 echo ""
 echo "📊 Task Summary:"
-echo "  Scout:    $SCOUT_ID ✅"
-echo "  Verifier: $VERIFIER_ID ✅"
-echo "  Writer:   $WRITER_ID ✅"
+echo "  Scout:      $SCOUT_ID ✅"
+echo "  Verifier:   $VERIFIER_ID ✅"
+echo "  Writer:     $WRITER_ID ✅ (Korean only)"
+echo "  Translator: $TRANSLATOR_ID ✅ (EN/ES/PT)"
 echo ""
-echo "📄 Output:"
+echo "📄 Output (Manager Worktree):"
 echo "  - Scout Report:    _pipeline/reports/scout_$DATE.md"
 echo "  - Verifier Report: _pipeline/reports/verifier_$DATE.md"
-echo "  - Content Files:   src/content/special*/$DATE-*.md (4 languages)"
+echo "  - Content Files:   src/content/news*/$DATE-noon.md (4 languages: KO/EN/ES/PT)"
 echo ""
 echo "🚀 Next Steps:"
 echo "  1. Review content files for consistency"
