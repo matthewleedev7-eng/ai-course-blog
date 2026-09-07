@@ -67,12 +67,15 @@ wait_for_worker_done() {
     log_step "⏳ Waiting for $agent_name worker_done (elapsed: ${elapsed}s/${timeout}s)..."
 
     # Query inbox for worker_done from this agent
-    local inbox=$(orca orchestration inbox --json 2>/dev/null || echo "{}")
+    # NOTE: tr '\n' ' ' converts multiline JSON to single line for grep matching
+    local inbox=$(orca orchestration inbox --json 2>/dev/null | tr '\n' ' ' || echo "{}")
 
     # Check if there's a worker_done message from the expected handle with our task ID
+    # Task ID appears as "taskId":"task_xxx" in payload field (escaped quotes in JSON string)
     if echo "$inbox" | grep -q '"type":"worker_done"'; then
       if echo "$inbox" | grep -q "$expected_handle"; then
-        if echo "$inbox" | grep -q "\"taskId\":\"$task_id\""; then
+        # Match task ID with flexible pattern (handles both escaped and unescaped quotes)
+        if echo "$inbox" | grep -qE "(taskId|\"taskId\").*:.*$task_id"; then
           log_success "$agent_name completed!"
 
           # Extract message details
