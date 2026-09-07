@@ -93,6 +93,71 @@ wait_for_worker_done() {
   return 1
 }
 
+# Copy Scout report to Manager
+copy_scout_report() {
+  local date="$1"
+  local source_path="../Scout/_pipeline/reports/scout_${date}.md"
+  local dest_path="_pipeline/reports/scout_${date}.md"
+
+  if [ -f "$source_path" ]; then
+    cp "$source_path" "$dest_path"
+    log_success "Scout report copied to Manager: $dest_path"
+    return 0
+  else
+    log_error "Scout report not found: $source_path"
+    return 1
+  fi
+}
+
+# Copy Verifier report to Manager and Writer
+copy_verifier_report() {
+  local date="$1"
+  local source_path="../Verifier/_pipeline/reports/verifier_${date}.md"
+
+  if [ ! -f "$source_path" ]; then
+    log_error "Verifier report not found: $source_path"
+    return 1
+  fi
+
+  # Copy to Manager
+  local dest_manager="_pipeline/reports/verifier_${date}.md"
+  cp "$source_path" "$dest_manager"
+  log_success "Verifier report copied to Manager: $dest_manager"
+
+  # Copy to Writer
+  mkdir -p "../Writer/_pipeline/reports"
+  local dest_writer="../Writer/_pipeline/reports/verifier_${date}.md"
+  cp "$source_path" "$dest_writer"
+  log_success "Verifier report copied to Writer: $dest_writer"
+
+  return 0
+}
+
+# Copy Writer content to Manager
+copy_writer_content() {
+  local date="$1"
+  local copied=0
+
+  # Copy news files (4 languages)
+  for lang in "" "_en" "_es" "_pt"; do
+    local source_file="../Writer/src/content/news${lang}/${date}-noon.md"
+    local dest_file="src/content/news${lang}/${date}-noon.md"
+
+    if [ -f "$source_file" ]; then
+      cp "$source_file" "$dest_file"
+      log_success "Writer content copied: $dest_file"
+      copied=$((copied + 1))
+    fi
+  done
+
+  if [ $copied -gt 0 ]; then
+    return 0
+  else
+    log_error "No Writer content files found"
+    return 1
+  fi
+}
+
 # =============================================================================
 # Phase 1: Scout
 # =============================================================================
@@ -127,6 +192,12 @@ log_success "Dispatched to Scout"
 
 # Wait for Scout completion
 if ! wait_for_worker_done "$SCOUT_ID" "$SCOUT_TIMEOUT" "Scout" "$SCOUT_HANDLE"; then
+  exit 1
+fi
+
+# Copy Scout report to Manager
+log_step "Copying Scout report..."
+if ! copy_scout_report "$DATE"; then
   exit 1
 fi
 
@@ -167,6 +238,12 @@ if ! wait_for_worker_done "$VERIFIER_ID" "$VERIFIER_TIMEOUT" "Verifier" "$VERIFI
   exit 1
 fi
 
+# Copy Verifier report to Manager and Writer
+log_step "Copying Verifier report..."
+if ! copy_verifier_report "$DATE"; then
+  exit 1
+fi
+
 # =============================================================================
 # Phase 3: Writer
 # =============================================================================
@@ -201,6 +278,12 @@ log_success "Dispatched to Writer"
 
 # Wait for Writer completion
 if ! wait_for_worker_done "$WRITER_ID" "$WRITER_TIMEOUT" "Writer" "$WRITER_HANDLE"; then
+  exit 1
+fi
+
+# Copy Writer content to Manager
+log_step "Copying Writer content..."
+if ! copy_writer_content "$DATE"; then
   exit 1
 fi
 
