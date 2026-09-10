@@ -1,0 +1,183 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const guides = await getCollection('guides');
+const sortedGuides = guides.sort((a, b) => (b.data.featured ? 1 : 0) - (a.data.featured ? 1 : 0));
+---
+
+<Layout 
+  title="실전 LLM 오픈북 & 글로벌 핸드북 서재 | AI 러닝로그"
+  description="동영상 강의보다 빠른 완독! 실전 코드와 챕터별 해설이 담긴 한국어 위키독스 및 글로벌 영문 오픈북(Hugging Face, Meta)을 엄선했습니다."
+>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <!-- 로컬 테스트 모드 알림 -->
+    <div class="mb-6 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-800 dark:text-amber-300 flex items-center justify-between text-xs sm:text-sm">
+      <div class="flex items-center gap-2">
+        <span class="text-base">🧪</span>
+        <span><strong>[로컬 테스트 모드]</strong> 깃 추적이 차단된 실전 오픈북 가이드(/guides) 프로토타입 화면입니다.</span>
+      </div>
+      <span class="px-2 py-0.5 rounded bg-amber-200/50 dark:bg-amber-900/40 text-[11px] font-bold">비공개</span>
+    </div>
+
+    <!-- 헤더 섹션 -->
+    <header class="text-center py-8 sm:py-12 border-b border-slate-200 dark:border-slate-800">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-blue-100 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800/60 mb-4">
+        <span>📚</span>
+        <span>100% 무료 온라인 전자책 & 글로벌 오픈 핸드북</span>
+      </div>
+
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+        실전 LLM 오픈북 & 글로벌 핸드북 서재
+      </h1>
+
+      <p class="mt-4 text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
+        길고 늘어지는 동영상 대신, <strong>코드 복사-붙여넣기와 실습으로 빠르게 끝내는 무료 오픈북</strong>.<br class="hidden sm:inline" />
+        한국어 <strong>위키독스(WikiDocs)</strong>부터 <strong>Hugging Face, Meta 공식 영문 핸드북</strong>까지 엄선했습니다.
+      </p>
+    </header>
+
+    <!-- 언어 필터 탭 바 (충분한 상하 여백 확보하여 카드와 절대 겹치지 않도록 분리) -->
+    <div style="margin-top: 28px; margin-bottom: 36px; display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap;">
+      <button 
+        type="button" 
+        class="guide-lang-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-blue-600 text-white shadow-sm ring-2 ring-blue-500/20"
+        data-lang="all"
+      >
+        📂 전체 모아보기 ({sortedGuides.length})
+      </button>
+      <button 
+        type="button" 
+        class="guide-lang-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
+        data-lang="ko"
+      >
+        🇰🇷 한국어 오픈북 (위키독스 등)
+      </button>
+      <button 
+        type="button" 
+        class="guide-lang-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
+        data-lang="en"
+      >
+        🌐 Global English Handbooks
+      </button>
+    </div>
+
+    <!-- 도서 리스트 그리드 (상단 마진 16px 추가) -->
+    <section style="margin-top: 16px;" class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+      {sortedGuides.map((guide) => (
+        <article 
+          class="guide-card rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm hover:border-blue-500/50 hover:shadow-md transition-all flex flex-col justify-between group"
+          data-lang={guide.data.language}
+        >
+          <div>
+            <!-- 상단 뱃지 바 (언어, 형태, 분량) -->
+            <div class="flex items-center justify-between gap-2 flex-wrap mb-4">
+              <div class="flex items-center gap-2">
+                <span class={`px-2.5 py-1 rounded-lg text-xs font-extrabold ${
+                  guide.data.language === 'ko' 
+                    ? 'bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-blue-900/50'
+                    : 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-900/50'
+                }`}>
+                  {guide.data.language === 'ko' ? '🇰🇷 한국어' : '🌐 English'}
+                </span>
+                <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                  {guide.data.format}
+                </span>
+              </div>
+              <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                <span>⏱️ {guide.data.chapters}</span>
+              </span>
+            </div>
+
+            <!-- 제목 -->
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-snug">
+              <a href={guide.data.url} target="_blank" rel="noopener noreferrer">
+                {guide.data.title}
+              </a>
+            </h2>
+
+            <!-- 저자 및 권장 환경 -->
+            <div class="mt-2 text-xs text-slate-500 dark:text-slate-400 flex items-center gap-2 flex-wrap">
+              <span>저자: <strong>{guide.data.author}</strong></span>
+              <span>•</span>
+              <span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium">
+                💻 {guide.data.environment}
+              </span>
+            </div>
+
+            <!-- 책 소개 설명 -->
+            <p class="mt-4 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+              {guide.data.description}
+            </p>
+
+            <!-- 추천 대상 독자 박스 -->
+            <div class="mt-4 p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+              <span class="font-bold text-blue-600 dark:text-blue-400">🎯 추천 독자: </span>
+              {guide.data.targetAudience}
+            </div>
+
+            <!-- 주요 다루는 내용 키워드 -->
+            <div class="mt-4 flex items-center gap-1.5 flex-wrap">
+              {guide.data.keyTopics.map((topic) => (
+                <span class="text-[11px] px-2.5 py-1 rounded-lg bg-blue-50/50 dark:bg-blue-950/30 text-blue-700 dark:text-blue-300 border border-blue-100/60 dark:border-blue-900/30 font-medium">
+                  ✓ {topic}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <!-- 하단 액션 버튼 (확실한 고대비 블루 버튼) -->
+          <div class="mt-6 pt-5 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between gap-3 flex-wrap">
+            <div class="flex items-center gap-1 text-xs font-bold text-amber-500">
+              <span>★</span>
+              <span>{guide.data.rating}</span>
+              <span class="text-slate-400 font-normal ml-1">({guide.data.level})</span>
+            </div>
+
+            <a 
+              href={guide.data.url} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              style="background-color: #2563eb; color: #ffffff !important;"
+              class="px-5 py-2.5 rounded-xl font-extrabold text-xs shadow-md hover:opacity-95 transition-all inline-flex items-center gap-2 group-hover:scale-[1.02]"
+            >
+              <span>📖 {guide.data.language === 'ko' ? '무료 전자책 바로 읽기' : 'Read Open Handbook'}</span>
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+          </div>
+        </article>
+      ))}
+    </section>
+  </div>
+
+  <!-- 언어 필터 스크립트 -->
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const langBtns = document.querySelectorAll('.guide-lang-btn');
+      const cards = document.querySelectorAll('.guide-card');
+
+      langBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          langBtns.forEach(b => {
+            b.classList.remove('bg-blue-600', 'text-white', 'shadow-sm', 'ring-2', 'ring-blue-500/20');
+            b.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+          });
+          btn.classList.add('bg-blue-600', 'text-white', 'shadow-sm', 'ring-2', 'ring-blue-500/20');
+          btn.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+
+          const lang = btn.getAttribute('data-lang');
+          cards.forEach(card => {
+            const cardLang = card.getAttribute('data-lang');
+            if (lang === 'all' || cardLang === lang) {
+              card.style.display = 'flex';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+    });
+  </script>
+</Layout>

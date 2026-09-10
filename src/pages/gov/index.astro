@@ -1,0 +1,193 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const govItems = await getCollection('gov');
+const sortedItems = govItems.sort((a, b) => (b.data.featured ? 1 : 0) - (a.data.featured ? 1 : 0));
+---
+
+<Layout 
+  title="대한민국 국책 AI 지원사업 & 100% 무료 공공 사관학교 레이더 | AI 러닝로그"
+  description="사설 학원 광고 0%! 부산시 찾아가는 AX 클리닉부터 서울시 새싹, 과기정통부 42서울, 정부 AI 바우처까지 대한민국 세금 지원 혜택 총정리."
+>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <!-- 로컬 테스트 모드 알림 -->
+    <div class="mb-6 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-800 dark:text-amber-300 flex items-center justify-between text-xs sm:text-sm">
+      <div class="flex items-center gap-2">
+        <span class="text-base">🧪</span>
+        <span><strong>[로컬 테스트 모드]</strong> 깃 추적이 차단된 국책 지원사업(/gov) 프로토타입 화면입니다.</span>
+      </div>
+      <span class="px-2 py-0.5 rounded bg-amber-200/50 dark:bg-amber-900/40 text-[11px] font-bold">비공개</span>
+    </div>
+
+    <!-- 헤더 섹션 -->
+    <header class="text-center py-6 sm:py-8 border-b border-slate-200 dark:border-slate-800">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60 mb-4">
+        <span>🏛️</span>
+        <span>사설 학원 배제! 대한민국 정부 & 지자체 세금 지원 100%</span>
+      </div>
+
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+        국책 AI 지원사업 & 공공 무료 아카데미
+      </h1>
+
+      <p class="mt-4 text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
+        길거리 현수막을 보지 않으면 놓치는 <strong>전국 지자체 무료 AX 컨설팅</strong>부터<br class="hidden sm:inline" />
+        <strong>학비 0원에 매월 100만원 지원금</strong>을 주는 공공 AI 사관학교까지 엄선했습니다.
+      </p>
+
+      <!-- 실시간 정부/지자체 공고 추적 뱃지 -->
+      <div class="mt-4 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800/80 text-[11px] text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span>중기부 기업마당, K-Startup, 부산 BIPA, 서울 SBA 공식 공고 기반 실시간 큐레이션</span>
+      </div>
+    </header>
+
+    <!-- 카테고리 필터 탭 바 (완벽한 상하 여백 확보) -->
+    <div style="margin-top: 28px; margin-bottom: 36px; display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap;">
+      <button 
+        type="button" 
+        class="gov-filter-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-emerald-600 text-white shadow-sm ring-2 ring-emerald-500/20"
+        data-cat="all"
+      >
+        📂 전체 모아보기 ({sortedItems.length})
+      </button>
+      <button 
+        type="button" 
+        class="gov-filter-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
+        data-cat="AX컨설팅/기업지원"
+      >
+        🏢 부산/전국 기업 AX 지원·바우처
+      </button>
+      <button 
+        type="button" 
+        class="gov-filter-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
+        data-cat="공공사관학교"
+      >
+        🏛️ 공공 사관학교 (서울 새싹, 42서울, 소마)
+      </button>
+      <button 
+        type="button" 
+        class="gov-filter-btn px-4 py-2 rounded-xl text-xs font-bold transition-all bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
+        data-cat="국비무료/수당지급"
+      >
+        💰 훈련수당·기숙사 무료 지원 (KAIST, 광주)
+      </button>
+    </div>
+
+    <!-- 카드 그리드 -->
+    <section style="margin-top: 16px;" class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+      {sortedItems.map((item) => (
+        <article 
+          class="gov-card rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm hover:border-emerald-500/50 hover:shadow-md transition-all flex flex-col justify-between group"
+          data-cat={item.data.category}
+        >
+          <div>
+            <!-- 상단 뱃지 바 (지역, 카테고리, 상태) -->
+            <div class="flex items-center justify-between gap-2 flex-wrap mb-4">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-1 rounded-lg text-xs font-extrabold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/50">
+                  📍 {item.data.region}
+                </span>
+                <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                  {item.data.category}
+                </span>
+              </div>
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
+                ● {item.data.status}
+              </span>
+            </div>
+
+            <!-- 사업명/프로그램명 -->
+            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white leading-snug group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+              <a href={item.data.url} target="_blank" rel="noopener noreferrer">
+                {item.data.title}
+              </a>
+            </h2>
+
+            <!-- 주관 기관 및 대상 -->
+            <div class="mt-2.5 text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              <div>🏛️ 주관: <strong class="text-slate-700 dark:text-slate-200">{item.data.organization}</strong></div>
+              <div class="mt-1">🎯 대상: <span class="text-slate-700 dark:text-slate-300 font-medium">{item.data.target}</span></div>
+            </div>
+
+            <!-- 💰 핵심 정부 지원 혜택 골드 박스 -->
+            <div class="mt-4 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/25 text-xs sm:text-sm text-slate-800 dark:text-slate-200 leading-relaxed">
+              <div class="font-extrabold text-amber-800 dark:text-amber-300 flex items-center justify-between mb-2">
+                <span class="flex items-center gap-1.5">
+                  <span>💰</span>
+                  <span>정부·지자체 지원 혜택</span>
+                </span>
+                <span class="px-2 py-0.5 rounded bg-amber-400/20 text-[11px] font-bold text-amber-900 dark:text-amber-200">
+                  {item.data.cost}
+                </span>
+              </div>
+              <ul class="space-y-1.5 mt-2">
+                {item.data.perks.map((p) => (
+                  <li class="flex items-start gap-2 text-xs text-slate-700 dark:text-slate-300">
+                    <span class="text-amber-500 font-bold shrink-0 mt-0.5">✓</span>
+                    <span>{p}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <!-- 설명 요약 -->
+            <p class="mt-4 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+              {item.data.description}
+            </p>
+          </div>
+
+          <!-- 하단 액션 버튼 바 -->
+          <div class="mt-6 pt-5 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between gap-3 flex-wrap">
+            <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">
+              📅 {item.data.deadline}
+            </span>
+
+            <a 
+              href={item.data.url} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              style="background-color: #059669; color: #ffffff !important;"
+              class="px-5 py-2.5 rounded-xl font-extrabold text-xs shadow-md hover:opacity-95 transition-all inline-flex items-center gap-2 group-hover:scale-[1.02]"
+            >
+              <span>🏛️ 공식 공고 및 신청 바로가기</span>
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+          </div>
+        </article>
+      ))}
+    </section>
+  </div>
+
+  <!-- 필터링 스크립트 -->
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const btns = document.querySelectorAll('.gov-filter-btn');
+      const cards = document.querySelectorAll('.gov-card');
+
+      btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          btns.forEach(b => {
+            b.classList.remove('bg-emerald-600', 'text-white', 'shadow-sm', 'ring-2', 'ring-emerald-500/20');
+            b.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+          });
+          btn.classList.add('bg-emerald-600', 'text-white', 'shadow-sm', 'ring-2', 'ring-emerald-500/20');
+          btn.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+
+          const cat = btn.getAttribute('data-cat');
+          cards.forEach(card => {
+            const cardCat = card.getAttribute('data-cat');
+            if (cat === 'all' || cardCat === cat) {
+              card.style.display = 'flex';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+    });
+  </script>
+</Layout>

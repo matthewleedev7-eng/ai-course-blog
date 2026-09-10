@@ -1,0 +1,394 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout 
+  title="오픈 LLM 로컬 구동 VRAM & 양자화 계산기 | AI 러닝로그"
+  description="내 컴퓨터(인텔 내장그래픽, 맥북 M시리즈, NVIDIA RTX)에서 8B~70B 오픈 LLM을 돌릴 때 필요한 VRAM과 최적의 GGUF 양자화(Q4_K_M 등)를 실시간으로 계산해 드립니다."
+>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <!-- 로컬 테스트 모드 알림 -->
+    <div class="mb-6 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-800 dark:text-amber-300 flex items-center justify-between text-xs sm:text-sm">
+      <div class="flex items-center gap-2">
+        <span class="text-base">🧪</span>
+        <span><strong>[로컬 엔지니어링 도구]</strong> 오픈 LLM VRAM & 양자화 계산기(/calculator) 프로토타입입니다.</span>
+      </div>
+      <span class="px-2 py-0.5 rounded bg-amber-200/50 dark:bg-amber-900/40 text-[11px] font-bold">비공개</span>
+    </div>
+
+    <!-- 헤더 -->
+    <header class="text-center py-6 sm:py-8 border-b border-slate-200 dark:border-slate-800">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-indigo-100 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800/60 mb-4">
+        <span>🧮</span>
+        <span>하드웨어 메모리 오버플로우(OOM) 방지 엔지니어링 도구</span>
+      </div>
+
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+        LLM 로컬 VRAM & 양자화 계산기
+      </h1>
+
+      <p class="mt-4 text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
+        "내 컴퓨터에서 8B, 14B 모델이 돌아갈까?"<br class="hidden sm:inline" />
+        모델 파라미터와 양자화 규격, 컨텍스트 길이에 따른 <strong>실제 VRAM 점유율과 최적의 GGUF 파일</strong>을 계산합니다.
+      </p>
+    </header>
+
+    <!-- 인터랙티브 계산기 카드 -->
+    <div class="mt-8 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm">
+      
+      <!-- 1. 모델 크기 선택 -->
+      <div class="mb-8">
+        <label class="block text-xs font-extrabold text-slate-700 dark:text-slate-200 mb-3 uppercase tracking-wider">
+          1. 모델 파라미터 크기 (Parameters)
+        </label>
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5" id="param-group">
+          <button type="button" data-val="3" class="param-btn py-2.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 hover:border-indigo-500 transition-all">
+            3B (초경량)
+          </button>
+          <button type="button" data-val="8" class="param-btn active py-2.5 px-3 rounded-xl border text-xs font-bold transition-all shadow-sm">
+            7B / 8B (표준)
+          </button>
+          <button type="button" data-val="14" class="param-btn py-2.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 hover:border-indigo-500 transition-all">
+            14B (고성능)
+          </button>
+          <button type="button" data-val="22" class="param-btn py-2.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 hover:border-indigo-500 transition-all">
+            22B (Solar 등)
+          </button>
+          <button type="button" data-val="70" class="param-btn py-2.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 hover:border-indigo-500 transition-all">
+            70B (전문가용)
+          </button>
+        </div>
+      </div>
+
+      <!-- 2. 양자화 정밀도 선택 -->
+      <div class="mb-8">
+        <label class="block text-xs font-extrabold text-slate-700 dark:text-slate-200 mb-3 uppercase tracking-wider">
+          2. 양자화 정밀도 (Quantization Precision)
+        </label>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5" id="quant-group">
+          <button type="button" data-bits="16" data-name="FP16" class="quant-btn py-2.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:border-indigo-500 text-left">
+            <span class="font-bold block">FP16 (16-bit)</span>
+            <span class="text-[11px] text-slate-500">품질 손실 0% (용량 큼)</span>
+          </button>
+          <button type="button" data-bits="8.5" data-name="Q8_0" class="quant-btn py-2.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:border-indigo-500 text-left">
+            <span class="font-bold block">Q8_0 (8-bit)</span>
+            <span class="text-[11px] text-slate-500">실측 손실 0.1% 미만</span>
+          </button>
+          <button type="button" data-bits="4.8" data-name="Q4_K_M" class="quant-btn active py-2.5 px-3 rounded-xl border text-xs font-semibold text-left shadow-sm">
+            <span class="font-bold block">⭐ Q4_K_M (4-bit)</span>
+            <span class="text-[11px] opacity-90">업계 표준 밸런스 추천</span>
+          </button>
+          <button type="button" data-bits="5.5" data-name="Q5_K_M" class="quant-btn py-2.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:border-indigo-500 text-left">
+            <span class="font-bold block">Q5_K_M (5-bit)</span>
+            <span class="text-[11px] text-slate-500">고품질 추론용</span>
+          </button>
+          <button type="button" data-bits="3.8" data-name="Q3_K_M" class="quant-btn py-2.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:border-indigo-500 text-left">
+            <span class="font-bold block">Q3_K_M (3-bit)</span>
+            <span class="text-[11px] text-slate-500">저사양 메모리 절약</span>
+          </button>
+          <button type="button" data-bits="2.5" data-name="IQ2_XXS" class="quant-btn py-2.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:border-indigo-500 text-left">
+            <span class="font-bold block">IQ2_XXS (2-bit)</span>
+            <span class="text-[11px] text-slate-500">극한의 메모리 압축</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3. 컨텍스트 길이 (문맥 창) -->
+      <div class="mb-8">
+        <div class="flex items-center justify-between mb-3">
+          <label class="text-xs font-extrabold text-slate-700 dark:text-slate-200 uppercase tracking-wider">
+            3. 컨텍스트 길이 (Context Window / KV Cache)
+          </label>
+          <span id="ctx-display" class="text-xs font-extrabold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 px-2.5 py-1 rounded-lg border border-indigo-200 dark:border-indigo-800/60">
+            8,192 토큰 (약 6,000단어)
+          </span>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2" id="ctx-group">
+          <button type="button" data-val="2048" class="ctx-btn py-2 px-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 hover:border-indigo-500">2K (일상대화)</button>
+          <button type="button" data-val="4096" class="ctx-btn py-2 px-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 hover:border-indigo-500">4K (기본문서)</button>
+          <button type="button" data-val="8192" class="ctx-btn active py-2 px-2 rounded-xl border text-xs font-bold">8K (코딩/업무)</button>
+          <button type="button" data-val="16384" class="ctx-btn py-2 px-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 hover:border-indigo-500">16K (중장문)</button>
+          <button type="button" data-val="32768" class="ctx-btn py-2 px-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 hover:border-indigo-500">32K (논문분석)</button>
+        </div>
+      </div>
+
+      <!-- 4. 내 PC 하드웨어 환경 선택 -->
+      <div class="mb-8">
+        <label class="block text-xs font-extrabold text-slate-700 dark:text-slate-200 mb-3 uppercase tracking-wider">
+          4. 내 PC 하드웨어 사양 (VRAM / 공유 메모리)
+        </label>
+        <select id="hw-select" class="w-full py-3 px-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+          <option value="8">💻 윈도우 인텔/AMD 내장 그래픽 (16GB RAM ➡️ VRAM 약 8GB 할당)</option>
+          <option value="16">💻 윈도우 인텔/AMD 내장 그래픽 (32GB RAM ➡️ VRAM 약 16GB 할당)</option>
+          <option value="8">🍏 Apple Silicon Mac (8GB 통합 메모리)</option>
+          <option value="16" selected>🍏 Apple Silicon Mac (16GB 통합 메모리 / M2, M3)</option>
+          <option value="24">🍏 Apple Silicon Mac (24GB~36GB 통합 메모리 / M3 Pro)</option>
+          <option value="8">🎮 NVIDIA RTX 3060 / 4060 (8GB VRAM)</option>
+          <option value="12">🎮 NVIDIA RTX 3060 12GB / RTX 4070 (12GB VRAM)</option>
+          <option value="16">🎮 NVIDIA RTX 4080 (16GB VRAM)</option>
+          <option value="24">🎮 NVIDIA RTX 4090 (24GB VRAM)</option>
+        </select>
+      </div>
+
+      <!-- 📊 실시간 계산 결과 대시보드 (어떤 테마에서도 완벽한 칠흑 콘솔 유지) -->
+      <div 
+        id="result-dashboard"
+        style="background-color: #0f172a !important; color: #ffffff !important; border: 1px solid #334155 !important; border-radius: 20px; padding: 24px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3) !important;"
+      >
+        <div class="flex items-center justify-between gap-3 flex-wrap mb-4">
+          <div>
+            <span style="color: #94a3b8 !important; font-size: 12px; font-weight: 600; display: block;">예상 총 필요 메모리 (VRAM)</span>
+            <div style="font-size: 2.25rem; font-weight: 800; color: #818cf8 !important; margin-top: 2px;">
+              <span id="total-vram" style="color: #818cf8 !important;">6.2</span> <span style="font-size: 1.25rem; color: #cbd5e1 !important;">GB</span>
+            </div>
+          </div>
+
+          <div 
+            id="status-badge" 
+            style="background-color: #064e3b !important; color: #6ee7b7 !important; border: 1px solid #047857 !important; padding: 8px 16px; border-radius: 12px; font-size: 12px; font-weight: 800; display: inline-flex; align-items: center; gap: 6px;"
+          >
+            <span>●</span>
+            <span id="status-text" style="color: #6ee7b7 !important;">쾌적 구동 가능</span>
+          </div>
+        </div>
+
+        <!-- 메모리 게이지 바 -->
+        <div class="mb-5">
+          <div style="display: flex; justify-content: space-between; font-size: 12px; color: #94a3b8 !important; margin-bottom: 6px; font-weight: 500;">
+            <span>메모리 점유율: <strong id="pct-text" style="color: #ffffff !important;">38.8%</strong></span>
+            <span>내 하드웨어 가용량: <strong id="hw-capacity" style="color: #ffffff !important;">16 GB</strong></span>
+          </div>
+          <div style="width: 100%; height: 14px; background-color: #020617 !important; border-radius: 9999px; overflow: hidden; padding: 2px; border: 1px solid #334155 !important;">
+            <div id="vram-bar" style="height: 100%; width: 38.8%; background-color: #10b981 !important; border-radius: 9999px; transition: all 0.3s ease;"></div>
+          </div>
+        </div>
+
+        <!-- 메모리 세부 명세 표 -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 12px 0; border-top: 1px solid #1e293b !important; text-align: center; font-size: 12px;">
+          <div>
+            <span style="color: #94a3b8 !important; display: block; font-size: 11px;">모델 가중치</span>
+            <strong id="weight-vram" style="color: #f1f5f9 !important; font-family: monospace; font-size: 13px;">4.8 GB</strong>
+          </div>
+          <div>
+            <span style="color: #94a3b8 !important; display: block; font-size: 11px;">KV 캐시 (컨텍스트)</span>
+            <strong id="kv-vram" style="color: #f1f5f9 !important; font-family: monospace; font-size: 13px;">0.8 GB</strong>
+          </div>
+          <div>
+            <span style="color: #94a3b8 !important; display: block; font-size: 11px;">런타임 오버헤드</span>
+            <strong style="color: #f1f5f9 !important; font-family: monospace; font-size: 13px;">0.6 GB</strong>
+          </div>
+        </div>
+
+        <!-- 추천 GGUF 파일명 및 원클릭 복사 -->
+        <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #1e293b !important; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
+          <div style="font-size: 12px;">
+            <span style="color: #94a3b8 !important; display: block; font-size: 11px; margin-bottom: 2px;">LM Studio / Ollama 추천 다운로드 파일:</span>
+            <code id="rec-filename" style="color: #34d399 !important; font-family: monospace; font-weight: 800; font-size: 13px;">Model-8B-Instruct-Q4_K_M.gguf</code>
+          </div>
+          <button 
+            type="button" 
+            id="copy-rec-btn"
+            style="background-color: #059669 !important; color: #ffffff !important; padding: 8px 16px; border-radius: 12px; font-size: 12px; font-weight: 800; border: none; cursor: pointer;"
+          >
+            📋 파일명 복사
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 엔지니어링 가이드 FAQ -->
+    <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 text-xs sm:text-sm">
+      <div class="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+        <h3 class="font-extrabold text-slate-900 dark:text-white flex items-center gap-1.5 mb-2">
+          <span>💡</span>
+          <span>양자화(Quantization)란 무엇인가요?</span>
+        </h3>
+        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+          원래 16비트(FP16) 실수로 된 수십억 개의 가중치를 4비트(Q4)나 5비트(Q5) 정수로 압축하는 기술입니다. 
+          최신 <strong>Q4_K_M</strong> 알고리즘은 성능 손실이 1% 미만으로 체감하기 어려우면서 용량을 1/3 수준으로 대폭 줄여줍니다.
+        </p>
+      </div>
+
+      <div class="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+        <h3 class="font-extrabold text-slate-900 dark:text-white flex items-center gap-1.5 mb-2">
+          <span>⚠️</span>
+          <span>KV 캐시로 인해 왜 메모리가 터지나요?</span>
+        </h3>
+        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+          대화가 길어질수록 모델은 이전 대화 내용(KV 캐시)을 VRAM에 계속 쌓아둡니다. 
+          컨텍스트를 32k 이상으로 무리하게 늘리면 캐시 메모리만 4~8GB를 잡아먹어 모델이 튕기는(OOM) 주원인이 됩니다.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 계산기 로직 스크립트 -->
+  <script is:inline>
+    let currentParam = 8;
+    let currentBits = 4.8;
+    let currentQuantName = "Q4_K_M";
+    let currentCtx = 8192;
+    let currentHwVram = 16;
+
+    function calculate() {
+      // 1. 가중치 VRAM (GB) = 파라미터(B) * 비트수 / 8 * 1.15 오버헤드
+      const weightVram = (currentParam * (currentBits / 8) * 1.15);
+      
+      // 2. KV 캐시 VRAM (GB)
+      // 표준 Llama 계열: 2 * num_layers * hidden_size * ctx_len * 2 bytes
+      // 8B 기준 32 layers, 4096 hidden -> 토큰당 약 0.0001 MB
+      const kvPerTokenMb = (currentParam / 8) * 0.12; 
+      const kvVram = (currentCtx * kvPerTokenMb) / 1024;
+
+      // 3. 런타임 및 Vulkan/CUDA 고정 버퍼
+      const runtimeOverhead = 0.6;
+
+      const total = weightVram + kvVram + runtimeOverhead;
+      const pct = Math.round((total / currentHwVram) * 100);
+
+      // DOM 업데이트
+      document.getElementById('total-vram').innerText = total.toFixed(1);
+      document.getElementById('weight-vram').innerText = weightVram.toFixed(1) + ' GB';
+      document.getElementById('kv-vram').innerText = kvVram.toFixed(1) + ' GB';
+      document.getElementById('hw-capacity').innerText = currentHwVram + ' GB';
+      document.getElementById('pct-text').innerText = pct + '%';
+
+      const bar = document.getElementById('vram-bar');
+      const badge = document.getElementById('status-badge');
+      const statusText = document.getElementById('status-text');
+
+      bar.style.width = Math.min(pct, 100) + '%';
+
+      if (pct <= 80) {
+        bar.style.backgroundColor = '#10b981';
+        badge.style.backgroundColor = '#064e3b';
+        badge.style.border = '1px solid #047857';
+        statusText.style.color = '#6ee7b7';
+        statusText.innerText = '쾌적 구동 가능 (안정적)';
+      } else if (pct <= 98) {
+        bar.style.backgroundColor = '#f59e0b';
+        badge.style.backgroundColor = '#78350f';
+        badge.style.border = '1px solid #b45309';
+        statusText.style.color = '#fcd34d';
+        statusText.innerText = '구동 가능 (메모리 주의)';
+      } else {
+        bar.style.backgroundColor = '#ef4444';
+        badge.style.backgroundColor = '#7f1d1d';
+        badge.style.border = '1px solid #b91c1c';
+        statusText.style.color = '#fca5a5';
+        statusText.innerText = '메모리 부족 경고 (OOM 위험)';
+      }
+
+      // 추천 파일명
+      const recFilename = `Model-${currentParam}B-Instruct-${currentQuantName}.gguf`;
+      document.getElementById('rec-filename').innerText = recFilename;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. 파라미터 선택
+      const paramBtns = document.querySelectorAll('.param-btn');
+      paramBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          paramBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentParam = parseFloat(btn.getAttribute('data-val'));
+          calculate();
+        });
+      });
+
+      // 2. 양자화 선택
+      const quantBtns = document.querySelectorAll('.quant-btn');
+      quantBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          quantBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentBits = parseFloat(btn.getAttribute('data-bits'));
+          currentQuantName = btn.getAttribute('data-name');
+          calculate();
+        });
+      });
+
+      // 3. 컨텍스트 선택
+      const ctxBtns = document.querySelectorAll('.ctx-btn');
+      ctxBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          ctxBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentCtx = parseInt(btn.getAttribute('data-val'));
+          document.getElementById('ctx-display').innerText = currentCtx.toLocaleString() + ' 토큰';
+          calculate();
+        });
+      });
+
+      // 4. 하드웨어 선택
+      const hwSelect = document.getElementById('hw-select');
+      hwSelect.addEventListener('change', (e) => {
+        currentHwVram = parseInt(e.target.value);
+        calculate();
+      });
+
+      // 복사 버튼
+      document.getElementById('copy-rec-btn').addEventListener('click', () => {
+        const text = document.getElementById('rec-filename').innerText;
+        navigator.clipboard.writeText(text);
+        const btn = document.getElementById('copy-rec-btn');
+        const old = btn.innerText;
+        btn.innerText = '✅ 복사 완료!';
+        setTimeout(() => btn.innerText = old, 1500);
+      });
+
+      calculate();
+    });
+  </script>
+
+  <style>
+    /* 영구 고대비 선택 버튼 스타일: 라이트/다크모드 불문 100% 가독성 보장 */
+    .param-btn.active,
+    .quant-btn.active,
+    .ctx-btn.active {
+      background-color: #4f46e5 !important; /* 강렬한 인디고 */
+      border-color: #4338ca !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3) !important;
+    }
+
+    .param-btn.active *,
+    .quant-btn.active *,
+    .ctx-btn.active * {
+      color: #ffffff !important;
+    }
+
+    /* 비활성 버튼: 라이트모드에서 확실한 흰색 배경과 진한 텍스트 */
+    .param-btn:not(.active),
+    .quant-btn:not(.active),
+    .ctx-btn:not(.active) {
+      background-color: #ffffff !important;
+      color: #0f172a !important;
+      border-color: #cbd5e1 !important;
+    }
+
+    .param-btn:not(.active):hover,
+    .quant-btn:not(.active):hover,
+    .ctx-btn:not(.active):hover {
+      background-color: #f1f5f9 !important;
+      border-color: #94a3b8 !important;
+    }
+
+    /* 비활성 버튼: 다크모드 */
+    :global(.dark) .param-btn:not(.active),
+    :global(.dark) .quant-btn:not(.active),
+    :global(.dark) .ctx-btn:not(.active) {
+      background-color: #0f172a !important;
+      color: #e2e8f0 !important;
+      border-color: #334155 !important;
+    }
+
+    :global(.dark) .param-btn:not(.active):hover,
+    :global(.dark) .quant-btn:not(.active):hover,
+    :global(.dark) .ctx-btn:not(.active):hover {
+      background-color: #1e293b !important;
+      border-color: #64748b !important;
+    }
+  </style>
+</Layout>

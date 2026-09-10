@@ -1,0 +1,332 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const models = await getCollection('models');
+---
+
+<Layout 
+  title="오픈 LLM & 무료 혜택 레이더 | AI 러닝로그"
+  description="Kimi, Solar Pro, Hermes 3, Qwen 2.5 Coder 등 메이저를 능가하는 특화 오픈 모델과 무료 체험 혜택, OS별 터미널 실행 명령어 총정리."
+>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <!-- 로컬 테스트 모드 알림 -->
+    <div class="mb-6 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-800 dark:text-amber-300 flex items-center justify-between text-xs sm:text-sm">
+      <div class="flex items-center gap-2">
+        <span class="text-base">🧪</span>
+        <span><strong>[로컬 테스트 모드]</strong> 깃 추적이 차단된 오픈 LLM 레이더(/models) 프로토타입 화면입니다.</span>
+      </div>
+      <span class="px-2 py-0.5 rounded bg-amber-200/50 dark:bg-amber-900/40 text-[11px] font-bold">비공개</span>
+    </div>
+
+    <!-- 헤더 섹션 -->
+    <header class="text-center py-8 sm:py-12 border-b border-slate-200 dark:border-slate-800">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800/60 mb-4">
+        <span>⚡</span>
+        <span>특화 오픈소스 모델 & 무료 혜택 레이더</span>
+      </div>
+
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+        오픈 LLM & 무료 혜택 레이더
+      </h1>
+
+      <p class="mt-4 text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
+        OpenAI, Google 외에도 특정 영역을 압도하는 <strong>알짜배기 오픈소스 특화 LLM</strong> 총정리.<br class="hidden sm:inline" />
+        개발자 무료 API 크레딧, 웹 무료 체험권, OS별(Windows / Mac / Linux) 터미널 실행 명령어를 모았습니다.
+      </p>
+    </header>
+
+    <!-- 🧮 VRAM & 양자화 계산기 바로가기 배너 (라이트/다크 무관 완벽한 고대비 보장) -->
+    <div 
+      style="background: linear-gradient(135deg, #1e1b4b 0%, #31104b 100%) !important; border: 1px solid #4338ca !important; border-radius: 20px; padding: 20px; box-shadow: 0 4px 15px rgba(30, 27, 75, 0.25) !important;"
+      class="mt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+    >
+      <div class="flex items-center gap-3">
+        <span class="text-2xl sm:text-3xl">🧮</span>
+        <div>
+          <div style="color: #ffffff !important; font-weight: 800; font-size: 1.05rem; letter-spacing: -0.01em;">
+            내 컴퓨터에서 이 모델이 돌아갈까?
+          </div>
+          <p style="color: #cbd5e1 !important; font-size: 0.8rem; margin-top: 3px; line-height: 1.5;">
+            인텔 내장그래픽, M3 맥북, RTX 그래픽카드에 맞춘 <strong style="color: #a5b4fc !important;">실시간 VRAM & GGUF 양자화 계산기</strong>를 이용해 보세요.
+          </p>
+        </div>
+      </div>
+      <a 
+        href="/calculator" 
+        style="background-color: #6366f1 !important; color: #ffffff !important; padding: 10px 18px; border-radius: 12px; font-weight: 800; font-size: 12px; text-decoration: none;"
+        class="shadow hover:opacity-90 transition-all shrink-0 inline-flex items-center gap-1.5"
+      >
+        <span>VRAM 계산기 열기</span>
+        <span>→</span>
+      </a>
+    </div>
+
+    <!-- 💡 LMSYS Elo 점수 척도 & 만점 기준 안내 박스 -->
+    <div class="mt-6 p-4 sm:p-5 rounded-2xl bg-purple-500/10 border border-purple-500/20 text-slate-800 dark:text-slate-200 text-xs sm:text-sm">
+      <div class="flex items-center justify-between gap-2 flex-wrap mb-2">
+        <span class="font-extrabold text-purple-900 dark:text-purple-300 flex items-center gap-1.5">
+          <span>📊</span>
+          <span>LMSYS Chatbot Arena Elo 점수 척도 가이드 (만점 기준은?)</span>
+        </span>
+        <span class="px-2 py-0.5 rounded bg-purple-200/60 dark:bg-purple-900/40 text-[11px] font-bold text-purple-800 dark:text-purple-300">
+          글로벌 200만+ 블라인드 평가
+        </span>
+      </div>
+      <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+        체스(Chess) 승률 알고리즘을 AI에 도입한 블라인드 배틀 리그로, <strong>상한선(만점)이 없는 상대 평가 점수</strong>입니다. 
+        두 모델의 이름을 가린 채 전 세계 유저가 실제 질문을 던져 투표한 결과입니다:
+      </p>
+      <div class="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs">
+        <div class="p-2 rounded-xl bg-white dark:bg-slate-800/80 border border-purple-200 dark:border-purple-900/40">
+          <span class="block font-bold text-purple-700 dark:text-purple-300">🏆 1,300점+</span>
+          <span class="text-[11px] text-slate-500 dark:text-slate-400">SSS티어 (GPT-4o, Claude 3.5)</span>
+        </div>
+        <div class="p-2 rounded-xl bg-white dark:bg-slate-800/80 border border-purple-200 dark:border-purple-900/40">
+          <span class="block font-bold text-indigo-700 dark:text-indigo-300">🥇 1,240~1,299점</span>
+          <span class="text-[11px] text-slate-500 dark:text-slate-400">S티어 (오픈소스 1위 / GPT-4급)</span>
+        </div>
+        <div class="p-2 rounded-xl bg-white dark:bg-slate-800/80 border border-purple-200 dark:border-purple-900/40">
+          <span class="block font-bold text-emerald-700 dark:text-emerald-300">🥈 1,200~1,239점</span>
+          <span class="text-[11px] text-slate-500 dark:text-slate-400">A티어 (실무 완벽 / GPT-3.5 압살)</span>
+        </div>
+        <div class="p-2 rounded-xl bg-white dark:bg-slate-800/80 border border-purple-200 dark:border-purple-900/40">
+          <span class="block font-bold text-slate-600 dark:text-slate-400">🥉 1,100~1,199점</span>
+          <span class="text-[11px] text-slate-500 dark:text-slate-400">B티어 (가벼운 일상 대화)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 모델 카드 그리드 -->
+    <section class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+      {models.map((m) => (
+        <article class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm hover:border-purple-500/50 hover:shadow-md transition-all flex flex-col justify-between group">
+          <div>
+            <!-- 상단 뱃지 및 출시일 -->
+            <div class="flex items-center justify-between gap-2 flex-wrap mb-4">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-1 rounded-lg text-xs font-extrabold bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border border-purple-100 dark:border-purple-900/50">
+                  {m.data.parameters}
+                </span>
+                {m.data.badge && (
+                  <span class="px-2.5 py-1 rounded-lg text-xs font-extrabold bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800/60">
+                    🏆 {m.data.badge}
+                  </span>
+                )}
+              </div>
+              <span class="text-xs text-slate-400 font-medium">{m.data.releaseDate}</span>
+            </div>
+
+            <!-- 모델명 & 개발사 -->
+            <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white leading-snug">
+              {m.data.name}
+            </h2>
+            <div class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+              개발: <strong class="text-slate-700 dark:text-slate-200">{m.data.creator}</strong>
+            </div>
+
+            <!-- 🎯 특화 강점 하이라이트 박스 -->
+            <div class="mt-4 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200 leading-relaxed">
+              <span class="text-purple-600 dark:text-purple-400 mr-1.5 font-bold">🎯 핵심 특화 강점:</span>
+              {m.data.specialty}
+            </div>
+
+            <!-- 🎁 무료 혜택 (Free Perks) 정돈된 박스 -->
+            <div class="mt-3.5 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-xs sm:text-sm text-slate-800 dark:text-slate-200 leading-relaxed">
+              <div class="font-bold text-amber-700 dark:text-amber-400 flex items-center gap-1.5 mb-2">
+                <span>🎁</span>
+                <span>현재 제공 중인 무료 사용 혜택</span>
+              </div>
+              <ul class="space-y-1.5">
+                {m.data.freePerksList.map((perk) => (
+                  <li class="flex items-start gap-2 text-xs text-slate-700 dark:text-slate-300">
+                    <span class="text-amber-500 font-bold shrink-0 mt-0.5">•</span>
+                    <span>{perk}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <!-- ⚖️ 상업적 라이선스 & 법적 제약 팩트시트 -->
+            <div class="mt-3.5 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-800 text-xs">
+              <div class="font-bold text-slate-800 dark:text-slate-200 flex items-center justify-between mb-2">
+                <span class="flex items-center gap-1.5">
+                  <span>⚖️</span>
+                  <span>상업적 라이선스 팩트체크</span>
+                </span>
+                <span class="px-2 py-0.5 rounded bg-indigo-100 dark:bg-indigo-950/60 text-[11px] font-bold text-indigo-700 dark:text-indigo-300">
+                  {m.data.licenseName}
+                </span>
+              </div>
+              <div class="space-y-1 text-slate-600 dark:text-slate-300 text-[11px] leading-relaxed">
+                <div>• 상용화 여부: <strong class="text-slate-800 dark:text-slate-200">{m.data.commercialUse}</strong></div>
+                {m.data.licenseGotchas && (
+                  <div class="text-amber-700 dark:text-amber-300 mt-1">
+                    ⚠️ 주의: {m.data.licenseGotchas}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <!-- 📊 실측 벤치마크 & TPS 속도 인덱스 -->
+            <div class="mt-3.5 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-800 text-xs">
+              <div class="font-bold text-slate-800 dark:text-slate-200 flex items-center justify-between mb-1.5">
+                <span class="flex items-center gap-1.5">
+                  <span>📊</span>
+                  <span>독립 실측 벤치마크</span>
+                </span>
+                {m.data.lmsysElo && (
+                  <span class="px-2.5 py-0.5 rounded-full bg-purple-100 dark:bg-purple-950/60 text-[11px] font-extrabold text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800/50">
+                    LMSYS Elo {m.data.lmsysElo}점
+                  </span>
+                )}
+              </div>
+
+              {m.data.eloContext && (
+                <div class="mb-2.5 px-2.5 py-1.5 rounded-lg bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/40 text-[11px] text-indigo-900 dark:text-indigo-200 font-medium">
+                  🎯 <strong>체감 척도:</strong> {m.data.eloContext}
+                </div>
+              )}
+
+              <ul class="space-y-1 text-[11px] text-slate-600 dark:text-slate-300 mb-3">
+                {m.data.benchmarkScores.map((b) => (
+                  <li class="flex items-center gap-1.5">
+                    <span class="text-indigo-500 font-bold">✓</span>
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
+
+              {m.data.hardwareTps && (
+                <div class="pt-2.5 border-t border-slate-200 dark:border-slate-700/60 text-[10px] text-slate-500 dark:text-slate-400 space-y-1">
+                  <div class="font-bold text-slate-700 dark:text-slate-300 mb-1">⚡ 하드웨어별 실사용 속도 (Tokens/Sec):</div>
+                  <div>• 인텔 내장그래픽 (LM Studio): <span class="font-mono text-emerald-600 dark:text-emerald-400 font-bold">{m.data.hardwareTps.igpu}</span></div>
+                  <div>• Mac Apple Silicon (M시리즈): <span class="font-mono text-emerald-600 dark:text-emerald-400 font-bold">{m.data.hardwareTps.mac}</span></div>
+                  <div>• NVIDIA 외장 GPU (RTX): <span class="font-mono text-emerald-600 dark:text-emerald-400 font-bold">{m.data.hardwareTps.nvidia}</span></div>
+                </div>
+              )}
+            </div>
+
+            <!-- 💻 로컬 PC 실행 가이드: LM Studio (GUI) & Ollama (CLI) -->
+            <div style="background-color: #0f172a; color: #e2e8f0; border: 1px solid #334155; border-radius: 16px; padding: 16px; margin-top: 16px;">
+              <div style="font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 4px;">
+                <span class="flex items-center gap-1.5">
+                  <span>💻</span>
+                  <span>로컬 PC 다운로드 & 실행 (선택)</span>
+                </span>
+                <span style="color: #64748b; font-size: 10px; font-weight: normal;">LM Studio(GUI) or Ollama(CLI)</span>
+              </div>
+
+              <!-- 🖥️ 1. LM Studio 사용자 (인텔 내장그래픽 / AMD / Mac 마우스 원클릭) -->
+              {m.data.lmStudioModel && (
+                <div style="margin-top: 6px; padding-top: 6px; border-top: 1px solid #1e293b;">
+                  <div style="font-size: 11px; color: #a7f3d0; margin-bottom: 4px; font-weight: 700; display: flex; align-items: center; justify-content: space-between;">
+                    <span class="flex items-center gap-1">
+                      <span>🖥️ LM Studio</span>
+                      <span style="color: #6ee7b7; font-weight: normal; font-size: 10px;">(인텔 내장그래픽/AMD/Mac GUI 추천)</span>
+                    </span>
+                    <span style="font-size: 9px; color: #34d399; font-weight: 600;">마우스 검색</span>
+                  </div>
+                  <div style="background-color: #020617; border: 1px solid #1e293b; border-radius: 10px; padding: 8px 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                    <span style="color: #34d399; font-size: 11px; select-none;">🔍</span>
+                    <span style="color: #e2e8f0; font-family: monospace; font-size: 11px; font-weight: 600; flex-grow: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{m.data.lmStudioModel}</span>
+                    <button 
+                      type="button" 
+                      class="copy-cmd-btn shrink-0"
+                      style="background-color: #065f46; color: #ffffff; border: 1px solid #059669; border-radius: 6px; padding: 3px 8px; font-size: 10px; font-weight: 700; cursor: pointer;"
+                      data-cmd={m.data.lmStudioModel}
+                    >
+                      검색어 복사
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              <!-- ⚡ 2. Ollama 사용자 (터미널 CLI) -->
+              {m.data.windowsCommand && (
+                <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid #1e293b;">
+                  <div style="font-size: 11px; color: #93c5fd; margin-bottom: 4px; font-weight: 700; display: flex; align-items: center; gap: 4px;">
+                    <span>⚡ Ollama 터미널 (윈도우 PowerShell / Mac)</span>
+                  </div>
+                  <div style="background-color: #020617; border: 1px solid #1e293b; border-radius: 10px; padding: 8px 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                    <span style="color: #34d399; font-weight: bold; user-select: none;">$</span>
+                    <span style="color: #38bdf8; font-family: monospace; font-size: 11px; font-weight: 600; flex-grow: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{m.data.windowsCommand}</span>
+                    <button 
+                      type="button" 
+                      class="copy-cmd-btn shrink-0"
+                      style="background-color: #1e293b; color: #f1f5f9; border: 1px solid #475569; border-radius: 6px; padding: 3px 8px; font-size: 10px; font-weight: 700; cursor: pointer;"
+                      data-cmd={m.data.windowsCommand}
+                    >
+                      명령어 복사
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <!-- 모델 요약 설명 -->
+            <p class="mt-4 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+              {m.data.summary}
+            </p>
+
+            <!-- 태그 -->
+            <div class="mt-4 flex items-center gap-1.5 flex-wrap">
+              {m.data.tags.map((t) => (
+                <span class="text-[11px] px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">
+                  #{t}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <!-- 하단 링크 액션 버튼 바 -->
+          <div class="mt-6 pt-5 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between gap-3 flex-wrap">
+            <a 
+              href={m.data.playgroundUrl} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              style="background-color: #7c3aed; color: #ffffff !important;"
+              class="px-5 py-2.5 rounded-xl font-extrabold text-xs shadow-md hover:opacity-95 transition-all inline-flex items-center gap-2 group-hover:scale-[1.02]"
+            >
+              <span>🚀 무료 웹 체험하기</span>
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+
+            {m.data.weightsUrl && (
+              <a 
+                href={m.data.weightsUrl} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="px-3.5 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors inline-flex items-center gap-1 border border-slate-200 dark:border-slate-700"
+              >
+                <span>{m.data.weightsUrl.includes('huggingface.co') ? '🤗 Hugging Face 정식 모델 페이지' : '📖 공식 개발자 문서 & API'}</span>
+                <span class="text-xs">↗</span>
+              </a>
+            )}
+          </div>
+        </article>
+      ))}
+    </section>
+  </div>
+
+  <!-- 명령어 복사 스크립트 -->
+  <script is:inline>
+    document.querySelectorAll('.copy-cmd-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const cmd = btn.getAttribute('data-cmd');
+        if (cmd) {
+          await navigator.clipboard.writeText(cmd);
+          const orig = btn.innerText;
+          btn.innerText = '복사됨! ✓';
+          btn.classList.add('text-emerald-400');
+          setTimeout(() => {
+            btn.innerText = orig;
+            btn.classList.remove('text-emerald-400');
+          }, 2000);
+        }
+      });
+    });
+  </script>
+</Layout>

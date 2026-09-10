@@ -1,0 +1,476 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout 
+  title="AI API 토큰 비용 & 무료 크레딧 계산기 | 실시간 월 견적 시뮬레이터"
+  description="ChatGPT, Claude, Gemini, Solar Pro API를 내 서비스에 붙이면 한 달에 얼마가 나올까? DAU와 토큰 사용량에 따른 실시간 월간 청구액 계산 및 100% 무료 개발자 API 티어 총정리."
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+    
+    <!-- 상단 네비게이션 & 헤더 -->
+    <div class="flex items-center gap-2 text-xs font-bold text-indigo-600 dark:text-indigo-400 mb-3">
+      <a href="/" class="hover:underline">홈</a>
+      <span>›</span>
+      <span>엔지니어링 툴킷</span>
+      <span>›</span>
+      <span>AI API 비용 계산기</span>
+    </div>
+
+    <header class="mb-8">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs font-extrabold mb-3">
+        <span>💸 실시간 클라우드 API 견적 엔진</span>
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
+        AI API 토큰 비용 & 무료 크레딧 실시간 계산기
+      </h1>
+      <p class="mt-2.5 text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-3xl leading-relaxed">
+        내 웹서비스나 사내 챗봇에 <strong>ChatGPT, Claude, Gemini, Solar Pro</strong>를 붙이면 한 달 요금이 얼마나 나올까요?
+        예상 사용자 수(DAU)와 대화량을 조절하여 <strong>모델별 예상 청구액을 1초 만에 비교</strong>하고, 돈 안 들이고 시작하는 <strong>공식 100% 무료 개발자 API 지도</strong>를 확인해 보세요.
+      </p>
+    </header>
+
+    <!-- 🎛️ 실시간 시뮬레이션 컨트롤 패널 -->
+    <div class="pricing-control-panel rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-sm">
+      
+      <!-- 1. 일일 활성 사용자 수 (DAU) -->
+      <div class="mb-8">
+        <div class="flex items-center justify-between mb-2.5">
+          <label class="text-xs font-extrabold text-slate-800 dark:text-slate-200 uppercase tracking-wider">
+            1. 하루 예상 활성 사용자 수 (DAU)
+          </label>
+          <span id="dau-display" class="text-xs font-extrabold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 px-3 py-1 rounded-lg border border-indigo-200 dark:border-indigo-800/60">
+            100 명
+          </span>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-6 gap-2 mb-3" id="dau-group">
+          <button type="button" data-val="10" class="dau-btn py-2 px-3 rounded-xl border text-xs font-bold transition-all">10명 (테스트)</button>
+          <button type="button" data-val="50" class="dau-btn py-2 px-3 rounded-xl border text-xs font-bold transition-all">50명 (초기)</button>
+          <button type="button" data-val="100" class="dau-btn active py-2 px-3 rounded-xl border text-xs font-bold transition-all">100명 (성장기)</button>
+          <button type="button" data-val="500" class="dau-btn py-2 px-3 rounded-xl border text-xs font-bold transition-all">500명 (중소형)</button>
+          <button type="button" data-val="1000" class="dau-btn py-2 px-3 rounded-xl border text-xs font-bold transition-all">1,000명 (상용화)</button>
+          <button type="button" data-val="5000" class="dau-btn py-2 px-3 rounded-xl border text-xs font-bold transition-all">5,000명 (대규모)</button>
+        </div>
+        <input type="range" id="dau-slider" min="10" max="10000" step="10" value="100" class="w-full accent-indigo-600 cursor-pointer h-2 bg-slate-200 dark:bg-slate-700 rounded-lg" />
+      </div>
+
+      <!-- 2. 대화당 토큰 및 일일 대화 횟수 -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
+        
+        <!-- 질문 길이 (Input) -->
+        <div>
+          <label class="block text-xs font-extrabold text-slate-800 dark:text-slate-200 mb-2 uppercase tracking-wider">
+            2. 질문 1회당 입력 길이 (Input)
+          </label>
+          <select id="input-select" class="w-full py-2.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-bold text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+            <option value="200">단문 질문 (약 200토큰 / 150단어)</option>
+            <option value="500" selected>일반 질문 + 시스템 프롬프트 (약 500토큰)</option>
+            <option value="1500">긴 글 분석 / RAG 문서 참조 (약 1,500토큰)</option>
+            <option value="4000">대용량 PDF 문서 분석 (약 4,000토큰)</option>
+          </select>
+        </div>
+
+        <!-- 답변 길이 (Output) -->
+        <div>
+          <label class="block text-xs font-extrabold text-slate-800 dark:text-slate-200 mb-2 uppercase tracking-wider">
+            3. AI 1회당 답변 길이 (Output)
+          </label>
+          <select id="output-select" class="w-full py-2.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-bold text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+            <option value="300">핵심 단답형 요약 (약 300토큰 / 200단어)</option>
+            <option value="800" selected>일반적인 친절한 답변 (약 800토큰)</option>
+            <option value="1500">코드 작성 및 장문 리포트 (약 1,500토큰)</option>
+            <option value="3000">초장문 기획서 / 에세이 (약 3,000토큰)</option>
+          </select>
+        </div>
+
+        <!-- 하루 대화 횟수 -->
+        <div>
+          <label class="block text-xs font-extrabold text-slate-800 dark:text-slate-200 mb-2 uppercase tracking-wider">
+            4. 유저 1명당 하루 질문 횟수
+          </label>
+          <select id="turns-select" class="w-full py-2.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-bold text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+            <option value="1">하루 1회 (가벼운 방문)</option>
+            <option value="3" selected>하루 3회 (표준 서비스 평균)</option>
+            <option value="5">하루 5회 (적극적 유저)</option>
+            <option value="10">하루 10회 (파워 유저 및 코딩)</option>
+          </select>
+        </div>
+
+      </div>
+
+      <!-- 📊 월간 예상 토큰 총량 요약 바 -->
+      <div 
+        style="background-color: #0f172a !important; color: #ffffff !important; border: 1px solid #334155 !important; border-radius: 16px; padding: 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important;"
+        class="flex items-center justify-between gap-4 flex-wrap"
+      >
+        <div>
+          <span style="color: #94a3b8 !important; font-size: 11px; font-weight: 600; display: block;">한 달 총 예상 사용량 (30일 기준)</span>
+          <div style="font-size: 1.25rem; font-weight: 800; color: #ffffff !important; margin-top: 2px;">
+            월간 총 <span id="total-tokens-display" style="color: #818cf8 !important;">11.7 M</span> 토큰 소모
+          </div>
+        </div>
+        <div class="flex items-center gap-4 text-xs font-mono">
+          <div>
+            <span style="color: #94a3b8 !important; display: block; font-size: 11px;">입력 (Prompt)</span>
+            <strong id="input-tokens-display" style="color: #cbd5e1 !important;">4.5 M</strong>
+          </div>
+          <div style="border-left: 1px solid #334155; padding-left: 16px;">
+            <span style="color: #94a3b8 !important; display: block; font-size: 11px;">출력 (Completion)</span>
+            <strong id="output-tokens-display" style="color: #cbd5e1 !important;">7.2 M</strong>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 🏆 5대 핵심 상용 모델 실시간 비용 비교 견적표 -->
+    <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+      <span>📊</span>
+      <span>모델별 예상 월 청구액 실시간 비교 (환율 1,350원 기준)</span>
+    </h2>
+
+    <div class="pricing-models-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="model-cards-container">
+      
+      <!-- 1. Gemini 1.5 Flash (압도적 최저가 챔피언) -->
+      <div class="rounded-3xl border-2 border-emerald-500/80 bg-white dark:bg-slate-900 p-6 shadow-md flex flex-col justify-between relative overflow-hidden">
+        <div class="absolute top-0 right-0 px-3 py-1 bg-emerald-500 text-white text-[11px] font-extrabold rounded-bl-xl">
+          🏆 최저가 가성비 1위
+        </div>
+        <div>
+          <div class="text-xs font-extrabold text-emerald-600 dark:text-emerald-400 mb-1">Google DeepMind</div>
+          <h3 class="text-xl font-extrabold text-slate-900 dark:text-white">Gemini 1.5 Flash</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 mb-4">
+            초저지연, 대용량 멀티모달 처리 및 스타트업 서비스 구축에 가장 완벽한 모델
+          </p>
+          <div class="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900/60 mb-4">
+            <span class="text-xs text-emerald-700 dark:text-emerald-300 font-semibold block">예상 월 청구액:</span>
+            <div class="text-2xl sm:text-3xl font-extrabold text-emerald-600 dark:text-emerald-400 font-mono mt-0.5">
+              $<span id="cost-gemini-flash">2.50</span>
+              <span class="text-xs text-emerald-700 dark:text-emerald-300 font-sans font-bold">/ 월 (약 <span id="krw-gemini-flash">3,375</span>원)</span>
+            </div>
+          </div>
+        </div>
+        <div class="text-[11px] text-slate-500 dark:text-slate-400 space-y-1 border-t border-slate-100 dark:border-slate-800 pt-3">
+          <div>• 1M 토큰당 단가: 입력 $0.075 / 출력 $0.30</div>
+          <div>• 장점: <strong>Google AI Studio에서 무료 티어 제공</strong></div>
+        </div>
+      </div>
+
+      <!-- 2. GPT-4o-mini (OpenAI 표준 가성비) -->
+      <div class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm flex flex-col justify-between">
+        <div>
+          <div class="text-xs font-extrabold text-indigo-600 dark:text-indigo-400 mb-1">OpenAI</div>
+          <h3 class="text-xl font-extrabold text-slate-900 dark:text-white">GPT-4o mini</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 mb-4">
+            구형 GPT-3.5를 완전히 대체하며 가장 친숙한 OpenAI 생태계 표준 경량 모델
+          </p>
+          <div class="p-4 rounded-2xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-900/60 mb-4">
+            <span class="text-xs text-indigo-700 dark:text-indigo-300 font-semibold block">예상 월 청구액:</span>
+            <div class="text-2xl sm:text-3xl font-extrabold text-indigo-600 dark:text-indigo-400 font-mono mt-0.5">
+              $<span id="cost-gpt4o-mini">5.00</span>
+              <span class="text-xs text-indigo-700 dark:text-indigo-300 font-sans font-bold">/ 월 (약 <span id="krw-gpt4o-mini">6,750</span>원)</span>
+            </div>
+          </div>
+        </div>
+        <div class="text-[11px] text-slate-500 dark:text-slate-400 space-y-1 border-t border-slate-100 dark:border-slate-800 pt-3">
+          <div>• 1M 토큰당 단가: 입력 $0.15 / 출력 $0.60</div>
+          <div>• 장점: 수많은 튜토리얼과 SDK 라이브러리 완비</div>
+        </div>
+      </div>
+
+      <!-- 3. Solar Pro (국내 토종 한국어 특화) -->
+      <div class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm flex flex-col justify-between">
+        <div>
+          <div class="text-xs font-extrabold text-purple-600 dark:text-purple-400 mb-1">Upstage 🇰🇷</div>
+          <h3 class="text-xl font-extrabold text-slate-900 dark:text-white">Solar Pro</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 mb-4">
+            한국어 공문서, 금융, 법률 문맥 이해도에서 국내 최고 평가를 받는 국산 모델
+          </p>
+          <div class="p-4 rounded-2xl bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-900/60 mb-4">
+            <span class="text-xs text-purple-700 dark:text-purple-300 font-semibold block">예상 월 청구액:</span>
+            <div class="text-2xl sm:text-3xl font-extrabold text-purple-600 dark:text-purple-400 font-mono mt-0.5">
+              $<span id="cost-solar-pro">6.88</span>
+              <span class="text-xs text-purple-700 dark:text-purple-300 font-sans font-bold">/ 월 (약 <span id="krw-solar-pro">9,288</span>원)</span>
+            </div>
+          </div>
+        </div>
+        <div class="text-[11px] text-slate-500 dark:text-slate-400 space-y-1 border-t border-slate-100 dark:border-slate-800 pt-3">
+          <div>• 1M 토큰당 단가: 입력 $0.25 / 출력 $0.80</div>
+          <div>• 장점: 한국어 자연스러움 및 Upstage 가입 크레딧 제공</div>
+        </div>
+      </div>
+
+      <!-- 4. GPT-4o (플래그십 올라운더) -->
+      <div class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm flex flex-col justify-between">
+        <div>
+          <div class="text-xs font-extrabold text-slate-600 dark:text-slate-400 mb-1">OpenAI</div>
+          <h3 class="text-xl font-extrabold text-slate-900 dark:text-white">GPT-4o (Omni)</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 mb-4">
+            고난도 추론과 복잡한 멀티스텝 에이전트 작업을 위한 업계 최상위 플래그십
+          </p>
+          <div class="p-4 rounded-2xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 mb-4">
+            <span class="text-xs text-slate-600 dark:text-slate-400 font-semibold block">예상 월 청구액:</span>
+            <div class="text-2xl sm:text-3xl font-extrabold text-slate-800 dark:text-slate-100 font-mono mt-0.5">
+              $<span id="cost-gpt4o">83.25</span>
+              <span class="text-xs text-slate-600 dark:text-slate-400 font-sans font-bold">/ 월 (약 <span id="krw-gpt4o">112,388</span>원)</span>
+            </div>
+          </div>
+        </div>
+        <div class="text-[11px] text-slate-500 dark:text-slate-400 space-y-1 border-t border-slate-100 dark:border-slate-800 pt-3">
+          <div>• 1M 토큰당 단가: 입력 $2.50 / 출력 $10.00</div>
+          <div>• 가이드: 단순 챗봇보다는 복잡한 백엔드 분석용으로 적합</div>
+        </div>
+      </div>
+
+      <!-- 5. Claude 3.5 Sonnet (최강의 코딩 & 비즈니스) -->
+      <div class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm flex flex-col justify-between">
+        <div>
+          <div class="text-xs font-extrabold text-amber-600 dark:text-amber-400 mb-1">Anthropic</div>
+          <h3 class="text-xl font-extrabold text-slate-900 dark:text-white">Claude 3.5 Sonnet</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 mb-4">
+            전 세계 개발자 만족도 1위, 정교한 뉘앙스 처리와 코딩에 독보적인 프리미엄 모델
+          </p>
+          <div class="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60 mb-4">
+            <span class="text-xs text-amber-700 dark:text-amber-300 font-semibold block">예상 월 청구액:</span>
+            <div class="text-2xl sm:text-3xl font-extrabold text-amber-600 dark:text-amber-400 font-mono mt-0.5">
+              $<span id="cost-claude-sonnet">121.50</span>
+              <span class="text-xs text-amber-700 dark:text-amber-300 font-sans font-bold">/ 월 (약 <span id="krw-claude-sonnet">164,025</span>원)</span>
+            </div>
+          </div>
+        </div>
+        <div class="text-[11px] text-slate-500 dark:text-slate-400 space-y-1 border-t border-slate-100 dark:border-slate-800 pt-3">
+          <div>• 1M 토큰당 단가: 입력 $3.00 / 출력 $15.00</div>
+          <div>• 가이드: 아키텍처 설계, 정밀 코드 생성 등에 강력 추천</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 🎁 100% 전액 무료 개발자 API 발급 지도 -->
+    <section class="rounded-3xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900 p-6 sm:p-8">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="text-2xl">🗺️</span>
+        <h2 class="text-xl font-extrabold text-slate-900 dark:text-white">
+          돈 0원으로 개발하는 "공식 100% 무료 개발자 API 지도"
+        </h2>
+      </div>
+      <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mb-6">
+        신용카드를 등록하지 않고도 합법적으로 정식 API 키를 발급받아 내 사이트에 연동할 수 있는 빅테크의 무료 티어를 모았습니다.
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+        <!-- 무료 티어 1: Google AI Studio -->
+        <div class="free-tier-card p-5 rounded-2xl">
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-extrabold text-slate-900 dark:text-white text-sm">Google AI Studio</span>
+            <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 text-[11px] font-bold">분당 15회 무료</span>
+          </div>
+          <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-3">
+            신용카드 입력 없이 일반 구글 계정으로 로그인만 하면 <strong>Gemini 1.5 Flash와 Pro 모델의 무료 API 키</strong>를 즉시 발급해 줍니다. 개인 프로젝트나 프로토타입에 사실상 무제한으로 사용 가능합니다.
+          </p>
+          <a href="https://aistudio.google.com/" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline">
+            Google AI Studio 무료 키 받기 →
+          </a>
+        </div>
+
+        <!-- 무료 티어 2: Groq Cloud -->
+        <div class="free-tier-card p-5 rounded-2xl">
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-extrabold text-slate-900 dark:text-white text-sm">Groq Cloud</span>
+            <span class="px-2 py-0.5 rounded bg-purple-100 text-purple-800 dark:bg-purple-950/60 dark:text-purple-300 text-[11px] font-bold">초당 300토큰 무료</span>
+          </div>
+          <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-3">
+            독자적인 LPU 칩을 통해 오픈소스 <strong>Llama 3.3 70B와 Whisper 음성인식 모델</strong>을 믿을 수 없는 초고속(초당 300토큰)으로 전액 무료 API 엔드포인트를 제공합니다.
+          </p>
+          <a href="https://console.groq.com/" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline">
+            Groq Console 무료 API 발급 →
+          </a>
+        </div>
+
+        <!-- 무료 티어 3: Upstage Console -->
+        <div class="free-tier-card p-5 rounded-2xl">
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-extrabold text-slate-900 dark:text-white text-sm">Upstage Console 🇰🇷</span>
+            <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300 text-[11px] font-bold">첫 가입 크레딧 무료</span>
+          </div>
+          <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-3">
+            국내 토종 모델인 <strong>Solar Pro 및 Document OCR API</strong>를 테스트해 볼 수 있도록 회원가입 시 넉넉한 무료 테스트 크레딧을 무상 충전해 줍니다.
+          </p>
+          <a href="https://console.upstage.ai/" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline">
+            Upstage 콘솔 가입하기 →
+          </a>
+        </div>
+
+        <!-- 무료 티어 4: GitHub Models -->
+        <div class="free-tier-card p-5 rounded-2xl">
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-extrabold text-slate-900 dark:text-white text-sm">GitHub Models</span>
+            <span class="px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200 text-[11px] font-bold">깃허브 계정 무료</span>
+          </div>
+          <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-3">
+            마이크로소프트와 깃허브가 제공하는 플레이그라운드로, <strong>GPT-4o, Llama 3, Mistral 모델</strong>을 웹 인터페이스와 SDK 코드로 무료로 호출해 볼 수 있습니다.
+          </p>
+          <a href="https://github.com/marketplace/models" target="_blank" rel="noopener noreferrer" class="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline">
+            GitHub Models 마켓플레이스 →
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <script is:inline>
+    // 전역 상태
+    let currentDau = 100;
+    let inputTokens = 500;
+    let outputTokens = 800;
+    let turnsPerDay = 3;
+    const KRW_RATE = 1350;
+
+    // 1M 토큰당 가격 (단위: 달러 $)
+    const PRICING = {
+      geminiFlash: { input: 0.075, output: 0.30 },
+      gpt4oMini: { input: 0.15, output: 0.60 },
+      solarPro: { input: 0.25, output: 0.80 },
+      gpt4o: { input: 2.50, output: 10.00 },
+      claudeSonnet: { input: 3.00, output: 15.00 },
+    };
+
+    function recalculate() {
+      // 월간 총 대화 수 (30일)
+      const totalMonthlyConversations = currentDau * turnsPerDay * 30;
+
+      // 월간 총 입력 / 출력 토큰
+      const totalInputTokens = totalMonthlyConversations * inputTokens;
+      const totalOutputTokens = totalMonthlyConversations * outputTokens;
+      const totalTokens = totalInputTokens + totalOutputTokens;
+
+      // 상단 디스플레이 업데이트
+      document.getElementById('dau-display').innerText = currentDau.toLocaleString() + ' 명';
+      document.getElementById('total-tokens-display').innerText = (totalTokens / 1000000).toFixed(1) + ' M';
+      document.getElementById('input-tokens-display').innerText = (totalInputTokens / 1000000).toFixed(1) + ' M';
+      document.getElementById('output-tokens-display').innerText = (totalOutputTokens / 1000000).toFixed(1) + ' M';
+
+      // 모델별 청구액 계산
+      const calcModel = (key, costId, krwId) => {
+        const p = PRICING[key];
+        const cost = ((totalInputTokens / 1000000) * p.input) + ((totalOutputTokens / 1000000) * p.output);
+        const krw = Math.round(cost * KRW_RATE);
+
+        document.getElementById(costId).innerText = cost < 10 ? cost.toFixed(2) : cost.toFixed(1);
+        document.getElementById(krwId).innerText = krw.toLocaleString();
+      };
+
+      calcModel('geminiFlash', 'cost-gemini-flash', 'krw-gemini-flash');
+      calcModel('gpt4oMini', 'cost-gpt4o-mini', 'krw-gpt4o-mini');
+      calcModel('solarPro', 'cost-solar-pro', 'krw-solar-pro');
+      calcModel('gpt4o', 'cost-gpt4o', 'krw-gpt4o');
+      calcModel('claudeSonnet', 'cost-claude-sonnet', 'krw-claude-sonnet');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. DAU 버튼 클릭
+      const dauBtns = document.querySelectorAll('.dau-btn');
+      const dauSlider = document.getElementById('dau-slider');
+
+      dauBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          dauBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentDau = parseInt(btn.getAttribute('data-val'));
+          dauSlider.value = currentDau;
+          recalculate();
+        });
+      });
+
+      // 슬라이더 조절
+      dauSlider.addEventListener('input', (e) => {
+        currentDau = parseInt(e.target.value);
+        dauBtns.forEach(b => {
+          if (parseInt(b.getAttribute('data-val')) === currentDau) {
+            b.classList.add('active');
+          } else {
+            b.classList.remove('active');
+          }
+        });
+        recalculate();
+      });
+
+      // 2. 드롭다운 선택
+      document.getElementById('input-select').addEventListener('change', (e) => {
+        inputTokens = parseInt(e.target.value);
+        recalculate();
+      });
+
+      document.getElementById('output-select').addEventListener('change', (e) => {
+        outputTokens = parseInt(e.target.value);
+        recalculate();
+      });
+
+      document.getElementById('turns-select').addEventListener('change', (e) => {
+        turnsPerDay = parseInt(e.target.value);
+        recalculate();
+      });
+
+      recalculate();
+    });
+  </script>
+
+  <style>
+    /* 영구 고대비 선택 버튼 스타일: 라이트/다크모드 불문 100% 가독성 보장 */
+    .dau-btn.active {
+      background-color: #4f46e5 !important;
+      border-color: #4338ca !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3) !important;
+    }
+
+    .dau-btn.active * {
+      color: #ffffff !important;
+    }
+
+    /* 비활성 버튼 */
+    .dau-btn:not(.active) {
+      background-color: #ffffff !important;
+      color: #0f172a !important;
+      border-color: #cbd5e1 !important;
+    }
+
+    .dau-btn:not(.active):hover {
+      background-color: #f1f5f9 !important;
+      border-color: #94a3b8 !important;
+    }
+
+    :global(.dark) .dau-btn:not(.active) {
+      background-color: #0f172a !important;
+      color: #e2e8f0 !important;
+      border-color: #334155 !important;
+    }
+
+    :global(.dark) .dau-btn:not(.active):hover {
+      background-color: #1e293b !important;
+      border-color: #64748b !important;
+    }
+
+    /* 무료 티어 카드 고대비 보장 */
+    .free-tier-card {
+      background-color: #ffffff !important;
+      border: 1px solid #e2e8f0 !important;
+    }
+    :global(.dark) .free-tier-card {
+      background-color: #1e293b !important;
+      border: 1px solid #334155 !important;
+    }
+
+    /* 섹션 간 확실한 상하 여백 강제 적용 (0픽셀 마진 방지) */
+    .pricing-control-panel {
+      margin-bottom: 56px !important;
+    }
+    .pricing-models-grid {
+      margin-bottom: 56px !important;
+    }
+  </style>
+</Layout>
