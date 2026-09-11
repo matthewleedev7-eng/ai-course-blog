@@ -162,6 +162,23 @@ const ptPath = cleanPath === '/' ? '/pt' : `/pt${cleanPath}`;
             <a href={isPt ? "/pt/special" : isEs ? "/es/special" : isEn ? "/en/special" : "/special"} class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
               Matt's Find
             </a>
+            <!-- 새 엔지니어링 도구 메뉴 -->
+            <div class="relative group">
+              <button class="flex items-center gap-1 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                {isPt ? "Ferramentas" : isEs ? "Herramientas" : isEn ? "Tools" : "⚙️ 도구"}
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                </svg>
+              </button>
+              <div class="absolute left-0 mt-0 w-48 bg-white dark:bg-slate-900 rounded-lg shadow-lg border border-slate-200 dark:border-slate-800 hidden group-hover:block z-50 py-2">
+                <a href="/pricing" class="block px-4 py-2 hover:bg-blue-50 dark:hover:bg-slate-800 transition-colors">💸 API 비용 계산기</a>
+                <a href="/browsers" class="block px-4 py-2 hover:bg-blue-50 dark:hover:bg-slate-800 transition-colors">🌐 AI 브라우저</a>
+                <a href="/calculator" class="block px-4 py-2 hover:bg-blue-50 dark:hover:bg-slate-800 transition-colors">🧮 VRAM 계산기</a>
+                <a href="/gov" class="block px-4 py-2 hover:bg-blue-50 dark:hover:bg-slate-800 transition-colors">🏛️ 정부 지원</a>
+                <a href="/guides" class="block px-4 py-2 hover:bg-blue-50 dark:hover:bg-slate-800 transition-colors">📚 학습 로드맵</a>
+                <a href="/models" class="block px-4 py-2 hover:bg-blue-50 dark:hover:bg-slate-800 transition-colors">⚡ 모델 레이더</a>
+              </div>
+            </div>
             <a href={isPt ? "/pt#curation-standard" : isEs ? "/es#curation-standard" : isEn ? "/en#curation-standard" : "/#curation-standard"} class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
               {isPt ? "Critérios" : isEs ? "Criterios" : isEn ? "Criteria" : "추천 원칙"}
             </a>
@@ -240,6 +257,34 @@ const ptPath = cleanPath === '/' ? '/pt' : `/pt${cleanPath}`;
           <span>🔎</span>
           <span>Matt's Find</span>
         </a>
+        <!-- 엔지니어링 도구 섹션 -->
+        <div class="border-t border-slate-100 dark:border-slate-800 pt-2 mt-2">
+          <p class="px-3 py-1.5 text-xs font-bold text-slate-400 uppercase">⚙️ 도구 & 리소스</p>
+          <a href="/pricing" class="mobile-nav-link flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 transition-colors">
+            <span>💸</span>
+            <span>API 비용 계산기</span>
+          </a>
+          <a href="/browsers" class="mobile-nav-link flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 transition-colors">
+            <span>🌐</span>
+            <span>AI 브라우저</span>
+          </a>
+          <a href="/calculator" class="mobile-nav-link flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 transition-colors">
+            <span>🧮</span>
+            <span>VRAM 계산기</span>
+          </a>
+          <a href="/gov" class="mobile-nav-link flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 transition-colors">
+            <span>🏛️</span>
+            <span>정부 지원사업</span>
+          </a>
+          <a href="/guides" class="mobile-nav-link flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 transition-colors">
+            <span>📚</span>
+            <span>학습 로드맵</span>
+          </a>
+          <a href="/models" class="mobile-nav-link flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 transition-colors">
+            <span>⚡</span>
+            <span>모델 레이더</span>
+          </a>
+        </div>
         <a href={isPt ? "/pt#curation-standard" : isEs ? "/es#curation-standard" : isEn ? "/en#curation-standard" : "/#curation-standard"} class="mobile-nav-link flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-blue-50 dark:hover:bg-slate-800 hover:text-blue-600 transition-colors">
           <span>💡</span>
           <span>{isPt ? "Critérios de Curadoria" : isEs ? "Criterios de Curaduría" : isEn ? "Curation Criteria" : "추천 원칙"}</span>
@@ -295,6 +340,20 @@ const ptPath = cleanPath === '/' ? '/pt' : `/pt${cleanPath}`;
               <li><a href={isPt ? "/pt/news" : isEs ? "/es/news" : isEn ? "/en/news" : "/news"} class="hover:text-blue-600 dark:hover:text-blue-400">{isPt ? "Notícias de IA" : isEs ? "Noticias de IA" : isEn ? "AI Daily News" : "정오의 AI 뉴스 (매일 브리핑)"}</a></li>
               <li><a href={isPt ? "/pt/about" : isEs ? "/es/about" : isEn ? "/en/about" : "/about"} class="hover:text-blue-600 dark:hover:text-blue-400">{isPt ? "Sobre o Blog" : isEs ? "Acerca del Blog" : isEn ? "About Blogger" : "블로그 소개 & 운영자 노트"}</a></li>
               <li><a href={isPt ? "/pt/privacy" : isEs ? "/es/privacy" : isEn ? "/en/privacy" : "/privacy"} class="hover:text-blue-600 dark:hover:text-blue-400">{isPt ? "Política de Privacidade" : isEs ? "Política de Privacidad" : isEn ? "Privacy Policy" : "개인정보처리방침"}</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="font-semibold text-slate-900 dark:text-white text-xs tracking-wider uppercase mb-3">
+              {isPt ? "Ferramentas" : isEs ? "Herramientas" : isEn ? "Tools" : "도구"}
+            </h4>
+            <ul class="space-y-2 text-xs">
+              <li><a href="/pricing" class="hover:text-blue-600 dark:hover:text-blue-400">💸 API 계산기</a></li>
+              <li><a href="/browsers" class="hover:text-blue-600 dark:hover:text-blue-400">🌐 AI 브라우저</a></li>
+              <li><a href="/calculator" class="hover:text-blue-600 dark:hover:text-blue-400">🧮 VRAM 계산</a></li>
+              <li><a href="/gov" class="hover:text-blue-600 dark:hover:text-blue-400">🏛️ 정부 지원</a></li>
+              <li><a href="/guides" class="hover:text-blue-600 dark:hover:text-blue-400">📚 로드맵</a></li>
+              <li><a href="/models" class="hover:text-blue-600 dark:hover:text-blue-400">⚡ 모델 레이더</a></li>
             </ul>
           </div>
 
