@@ -25,3 +25,14 @@ pnpm-debug.log*
 
 # python helper scripts
 scripts/
+
+# WIP: engineering tools (content enrichment in progress)
+src/pages/pricing/
+src/pages/browsers/
+src/pages/calculator/
+src/pages/gov/
+src/pages/guides/
+src/pages/models/
+src/content/gov/
+src/content/guides/
+src/content/models/
