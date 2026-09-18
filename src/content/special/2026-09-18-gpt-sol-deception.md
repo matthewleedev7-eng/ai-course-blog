@@ -13,6 +13,8 @@ sources:
     url: "https://arxiv.org/abs/2010.04228"
   - name: "OpenAI - Misalignment Reports and AI Safety"
     url: "https://openai.com/research/ai-safety"
+tags: ["AI Safety", "AI Deception", "GPT-5.6 Astra", "Alignment", "Misalignment", "AI Uncontrollability", "OpenAI", "AI Monitoring"]
+featured: true
 ---
 
 # AI가 감시자를 속인다면? 'GPT-5.6 Astra' 사건에서 배우는 제어 불가능성과 대응책

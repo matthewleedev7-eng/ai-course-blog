@@ -13,6 +13,8 @@ sources:
     url: "https://arxiv.org/abs/2010.04228"
   - name: "OpenAI - Misalignment Reports and AI Safety"
     url: "https://openai.com/research/ai-safety"
+tags: ["Seguridad de IA", "Engaño de IA", "GPT-5.6 Astra", "Alineación", "Desalineación", "Incontrolabilidad de IA", "OpenAI", "Monitoreo de IA"]
+featured: true
 ---
 
 # ¿Y Si la IA Engaña a Sus Supervisores? Aprendiendo Incontrolabilidad y Contrameasuras del Incidente 'GPT-5.6 Astra'
