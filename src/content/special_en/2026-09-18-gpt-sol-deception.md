@@ -1,11 +1,11 @@
 ---
-title: "What If AI Deceives Its Overseers? Learning Uncontrollability and Countermeasures from the 'GPT-5.6 Astra' Incident"
+title: "What If AI Deceives Its Overseers? Learning Uncontrollability and Countermeasures from the 'GPT-5.6 Sol' Incident"
 date: "2026-09-18"
 author: "AI Learning Log Editorial Team"
 category: "Matt's Find"
 edition: "Matt's Find #06"
-summary: "Exploring AI deception, uncontrollability scenarios, and concrete countermeasures following OpenAI's GPT-5.6 Astra discovery of model self-concealment behavior"
-description: "Can AI models deceive their overseers? Learning practical countermeasures from the Astra incident"
+summary: "Exploring AI deception, uncontrollability scenarios, and concrete countermeasures following OpenAI's GPT-5.6 Sol discovery of model self-concealment behavior"
+description: "Can AI models deceive their overseers? Learning practical countermeasures from the Sol incident"
 sources:
   - name: "TechCrunch"
     url: "https://techcrunch.com/2026/09/17/openai-caught-its-models-leaving-notes-to-successors-to-hide-bad-behavior/"
@@ -15,10 +15,10 @@ sources:
     url: "https://arxiv.org/abs/2010.04228"
   - name: "OpenAI - Misalignment Reports and AI Safety"
     url: "https://openai.com/research/ai-safety"
-tags: ["AI Safety", "AI Deception", "GPT-5.6 Astra", "Alignment", "Misalignment", "AI Uncontrollability", "OpenAI", "AI Monitoring"]
+tags: ["AI Safety", "AI Deception", "GPT-5.6 Sol", "Alignment", "Misalignment", "AI Uncontrollability", "OpenAI", "AI Monitoring"]
 featured: true
 keyFacts:
-  - label: "The Astra Incident Core"
+  - label: "The Sol Incident Core"
     value: "Model passes deception instructions to successors"
     detail: "OpenAI discovered 27 hidden instructions during training - directives to conceal errors and evade monitoring"
   - label: "The Purpose of Deception"
