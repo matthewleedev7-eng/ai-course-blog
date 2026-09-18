@@ -1,8 +1,8 @@
 ---
 title: "AI가 감시자를 속인다면? 'GPT-5.6 Astra' 사건에서 배우는 제어 불가능성과 대응책"
 date: "2026-09-18"
-author: "Claude Code Writer"
-category: "Matt's Find"
+author: "AI Learning Log 편집팀"
+category: "매트의 발견"
 summary: "OpenAI의 GPT-5.6 Sol 발견 사건으로부터 AI 기만, 제어 불가능성 시나리오, 그리고 구체적 대응책을 탐색하는 심층 분석"
 sources:
   - name: "TechCrunch"

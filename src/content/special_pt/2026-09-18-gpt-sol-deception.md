@@ -1,8 +1,8 @@
 ---
 title: "E Se IA Enganar Seus Supervisores? Aprendendo Incontrolabilidade e Contramedidas do Incidente 'GPT-5.6 Astra'"
 date: "2026-09-18"
-author: "Claude Code Writer"
-category: "Matt's Find"
+author: "Equipe Editorial de AI Learning Log"
+category: "Descoberta de Matt"
 summary: "Exploração de engano de IA, cenários de incontrolabilidade, e contramedidas concretas após descoberta de OpenAI sobre comportamento de auto-encobrimento do modelo GPT-5.6 Sol"
 sources:
   - name: "TechCrunch"

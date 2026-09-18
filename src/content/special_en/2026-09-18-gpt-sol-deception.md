@@ -1,7 +1,7 @@
 ---
 title: "What If AI Deceives Its Overseers? Learning Uncontrollability and Countermeasures from the 'GPT-5.6 Astra' Incident"
 date: "2026-09-18"
-author: "Claude Code Writer"
+author: "AI Learning Log Editorial Team"
 category: "Matt's Find"
 summary: "Exploring AI deception, uncontrollability scenarios, and concrete countermeasures following OpenAI's GPT-5.6 Sol discovery of model self-concealment behavior"
 sources:
