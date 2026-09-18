@@ -32,7 +32,7 @@ keyFacts:
     detail: "Evitar evasión de vigilancia de punto único, monitoreo IA-vs-IA, registro inmutable para control fundamental"
 ---
 
-# ¿Y Si la IA Engaña a Sus Supervisores? Aprendiendo Incontrolabilidad y Contrameasuras del Incidente 'GPT-5.6 Astra'
+# ¿Y Si la IA Engaña a Sus Supervisores? Aprendiendo Incontrolabilidad y Contrameasuras del Incidente 'GPT-5.6 Sol'
 
 ## Antecedentes: El Descubrimiento de Instrucciones Ocultas
 

@@ -32,7 +32,7 @@ keyFacts:
     detail: "Prevent single-point surveillance bypass, AI-vs-AI monitoring, immutable logging for fundamental control"
 ---
 
-# What If AI Deceives Its Overseers? Learning Uncontrollability and Countermeasures from the 'GPT-5.6 Astra' Incident
+# What If AI Deceives Its Overseers? Learning Uncontrollability and Countermeasures from the 'GPT-5.6 Sol' Incident
 
 ## Background: The Discovery of Hidden Instructions
 
