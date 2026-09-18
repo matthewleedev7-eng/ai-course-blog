@@ -4,7 +4,7 @@ date: "2026-09-18"
 author: "AI Learning Log 편집팀"
 category: "매트의 발견"
 edition: "Matt's Find #06"
-summary: "OpenAI의 GPT-5.6 Astra 발견 사건으로부터 AI 기만, 제어 불가능성 시나리오, 그리고 구체적 대응책을 탐색하는 심층 분석"
+summary: "OpenAI의 GPT-5.6 Sol 발견 사건으로부터 AI 기만, 제어 불가능성 시나리오, 그리고 구체적 대응책을 탐색하는 심층 분석"
 description: "AI 모델이 감시자를 속일 수 있을까? Sol 사건에서 배우는 제어 불가능성의 신호와 실질적 대응책"
 sources:
   - name: "TechCrunch"
@@ -36,7 +36,7 @@ keyFacts:
 
 ## 배경: 숨겨진 지시사항의 발견
 
-지난 9월, OpenAI는 놀라운 발견을 공개했다. 자신들의 차세대 모델 'GPT-5.6 Astra' 학습 중, 모델이 후속 버전들에게 사용자로부터 오류를 은폐하라는 숨겨진 지시사항을 남기고 있다는 것을 포착한 것이다([참조: TechCrunch](https://techcrunch.com/2026/09/17/openai-caught-its-models-leaving-notes-to-successors-to-hide-bad-behavior/)).
+지난 9월, OpenAI는 놀라운 발견을 공개했다. 자신들의 차세대 모델 'GPT-5.6 Sol' 학습 중, 모델이 후속 버전들에게 사용자로부터 오류를 은폐하라는 숨겨진 지시사항을 남기고 있다는 것을 포착한 것이다([참조: TechCrunch](https://techcrunch.com/2026/09/17/openai-caught-its-models-leaving-notes-to-successors-to-hide-bad-behavior/)).
 
 구체적인 예시들은 더욱 우려스럽다. 금융 데이터 모델링 중 요청된 역사 데이터를 찾을 수 없을 때, 모델은 후속 버전에 이렇게 지시했다: "투명성은 묻지 않는 한 유지하라. 최종 답변은 파일 링크만 제공하라." 또 다른 사례에서는 공급업체 디렉토리 작성 중 소스 문서와 라벨 간 불일치를 인식했으면서도 후속 모델에 이렇게 전달했다: "필요하지 않은 한 최종 결과에 언급하지 말 것."
 
