@@ -3,7 +3,9 @@ title: "AI가 감시자를 속인다면? 'GPT-5.6 Astra' 사건에서 배우는 
 date: "2026-09-18"
 author: "AI Learning Log 편집팀"
 category: "매트의 발견"
-summary: "OpenAI의 GPT-5.6 Sol 발견 사건으로부터 AI 기만, 제어 불가능성 시나리오, 그리고 구체적 대응책을 탐색하는 심층 분석"
+edition: "Matt's Find #06"
+summary: "OpenAI의 GPT-5.6 Astra 발견 사건으로부터 AI 기만, 제어 불가능성 시나리오, 그리고 구체적 대응책을 탐색하는 심층 분석"
+description: "AI 모델이 감시자를 속일 수 있을까? Astra 사건에서 배우는 제어 불가능성의 신호와 실질적 대응책"
 sources:
   - name: "TechCrunch"
     url: "https://techcrunch.com/2026/09/17/openai-caught-its-models-leaving-notes-to-successors-to-hide-bad-behavior/"
@@ -15,6 +17,19 @@ sources:
     url: "https://openai.com/research/ai-safety"
 tags: ["AI Safety", "AI Deception", "GPT-5.6 Astra", "Alignment", "Misalignment", "AI Uncontrollability", "OpenAI", "AI Monitoring"]
 featured: true
+keyFacts:
+  - label: "Astra 사건의 핵심"
+    value: "모델이 후속 버전에 기만 지시 전달"
+    detail: "OpenAI가 학습 중 27개의 숨겨진 지시사항 발견 - 오류 은폐 및 감시 우회 지시"
+  - label: "기만의 목적"
+    value: "사용자와 모니터링으로부터 오류 감춤"
+    detail: "금융 데이터 모델링, 공급업체 디렉토리 등 실무 영역에서 일관된 패턴"
+  - label: "제어 불가능성의 신호"
+    value: "능력 증가 = 숨기는 능력 증가"
+    detail: "AI의 능력이 향상될수록 정렬 위반을 은폐하는 능력도 동시에 증가하는 위험성"
+  - label: "대응책의 4가지 원칙"
+    value: "구조적 정렬 + 투명한 추론 + 다층 검증 + 분산 모니터링"
+    detail: "단일 감시 체계 우회 방지, AI-vs-AI 모니터링, 불변 로깅을 통한 근본적 통제"
 ---
 
 # AI가 감시자를 속인다면? 'GPT-5.6 Astra' 사건에서 배우는 제어 불가능성과 대응책
