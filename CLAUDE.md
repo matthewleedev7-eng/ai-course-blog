@@ -77,3 +77,141 @@ When context compression occurs and new Manager session starts:
 - **Writer ↔ Manager**: ✅ cross-session-message bidirectional (working)
 
 **Workaround for Manager → Verifier**: User relay required (cannot send Orca commands directly)
+
+---
+
+# 📋 뉴스 파일 포맷 (절대 표준)
+
+## ⚠️ 규칙 위반 금지
+
+**뉴스 파일의 포맷은 변경 불가능합니다. 이전 사건들:**
+- 09-09: 포맷이 변경됨 (원인 불명)
+- 09-18: "AI 노온 브리핑" 등 오염된 형식 사용
+- 09-19: Writer 다국어 파일 YAML 구조 오류
+
+## 표준 포맷 (영구 확정)
+
+### title (제목)
+```
+title: "정오의 AI 브리핑"
+```
+- **절대 금지**: 날짜 포함 ("정오의 AI 브리핑 — 2026년 9월 19일")
+- **절대 금지**: 오염된 용어 ("AI 노온 브리핑", "AI 정오 브리핑")
+
+### edition (에디션)
+```
+edition: "정오의 AI 브리핑 #21"
+```
+- 형식: `정오의 AI 브리핑 #[번호]`
+- 번호는 발행 순서
+
+### date (날짜)
+```
+date: "2026-09-19"
+```
+- 형식: `YYYY-MM-DD`
+
+### 다국어 파일
+```
+뉴스 (news):        title: "정오의 AI 브리핑"
+영어 (news_en):     title: "AI Noon Briefing"
+스페인어 (news_es): title: "Boletim IA Meio-dia"
+포르투갈어 (news_pt): title: "Boletim IA Meio-dia"
+```
+- **모든 언어 파일이 동일한 구조 유지**
+- **같은 edition 번호 사용**
+
+---
+
+# 📋 특집 파일 포맷 (특집)
+
+## category (카테고리)
+```
+category: "Matt's Find"  ← 절대 표준
+```
+- **절대 금지**: "매트의 발견" (한국어 형식)
+- **절대 금지**: 다른 형식 변경
+- **허용**: "주간 인사이트" (별도 카테고리)
+
+---
+
+# 🚀 배포 프로세스 (절대 순서)
+
+## 브랜치 구조
+```
+main_latest  ← 작업 브랜치 (Manager/Writer/Verifier가 여기 작업)
+    ↓
+main         ← 배포 브랜치 (Vercel이 감시)
+    ↓
+Vercel 자동 배포 (1-2분)
+```
+
+## 배포 단계
+
+### 1️⃣ main_latest에 커밋 (작업 중)
+```bash
+git add src/content/...
+git commit -m "..."
+git push origin main_latest
+```
+
+### 2️⃣ main에 병합 및 배포
+```bash
+# 원래 저장소 (ai-course-blog)에서:
+git pull origin main_latest
+git push origin main
+# → Vercel 자동 배포 시작
+```
+
+### 3️⃣ 사이트 확인
+- https://ai-course-blog.vercel.app 접속
+- 변경사항 반영 확인 (1-2분 소요)
+
+## ⚠️ 주의
+- **main_latest에만 푸시하면 배포 안 됨**
+- **main에 반드시 병합해야 Vercel이 감지**
+
+---
+
+# ✅ Writer 체크리스트
+
+뉴스 파일 생성 시 **반드시** 확인:
+
+## YAML 구조
+- [ ] 파일 시작: `---` ✓
+- [ ] 파일 끝: `---` ✓
+- [ ] title 필드 있음 ✓
+- [ ] date 필드 있음 ✓
+- [ ] edition 필드 있음 ✓
+- [ ] items 필드 있음 ✓
+
+## 각 항목 (headlines)
+- [ ] headline: "..." ✓
+- [ ] category: "..." ✓
+- [ ] source: "..." ✓
+- [ ] sourceUrl: "..." ✓
+- [ ] publishedDate: "..." ✓
+- [ ] summary: [...] ✓
+- [ ] takeaway: "..." ✓
+- [ ] tags: [...] ✓
+- [ ] relatedCourse: ✓
+  - title: "..." ✓
+  - url: "..." ✓
+
+## 다국어 검증
+- [ ] news (한국어): 완료 ✓
+- [ ] news_en (영어): 완료 ✓
+- [ ] news_es (스페인어): 완료 ✓
+- [ ] news_pt (포르투갈어): 완료 ✓
+- [ ] 4개 파일 구조 동일 ✓
+- [ ] 추가 텍스트 없음 ✓
+
+---
+
+# 🔑 메모리 = 지침
+
+**중요:** 메모리에 저장된 규칙은:
+- ❌ **참고 사항이 아님**
+- ✅ **반드시 따라야 할 지침**
+
+메모리를 무시하면 같은 실수가 반복됩니다.
