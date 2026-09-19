@@ -2,7 +2,7 @@
 title: "AI 초지능 경쟁, 정말 10년 안에 인류를 위협할 수 있을까? — Jacob Coxon의 경고와 우리의 선택"
 date: "2026-09-10"
 author: "AI Learning Log 편집팀"
-category: "매트의 발견"
+category: "Matt's Find"
 edition: "Matt's Find #05"
 summary: "앤트로픽에서 3년간 대규모 언어 모델 사전학습을 담당한 야콥 콕슨 연구원이 '자기 개선 초지능 경쟁이 인류의 생명을 건 도박'이라며 공개 사직했다. 그의 경고는 AI 발전 속도, 정렬 준비도, 그리고 우리가 지금 취해야 할 행동에 대해 무엇을 말하는가?"
 description: "최전선 AI 연구자의 공개 경고: 자기 개선 초지능의 위험성과 우리가 할 수 있는 구체적 선택"

@@ -2,7 +2,7 @@
 title: "Google Mantis: AI가 코드 보안을 자동으로 진단하고 치료하는 시대의 개막"
 date: "2026-09-07"
 author: "AI Learning Log 편집팀"
-category: "매트의 발견"
+category: "Matt's Find"
 edition: "Matt's Find #04"
 summary: "Google이 공개한 Mantis는 보안 스캔 도구의 거짓 양성 문제를 저감하기 위해 설계되었다. AI 에이전트를 활용한 다층 검증 구조로, 기존 도구의 낮은 진양성(True Positive) 비율을 개선하는 것을 목표로 한다. DevSecOps 팀의 검증 효율 개선에 활용될 수 있는 기술이다."
 description: "AI 에이전트로 취약점을 발견, 검증, 수정하는 Google의 오픈소스 Mantis: 보안 자동화의 새 기준"
