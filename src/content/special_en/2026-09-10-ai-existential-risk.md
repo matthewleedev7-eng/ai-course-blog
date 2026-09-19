@@ -147,6 +147,8 @@ Individuals can:
 
 3. **Foster safety culture**: Make "Is this feature safe?" equally important as "Does this feature work fast?"
 
+![Navigating the ASI Horizon](/assets/infographics/Navigating_the_ASI_Horizon.png)
+
 ---
 
 ## Fourth Perspective: History and Different Expert Views

@@ -147,6 +147,8 @@ Indivíduos podem:
 
 3. **Fomentar cultura de segurança**: Tornar "Esta característica é segura?" igualmente importante quanto "Esta característica funciona rápido?"
 
+![O Caminho para a Superinteligência](/assets/infographics/O_Caminho_para_a_Superinteligência.png)
+
 ---
 
 ## Quarta Perspectiva: História e Diferentes Opiniões de Especialistas
