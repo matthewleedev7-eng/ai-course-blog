@@ -26,13 +26,13 @@ Consult these guides before working on related tasks:
 # 🚨 Manager 및 에이전트 통신 프로토콜
 
 ## Manager 주소
-- **Claude Session**: `blog-manager-c9 [f2d73b]` ← **현재 활성**
+- **Claude Session**: `blog-manager-a9 [bba1c8]` ← **현재 활성** (2026-09-19 context compression)
 - **통신 방식**: SendMessage (Orca Orch 장애로 인한 전환)
 - **Orca Terminal Handle (레거시)**: `term_b634a9b2-9706-4778-a9fd-bee48214bb5f` ⚠️ stale (미사용)
 
 ## 통신 규칙
-- **지시 수신**: SendMessage (blog-manager-c9)로부터
-- **완료 보고**: SendMessage (blog-manager-c9)로 전송
+- **지시 수신**: SendMessage (blog-manager-a9)로부터
+- **완료 보고**: SendMessage (blog-manager-a9)로 전송
 - **모든 작업 보고 원칙**: Manager가 각 하위 에이전트(Scout, Verifier, Writer)에게 지시한 사항은 사소한 작업이라도 완료 시 반드시 Manager에게 보고되어야 합니다.
 
 ---
@@ -41,9 +41,9 @@ Consult these guides before working on related tasks:
 
 ## Active Run
 - **Run ID**: `run_f355a5decad6`
-- **Status**: ✅ Bound to Manager (blog-manager-c9)
+- **Status**: ✅ Bound to Manager (blog-manager-a9)
 - **Created**: 2026-09-07T07:49:35Z
-- **Last Rebind**: 2026-09-11 20:24:08
+- **Last Rebind**: 2026-09-19 11:30:00 (blog-manager-c9 → blog-manager-a9)
 - **Description**: AI Learning Log Pipeline - Scout/Verifier/Writer Orchestration
 
 ## Agent Terminal Handles
