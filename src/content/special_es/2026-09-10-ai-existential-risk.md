@@ -26,7 +26,7 @@ keyFacts:
     detail: "Las técnicas de alineación y control pueden no mantenerse al ritmo de velocidad de desarrollo de capacidad"
 ---
 
-## "Están Apostando Nuestras Vidas"
+![El camino a la superinteligencia](/assets/infographics/El_camino_a_la_superinteligencia.png)
 
 El 8 de septiembre de 2026, un investigador de IA de primera línea renunció a su puesto.
 
@@ -146,8 +146,6 @@ Los individuos pueden:
 2. **Construir comprensión básica**: Adquirir conocimiento mínimo sobre posibles cronogramas de AGI, independientemente de tu campo
 
 3. **Fomentar cultura de seguridad**: Hacer "¿Es esta característica segura?" igualmente importante que "¿Funciona esta característica rápido?"
-
-![El camino a la superinteligencia](/assets/infographics/El_camino_a_la_superinteligencia.png)
 
 ---
 

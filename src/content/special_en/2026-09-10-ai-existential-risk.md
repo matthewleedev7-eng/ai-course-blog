@@ -26,7 +26,7 @@ keyFacts:
     detail: "Alignment and control techniques may not keep pace with capability development speed"
 ---
 
-## "They Are Gambling With Our Lives"
+![Navigating the ASI Horizon](/assets/infographics/Navigating_the_ASI_Horizon.png)
 
 On September 8, 2026, a frontline AI researcher stepped down from his position.
 
@@ -146,8 +146,6 @@ Individuals can:
 2. **Build basic understanding**: Gain minimum knowledge about possible AGI timelines, regardless of your field
 
 3. **Foster safety culture**: Make "Is this feature safe?" equally important as "Does this feature work fast?"
-
-![Navigating the ASI Horizon](/assets/infographics/Navigating_the_ASI_Horizon.png)
 
 ---
 
